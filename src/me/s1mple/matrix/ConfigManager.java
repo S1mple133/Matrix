@@ -1,9 +1,9 @@
 package me.s1mple.matrix;
 
-import com.google.common.base.Charsets;
 import com.projectkorra.projectkorra.ProjectKorra;
 import com.projectkorra.projectkorra.configuration.Config;
 import me.s1mple.matrix.Matrix;
+import org.apache.commons.codec.Charsets;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;

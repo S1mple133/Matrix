@@ -5,7 +5,6 @@ import com.hm.achievement.category.Category;
 import com.hm.achievement.db.data.DBAchievement;
 import org.bukkit.inventory.ItemStack;
 import ru.tehkode.permissions.PermissionGroup;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;

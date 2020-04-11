@@ -2,7 +2,7 @@ main: me.s1mple.matrix.Matrix
 name: MatrixPlugin
 version: ${project.version}
 author: Simple
-depend: [ProjectKorra, AuthMe, AdvancedAchievements]
+depend: [ProjectKorra, AuthMe, AdvancedAchievements, PermissionsEx]
 loadbefore:
   - AuthMe
 description: Matrix Abilities.

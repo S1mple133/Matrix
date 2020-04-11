@@ -3,6 +3,7 @@ package me.s1mple.matrix.BattlePass;
 import me.s1mple.matrix.BattlePass.Data.Level;
 import me.s1mple.matrix.BattlePass.Data.UserData;
 import me.s1mple.matrix.Matrix;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -12,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.h2.engine.User;
 import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,7 +62,6 @@ public class AchievementHandler {
                     PermissionsEx.getPermissionManager().getGroup(config.getString(actSection+"Rank")),
                     config.getString(actSection+"Command"),
                     config.getString(actSection+"Description"), i));
-
         }
 
         Level.SetNextLevels();
