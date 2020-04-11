@@ -94,49 +94,49 @@
       <artifactId>projectkorra</artifactId>
       <version>1.8.9</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/PK.jar</systemPath>
+      <systemPath>D:\GitHub\Matrix1\Matrix/src/Utils/PK.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.pex</groupId>
       <artifactId>pex</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/PermissionsEx-1.23.4.jar</systemPath>
+      <systemPath>D:\GitHub\Matrix1\Matrix/src/Utils/PermissionsEx-1.23.4.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.authme</groupId>
       <artifactId>authme</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/AuthMe.jar</systemPath>
+      <systemPath>D:\GitHub\Matrix1\Matrix/src/Utils/AuthMe.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.worldedit</groupId>
       <artifactId>worldedit</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/worldedit-bukkit-7.1.0.jar</systemPath>
+      <systemPath>D:\GitHub\Matrix1\Matrix/src/Utils/worldedit-bukkit-7.1.0.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.awe</groupId>
       <artifactId>awe</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/AsyncWorldEdit-3.6.19.jar</systemPath>
+      <systemPath>D:\GitHub\Matrix1\Matrix/src/Utils/AsyncWorldEdit-3.6.19.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.achievements</groupId>
       <artifactId>achievements</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/AdvancedAchievements.jar</systemPath>
+      <systemPath>D:\GitHub\Matrix1\Matrix/src/Utils/AdvancedAchievements.jar</systemPath>
     </dependency>
-      <dependency>
-          <groupId>org.spigotmc</groupId>
-          <artifactId>spigot-api</artifactId>
-          <version>1.15.1-R0.1-SNAPSHOT</version>
-          <scope>compile</scope>
-      </dependency>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.15.1-R0.1-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 </project>
 

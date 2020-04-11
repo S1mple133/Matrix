@@ -4,6 +4,7 @@ import com.projectkorra.projectkorra.ability.CoreAbility;
 import me.s1mple.matrix.BattlePass.BattlePass;
 import me.s1mple.matrix.Util.DBManager;
 import me.s1mple.matrix.listener.AbilityListener;
+import me.s1mple.matrix.slide.Slide;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -35,7 +36,7 @@ public class Matrix extends JavaPlugin {
         CoreAbility.registerPluginAbilities(plugin, "me.s1mple.matrix.Abilities.MatrixBending");
 
         BattlePass.LoadBattlePass(this);
-
+        plugin.getServer().getPluginManager().registerEvents(new Slide(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new AbilityListener(Matrix.plugin), Matrix.plugin);
     }
 

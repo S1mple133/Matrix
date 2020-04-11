@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" version="4">
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="MavenCustomPomFilePath">
     <option name="mavenPomFileUrl" value="file://$MODULE_DIR$/dependency-reduced-pom.xml" />
   </component>
@@ -20,7 +20,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.projectkorra:projectkorra:1.8.9">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Kali/Java/Snapchat/MatrixBending/src/Utils/PK.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/Utils/PK.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -29,7 +29,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.pex:pex:LATEST">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Kali/Java/Snapchat/MatrixBending/src/Utils/PermissionsEx-1.23.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/Utils/PermissionsEx-1.23.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -38,7 +38,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.authme:authme:LATEST">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Kali/Java/Snapchat/MatrixBending/src/Utils/AuthMe.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/Utils/AuthMe.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -47,7 +47,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.worldedit:worldedit:LATEST">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Kali/Java/Snapchat/MatrixBending/src/Utils/worldedit-bukkit-7.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/Utils/worldedit-bukkit-7.1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -56,7 +56,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.awe:awe:LATEST">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Kali/Java/Snapchat/MatrixBending/src/Utils/AsyncWorldEdit-3.6.19.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/Utils/AsyncWorldEdit-3.6.19.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -65,7 +65,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.achievements:achievements:LATEST">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Kali/Java/Snapchat/MatrixBending/src/Utils/AdvancedAchievements.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/Utils/AdvancedAchievements.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
