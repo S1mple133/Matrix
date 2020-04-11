@@ -1,0 +1,11 @@
+main: me.s1mple.matrix.Matrix
+name: MatrixPlugin
+version: ${project.version}
+author: Simple
+depend: [ProjectKorra, AuthMe, AdvancedAchievements]
+loadbefore:
+  - AuthMe
+description: Matrix Abilities.
+commands:
+  matrix:
+    description: Shows help on the plugin.

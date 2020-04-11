@@ -1,0 +1,9 @@
+BattlePass:
+  Lvls: 1
+Lvl:
+  1:
+    Command: /give $user$ 5 apple
+    Achievements:
+      - place_5_chest
+    Rank: Lvl 1
+    Description: Get five apples!
