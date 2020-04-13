@@ -1,8 +1,17 @@
+# Item names: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 BattlePass:
   Lvls: 1
 Lvl:
   1:
     Command: /give $user$ 5 apple
+    PremiumCommand: /give $user$ 20 golden_apple
+    Menu:
+      Item: APPLE
+      ItemPremium: GOLDEN_APPLE
+      Name: "Apple Reward"
+      NamePremium: "Premium Apple Reward"
+      Lore: "Get some sweet apples!"
+      LorePremium: "Get some OP Apples!"
     Achievements:
       - place_5_chest
     Rank: Lvl 1

@@ -61,19 +61,17 @@ public class AchievementHandler {
             Level.addLevel(new Level(config.getStringList(actSection+"Achievements"),
                     PermissionsEx.getPermissionManager().getGroup(config.getString(actSection+"Rank")),
                     config.getString(actSection+"Command"),
-                    config.getString(actSection+"Description"), i));
+                    config.getString(actSection+"Description"), i,
+                    config.getString(actSection+"PremiumCommand"),
+                    config.getString(actSection+"Menu.Item"),
+                    config.getString(actSection+"Menu.ItemPremium"),
+                    config.getString(actSection+"Menu.Name"),
+                    config.getString(actSection+"Menu.NamePremium"),
+                    config.getString(actSection+"Menu.Lore"),
+                    config.getString(actSection+"Menu.LorePremium")));
         }
 
         Level.SetNextLevels();
-    }
-
-    /**
-     * Shows the prize of the next level to user
-     * @param p
-     */
-    public void ShowNextPrize(Player p) {
-        Level next = UserData.GetUserData(p).getLevel().getNextLevel();
-        p.sendMessage(ChatColor.BLUE + "Next Level Description: " + ChatColor.AQUA + ((next == null) ? "You have the highest level." : next.getDescription()));
     }
 
     /**

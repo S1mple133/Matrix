@@ -18,13 +18,13 @@ import java.util.UUID;
 
 public class UserData {
     private static List<UserData> userDataList = new ArrayList<UserData>();
-    private static Optional<AdvancedAchievementsAPI> advancedAchievementsAPI = AdvancedAchievementsAPIFetcher.fetchInstance();
 
     private List<String> achievementsCompletedAtActualLevel;
     private Level actLevel;
     private String uuid;
+    private boolean isPremium;
 
-    public UserData(List<String> achievementsCompleted, Level actLevel, String uuid) {
+    public UserData(List<String> achievementsCompleted, Level actLevel, String uuid, boolean isPremium) {
         if(achievementsCompleted.contains("full") && actLevel.getNextLevel() != null) {
             achievementsCompletedAtActualLevel = completedAtLevel(actLevel.getNextLevel(), Matrix.getPlugin().getServer().getPlayer(uuid));
             this.actLevel = actLevel.getNextLevel();
@@ -33,6 +33,7 @@ public class UserData {
             this.actLevel = actLevel;
             this.achievementsCompletedAtActualLevel = achievementsCompleted;
         }
+        this.isPremium = isPremium;
         this.uuid = uuid;
     }
 
@@ -54,7 +55,7 @@ public class UserData {
         UUID name = player.getUniqueId();
 
         for (String achievement : levelAchievements) {
-            if(advancedAchievementsAPI.get().hasPlayerReceivedAchievement(name, achievement)) {
+            if(BattlePass.getAdvancedAchievementsAPI().get().hasPlayerReceivedAchievement(name, achievement)) {
                 returnVal.add(achievement);
             }
         }
@@ -111,10 +112,10 @@ public class UserData {
 
             if(!rs.next()) {
                 PermissionsEx.getUser(player).addGroup(Level.getLevel(1).getRank());
-                actUserData = new UserData(completedAtLevel(Level.getLevel(1), player), Level.getLevel(1), player.getName().toLowerCase());
+                actUserData = new UserData(completedAtLevel(Level.getLevel(1), player), Level.getLevel(1), player.getName().toLowerCase(), false);
             }
             else {
-                actUserData = new UserData(achievementListFromString(rs.getString(3)), Level.getLevel(rs.getInt(2)), rs.getString(1));
+                actUserData = new UserData(achievementListFromString(rs.getString(4)), Level.getLevel(rs.getInt(2)), rs.getString(3), rs.getBoolean(5));
             }
 
             userDataList.add(actUserData);
@@ -139,19 +140,22 @@ public class UserData {
                 return;
 
             if(!rs.next()) {
-                preparedStatement = db.prepareStatement("INSERT INTO users(uuid, level, achievements) VALUES(?, ?, ?)");
+                preparedStatement = db.prepareStatement("INSERT INTO users(uuid, level, achievements, premium) VALUES(?, ?, ?, ?)");
                 preparedStatement.setString(1, actUserData.uuid);
                 preparedStatement.setInt(2, actUserData.actLevel.getId());
                 preparedStatement.setString(3, achievementListToString(actUserData.achievementsCompletedAtActualLevel));
+                preparedStatement.setBoolean(4, actUserData.isPremium);
 
                 preparedStatement.executeUpdate();
             }
             else {
-                preparedStatement = db.prepareStatement("UPDATE users SET level = ?, achievements = ? WHERE uuid=?");
+                preparedStatement = db.prepareStatement("UPDATE users SET level = ?, achievements = ?, premium = ? WHERE uuid=?");
 
                 preparedStatement.setInt(1, actUserData.actLevel.getId());
                 preparedStatement.setString(2, achievementListToString(actUserData.achievementsCompletedAtActualLevel));
-                preparedStatement.setString(3, actUserData.uuid);
+                preparedStatement.setBoolean(3, actUserData.isPremium);
+
+                preparedStatement.setString(4, actUserData.uuid);
 
                 preparedStatement.executeUpdate();            }
 
@@ -159,6 +163,16 @@ public class UserData {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<String> getAchievements() {
+        List<String> ach = new ArrayList<>();
+        ach.addAll(achievementsCompletedAtActualLevel);
+        return ach;
+    }
+
+    public boolean isPremium() {
+        return isPremium;
     }
 
     /**
