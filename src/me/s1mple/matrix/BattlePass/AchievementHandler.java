@@ -85,6 +85,6 @@ public class AchievementHandler {
             PermissionsEx.getUser(p).addGroup(nextLevel.getRank());
         }
 
-        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), d.getLevel().getCommand().replace("%user%", p.getName()));
+        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), (d.isPremium()) ?d.getLevel().getPremiumCommand().replace("%user%", p.getName()) : d.getLevel().getCommand().replace("%user%", p.getName()));
     }
 }

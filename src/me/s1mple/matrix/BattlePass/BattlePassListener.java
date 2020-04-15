@@ -26,11 +26,6 @@ public class BattlePassListener implements Listener {
     }
 
     @EventHandler
-    public void onLogin(PlayerQuitEvent event) {
-        UserData.SaveUser(event.getPlayer());
-    }
-
-    @EventHandler
     public void onPrize(PlayerAdvancedAchievementEvent event) {
         BattlePass.getAchievementHandler().HandleAchievement(event.getName(), event.getPlayer());
     }

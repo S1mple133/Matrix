@@ -7,14 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="me.s1mple133.matrixbending" />
-        <module name="me.s1mple133.matrixbending (1)" />
-        <module name="me.s1mple133.matrixbending (2)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="me.s1mple133.matrixbending" target="8" />
-      <module name="me.s1mple133.matrixbending (1)" target="8" />
-      <module name="me.s1mple133.matrixbending (2)" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

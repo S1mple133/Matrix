@@ -2,9 +2,12 @@ package me.s1mple.matrix;
 
 import com.projectkorra.projectkorra.ability.CoreAbility;
 import me.s1mple.matrix.BattlePass.BattlePass;
+import me.s1mple.matrix.BattlePass.Data.UserData;
+import me.s1mple.matrix.BattlePass.command.Battlepass;
 import me.s1mple.matrix.Util.DBManager;
 import me.s1mple.matrix.listener.AbilityListener;
 import me.s1mple.matrix.slide.Slide;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -36,6 +39,8 @@ public class Matrix extends JavaPlugin {
         CoreAbility.registerPluginAbilities(plugin, "me.s1mple.matrix.Abilities.MatrixBending");
 
         BattlePass.LoadBattlePass(this);
+        plugin.getCommand("battlepass").setExecutor(new Battlepass());
+
         plugin.getServer().getPluginManager().registerEvents(new Slide(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new AbilityListener(Matrix.plugin), Matrix.plugin);
     }
@@ -50,7 +55,8 @@ public class Matrix extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         String helpMessage = ChatColor.AQUA + "/matrix vpn add: " + ChatColor.BLUE + "Creates vpn key\n";
-        String staffHelpMessage = ChatColor.AQUA + "/matrix vpn getip <name>: " + ChatColor.BLUE + "Returns the real ip of the player.";
+        String staffHelpMessage = ChatColor.AQUA + "/matrix vpn getip <name>: " + ChatColor.BLUE + "Returns the real ip of the player.\n" +
+                ChatColor.AQUA + "/matrix premium <name>: " + ChatColor.BLUE + "Makes player's battlepass premium.";
         // VPN perm: matrix.vpn
         // Staff perm: matrix.staff
 
@@ -88,6 +94,16 @@ public class Matrix extends JavaPlugin {
                             sender.sendMessage(addVpnKeyForPlayer(plugin.getServer().getPlayer(args[2])));
                             return true;
                         }
+                    }
+                }
+                else if(args[0].equalsIgnoreCase("premium") && args.length == 2 && sender.hasPermission("matrix.premium")) {
+                    if(Bukkit.getServer().getPlayer(args[1]) != null) {
+                        UserData.GetUserData(args[1]).makePremium();
+                        sender.sendMessage(ChatColor.GREEN + "Made " + args[1] + "'s battlepass premium.");
+                    }
+                    else {
+                        sender.sendMessage(ChatColor.RED + "Player doesnt exist!");
+                        return false;
                     }
                 }
             }

@@ -37,6 +37,16 @@ public class UserData {
         this.uuid = uuid;
     }
 
+    public static UserData GetUserData(String arg) {
+        for(UserData actUserData : userDataList) {
+            if(actUserData.uuid.equalsIgnoreCase(arg)) {
+                return actUserData;
+            }
+        }
+
+        return null;
+    }
+
     public Level getLevel() {
         return actLevel;
     }
@@ -129,12 +139,14 @@ public class UserData {
      * @param player
      */
     public static void SaveUser(Player player) {
+            SaveUser(GetUserData(player));
+    }
+
+    public static void SaveUser(UserData actUserData) {
         try {
             Connection db = Matrix.getPlugin().getDbManager().getDatabase();
-            PreparedStatement preparedStatement = db.prepareStatement("SELECT * from users WHERE UUID='"+player.getName().toLowerCase() + "'");
+            PreparedStatement preparedStatement = db.prepareStatement("SELECT * from users WHERE UUID='"+actUserData.uuid.toLowerCase() + "'");
             ResultSet rs = preparedStatement.executeQuery();
-
-            UserData actUserData = GetUserData(player);
 
             if(actUserData == null)
                 return;
@@ -197,6 +209,7 @@ public class UserData {
     public boolean addAchievement(String achievementName) {
         if(actLevel.getAchievements().contains(achievementName)) {
             achievementsCompletedAtActualLevel.add(achievementName);
+            SaveUser(this);
             return true;
         }
         return false;
@@ -210,5 +223,12 @@ public class UserData {
         else {
             achievementsCompletedAtActualLevel.add("full");
         }
+
+        SaveUser(this);
+    }
+
+    public void makePremium() {
+        this.isPremium = true;
+        SaveUser(this);
     }
 }

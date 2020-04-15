@@ -30,24 +30,24 @@ public class GUIUtil {
         if(1 + ((page-1)*8) > Level.getLevelCount() || page <= 0) {
             return null;
         }
-        Inventory inv = Bukkit.createInventory(null, 54, "Battlepass " +page);
+        Inventory inv = Bukkit.createInventory(null, 54, "Battlepass " + page + " Lvl " + data.getLevel().getId());
         List<String> lore = new ArrayList<String>();
         lore.add(data.getLevel().getDescription());
         List<String> achievements = data.getLevel().getAchievements();
 
-        inv.addItem(getItem(Material.EXPERIENCE_BOTTLE, "Level " + data.getLevel().getId(), lore, data.getLevel().getId()));
+        inv.addItem(getItem(Material.EXPERIENCE_BOTTLE, "Missions", lore, data.getLevel().getId()));
 
         // Add stats
         int cnt = 0;
         for(String achievement : data.getAchievements()) {
             achievements.remove(achievement);
-            inv.setItem(2+(cnt++), getItem(Material.YELLOW_STAINED_GLASS_PANE,
+            inv.setItem(2+(cnt++), getItem(Material.ENCHANTED_BOOK,
                     BattlePass.getAdvancedAchievementsAPI().get().getDisplayNameForName(achievement),
                     new ArrayList<String>(), 1));
         }
 
         for(String achievement : achievements) {
-            inv.setItem(2+(cnt++), getItem(Material.BLACK_STAINED_GLASS_PANE,
+            inv.setItem(2+(cnt++), getItem(Material.BOOK,
                     BattlePass.getAdvancedAchievementsAPI().get().getDisplayNameForName(achievement),
                     new ArrayList<String>(), 1));
         }
