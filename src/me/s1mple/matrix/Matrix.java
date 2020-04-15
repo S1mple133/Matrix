@@ -1,5 +1,6 @@
 package me.s1mple.matrix;
 
+import Utils.Glow;
 import com.projectkorra.projectkorra.ability.CoreAbility;
 import me.s1mple.matrix.BattlePass.BattlePass;
 import me.s1mple.matrix.BattlePass.Data.UserData;
@@ -9,12 +10,15 @@ import me.s1mple.matrix.listener.AbilityListener;
 import me.s1mple.matrix.slide.Slide;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.UUID;
 
 
@@ -34,6 +38,8 @@ public class Matrix extends JavaPlugin {
         this.abilityManager = new AbilityManager(this);
         this.dbManager = new DBManager("jdbc:mysql://localhost:6915/battlepass?useSSL=false", "root", "MatrixNtw1226!");
 
+        registerGlow();
+
         CoreAbility.registerPluginAbilities(plugin, "me.s1mple.matrix.Abilities");
         CoreAbility.registerPluginAbilities(plugin, "me.s1mple.matrix.Abilities.Passive");
         CoreAbility.registerPluginAbilities(plugin, "me.s1mple.matrix.Abilities.MatrixBending");
@@ -50,6 +56,26 @@ public class Matrix extends JavaPlugin {
     public void onDisable() {
         getLogger().info("me.s1mple.matrix.Matrix plugin is stopping...");
         this.plugin.saveConfig();
+    }
+
+    public void registerGlow() {
+        try {
+            Field f = Enchantment.class.getDeclaredField("acceptingNew");
+            f.setAccessible(true);
+            f.set(null, true);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            Glow glow = new Glow(new NamespacedKey( Matrix.plugin, "glow_ench"));
+            Enchantment.registerEnchantment(glow);
+        }
+        catch (IllegalArgumentException e){
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -38,11 +38,11 @@ public class Level {
         this.premiumCommand = premiumCommand;
         this.menuItemPremium = GUIUtil.getItem(Material.valueOf(menuItemPremium),
                 ChatColor.translateAlternateColorCodes('&', menuNamePremium),
-                Arrays.asList(ChatColor.translateAlternateColorCodes('&', menuLorePremium)),
+                Arrays.asList(ChatColor.translateAlternateColorCodes('&', menuLorePremium).split("\n")),
                 1);
         this.menuItem = GUIUtil.getItem(Material.valueOf(menuItem),
                 ChatColor.translateAlternateColorCodes('&', menuName),
-                Arrays.asList(ChatColor.translateAlternateColorCodes('&', menuLore)),
+                Arrays.asList(ChatColor.translateAlternateColorCodes('&', menuLore).split("\n")),
                 1);
     }
 

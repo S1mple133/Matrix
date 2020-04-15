@@ -11,12 +11,11 @@ import java.util.Optional;
 public class BattlePass {
     private static Matrix plugin;
     private static AchievementHandler achievementHandler;
-    private static Optional<AdvancedAchievementsAPI> advancedAchievementsAPI;
+    private static Optional<AdvancedAchievementsAPI> advancedAchievementsAPI= AdvancedAchievementsAPIFetcher.fetchInstance();
 
 
     public static void LoadBattlePass(Matrix matrixPlugin) {
         plugin = matrixPlugin;
-        advancedAchievementsAPI = AdvancedAchievementsAPIFetcher.fetchInstance();
         plugin.getServer().getPluginManager().registerEvents(new BattlePassListener(plugin), Matrix.plugin);
         achievementHandler = new AchievementHandler(plugin);
     }
