@@ -50,7 +50,7 @@ public class Matrix extends JavaPlugin {
         BattlePass.LoadBattlePass(this);
         plugin.getCommand("battlepass").setExecutor(new Battlepass());
 
-        plugin.getServer().getPluginManager().registerEvents(new Slide(), Matrix.plugin);
+        //plugin.getServer().getPluginManager().registerEvents(new Slide(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new AbilityListener(Matrix.plugin), Matrix.plugin);
     }
 
