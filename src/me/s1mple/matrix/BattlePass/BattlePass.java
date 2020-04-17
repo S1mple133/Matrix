@@ -14,10 +14,12 @@ public class BattlePass {
     private static Optional<AdvancedAchievementsAPI> advancedAchievementsAPI= AdvancedAchievementsAPIFetcher.fetchInstance();
 
 
-    public static void LoadBattlePass(Matrix matrixPlugin) {
+    public static void init(Matrix matrixPlugin) {
         plugin = matrixPlugin;
         plugin.getServer().getPluginManager().registerEvents(new BattlePassListener(plugin), Matrix.plugin);
         achievementHandler = new AchievementHandler(plugin);
+
+        plugin.getCommand("battlepass").setExecutor(new Battlepass());
     }
 
 

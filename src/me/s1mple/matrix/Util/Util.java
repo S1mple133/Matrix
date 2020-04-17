@@ -15,6 +15,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
+
 
 public class Util {
 
@@ -167,5 +169,15 @@ public class Util {
 
     public static String color(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
+    }
+
+    public static File getSchematicFile(String schemFileName) {
+        File schem = (new File("." + File.separator + Matrix.getPlugin().getWorldEditPlugin().getDataFolder(), "schematics/" + File.separator + schemFileName + ".schem"));
+        if(!schem.exists())
+            schem =  (new File("." + File.separator +Matrix.getPlugin().getWorldEditPlugin().getDataFolder(), "schematics/" + File.separator + schemFileName + ".schematic"));
+        if(!schem.exists())
+            schem =  (new File("." + File.separator +Matrix.getPlugin().getWorldEditPlugin().getDataFolder(), "schematics/" + File.separator + schemFileName ));
+
+        return schem;
     }
 }

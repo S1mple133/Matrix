@@ -47,7 +47,7 @@ public class AchievementHandler {
     }
 
     /**
-     * Loads Levels
+     * Loads Levels into memory
      */
     private void LoadLevels() {
         File customConfigFile = new File(plugin.getDataFolder(), "battlepass.yml");

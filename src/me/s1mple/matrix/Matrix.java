@@ -2,6 +2,9 @@ package me.s1mple.matrix;
 
 import Utils.Glow;
 import com.projectkorra.projectkorra.ability.CoreAbility;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import me.s1mple.matrix.Abilities.MatrixElement;
+import me.s1mple.matrix.ArenaManager.ArenaManager;
 import me.s1mple.matrix.BattlePass.BattlePass;
 import me.s1mple.matrix.BattlePass.Data.UserData;
 import me.s1mple.matrix.BattlePass.command.Battlepass;
@@ -11,6 +14,7 @@ import me.s1mple.matrix.slide.Slide;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -31,27 +35,22 @@ public class Matrix extends JavaPlugin {
     public static String author = "S1mple";
     private DBManager dbManager;
     private SkinsRestorer skinApi;
+    private WorldEditPlugin worldEditPlugin;
 
     @Override
     public void onEnable() {
-        getLogger().info("me.s1mple.matrix.Matrix is initializing...");
         this.plugin = this;
         this.configManager = new ConfigManager(this);
         this.abilityManager = new AbilityManager(this);
         this.dbManager = new DBManager("jdbc:mysql://localhost:6915/battlepass?useSSL=false", "root", "MatrixNtw1226!");
-        this.skinApi = ((SkinsRestorer)Matrix.getPlugin().getServer().getPluginManager().getPlugin("SkinsRestorer"));
-
+        this.skinApi = ((SkinsRestorer) plugin.getServer().getPluginManager().getPlugin("SkinsRestorer"));
+        this.worldEditPlugin = ((WorldEditPlugin) plugin.getServer().getPluginManager().getPlugin("WorldEdit"));
         registerGlow();
 
-        CoreAbility.registerPluginAbilities(plugin, "me.s1mple.matrix.Abilities");
-        CoreAbility.registerPluginAbilities(plugin, "me.s1mple.matrix.Abilities.Passive");
-        CoreAbility.registerPluginAbilities(plugin, "me.s1mple.matrix.Abilities.MatrixBending");
-
-        BattlePass.LoadBattlePass(this);
-        plugin.getCommand("battlepass").setExecutor(new Battlepass());
-
         //plugin.getServer().getPluginManager().registerEvents(new Slide(), Matrix.plugin);
-        plugin.getServer().getPluginManager().registerEvents(new AbilityListener(Matrix.plugin), Matrix.plugin);
+        MatrixElement.init(this);
+        ArenaManager.init(this);
+        BattlePass.init(this);
     }
 
 
@@ -170,6 +169,10 @@ public class Matrix extends JavaPlugin {
 
     public SkinsRestorer getSkinsApi() {
         return skinApi;
+    }
+
+    public WorldEditPlugin getWorldEditPlugin() {
+        return worldEditPlugin;
     }
 }
 

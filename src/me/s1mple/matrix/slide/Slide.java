@@ -13,7 +13,7 @@ public class Slide implements Listener {
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent event){
         if (event.getPlayer().isSprinting()&&event.isSneaking()){
-            event.getPlayer().setWalkSpeed(1);
+            event.getPlayer().setWalkSpeed(0.6f);
             BukkitTask run = new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -22,13 +22,13 @@ public class Slide implements Listener {
                             event.getPlayer().setWalkSpeed((float)(event.getPlayer().getWalkSpeed() - 0.2));
                         }
                         else {
-                            event.getPlayer().setWalkSpeed(0.1f);
+                            event.getPlayer().setWalkSpeed(0.2f);
                             Bukkit.getServer().getScheduler().cancelTask(this.getTaskId());
                         }
                     }
 
                     else {
-                        event.getPlayer().setWalkSpeed(0.1f);
+                        event.getPlayer().setWalkSpeed(0.2f);
                         Bukkit.getServer().getScheduler().cancelTask(this.getTaskId());
 
                     }
