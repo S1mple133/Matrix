@@ -25,6 +25,15 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="Maven: com.skins:skins:1.8.9">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/Utils/SkinsRestorer.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="Maven: com.pex:pex:LATEST">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/src/Utils/PermissionsEx-1.23.4.jar!/" />

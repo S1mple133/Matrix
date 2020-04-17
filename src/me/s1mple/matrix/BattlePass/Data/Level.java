@@ -11,16 +11,16 @@ import ru.tehkode.permissions.PermissionGroup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class Level {
     private static List<Level> levels = new ArrayList<Level>();
 
     private Level nextLevel;
-    private List<String> achievements;
+    private HashMap<String, String> achievements;
     private PermissionGroup rank;
     private String command;
-    private String description;
     private int id;
     private String premiumCommand;
     private ItemStack menuItem;
@@ -29,21 +29,28 @@ public class Level {
     public Level(List<String> achievements,
                  PermissionGroup rank, String command,String description, int id,
                  String premiumCommand, String menuItem, String menuItemPremium,
-                 String menuName, String menuNamePremium, String menuLore, String menuLorePremium) {
-        this.achievements = achievements;
+                 String menuName, String menuNamePremium, String menuLore, String menuLorePremium,
+                 List<String> descriptions) {
+        this.achievements = new HashMap<>();
+
+        for(int i = 0; i < achievements.size(); i++) {
+            this.achievements.put(achievements.get(i), descriptions.get(i));
+        }
+
         this.rank = rank;
         this.command = command;
-        this.description = description;
         this.id = id;
         this.premiumCommand = premiumCommand;
-        this.menuItemPremium = GUIUtil.getItem(Material.valueOf(menuItemPremium),
-                ChatColor.translateAlternateColorCodes('&', menuNamePremium),
-                Arrays.asList(ChatColor.translateAlternateColorCodes('&', menuLorePremium).split("\n")),
-                1);
-        this.menuItem = GUIUtil.getItem(Material.valueOf(menuItem),
-                ChatColor.translateAlternateColorCodes('&', menuName),
-                Arrays.asList(ChatColor.translateAlternateColorCodes('&', menuLore).split("\n")),
-                1);
+        if(menuName != null) {
+            this.menuItemPremium = GUIUtil.getItem(Material.valueOf(menuItemPremium),
+                    ChatColor.translateAlternateColorCodes('&', menuNamePremium),
+                    Arrays.asList(ChatColor.translateAlternateColorCodes('&', menuLorePremium).split("\n")),
+                    1);
+            this.menuItem = GUIUtil.getItem(Material.valueOf(menuItem),
+                    ChatColor.translateAlternateColorCodes('&', menuName),
+                    Arrays.asList(ChatColor.translateAlternateColorCodes('&', menuLore).split("\n")),
+                    1);
+        }
     }
 
     public static void SetNextLevels() {
@@ -54,15 +61,6 @@ public class Level {
 
     public static int getLevelCount() {
         return levels.size();
-    }
-
-
-    /**
-     * Returns the prize
-     * @return
-     */
-    public String getDescription() {
-        return description;
     }
 
     /**
@@ -81,10 +79,11 @@ public class Level {
      * - returns the achievements needed to be completed
      * @return
      */
-    public List<String> getAchievements() {
-        List<String> aach = new ArrayList<>();
-        aach.addAll(achievements);
-        return aach;
+    public HashMap<String, String> getAchievements() {
+        if(nextLevel == null)
+            return new HashMap<>();
+
+        return new HashMap<>(nextLevel.achievements);
     }
 
     /**

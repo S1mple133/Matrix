@@ -31,6 +31,8 @@ public class AchievementHandler {
      */
     public void HandleAchievement(String achievementName, Player player) {
         UserData playerData = UserData.GetUserData(player);
+        if(playerData == null)
+            return;
 
         if(playerData.addAchievement(achievementName)) {
             int cnt = playerData.getAchievementCount();
@@ -55,6 +57,7 @@ public class AchievementHandler {
         FileConfiguration config = YamlConfiguration.loadConfiguration(customConfigFile);
         int levels = config.getInt("BattlePass.Lvls");
 
+        Level.addLevel(new Level(new ArrayList<>(), null, null, null, 0, null, null, null, null, null, null, null, new ArrayList<String>()));
         for (int i = 1; i <= levels; i++) {
             String actSection = "Lvl." + i + ".";
 
@@ -68,7 +71,8 @@ public class AchievementHandler {
                     config.getString(actSection+"Menu.Name"),
                     config.getString(actSection+"Menu.NamePremium"),
                     config.getString(actSection+"Menu.Lore"),
-                    config.getString(actSection+"Menu.LorePremium")));
+                    config.getString(actSection+"Menu.LorePremium"),
+                    config.getStringList(actSection+"Descriptions")));
         }
 
         Level.SetNextLevels();
@@ -85,6 +89,7 @@ public class AchievementHandler {
             PermissionsEx.getUser(p).addGroup(nextLevel.getRank());
         }
 
-        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), (d.isPremium()) ?d.getLevel().getPremiumCommand().replace("%user%", p.getName()) : d.getLevel().getCommand().replace("%user%", p.getName()));
+        if(d.getLevel().getId() != 0)
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), (d.isPremium()) ?d.getLevel().getPremiumCommand().replace("%user%", p.getName()) : d.getLevel().getCommand().replace("%user%", p.getName()));
     }
 }

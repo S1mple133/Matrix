@@ -14,5 +14,7 @@ Lvl:
       LorePremium: "Get some OP Apples!"
     Achievements:
       - place_5_chest
+    Descriptions:
+      - "Place 5 chests."
     Rank: Lvl 1
     Description: Get five apples!

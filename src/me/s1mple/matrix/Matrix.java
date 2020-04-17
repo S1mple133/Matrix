@@ -16,6 +16,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import skinsrestorer.bukkit.SkinsRestorer;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -29,6 +30,7 @@ public class Matrix extends JavaPlugin {
     public static String version = "1.10";
     public static String author = "S1mple";
     private DBManager dbManager;
+    private SkinsRestorer skinApi;
 
     @Override
     public void onEnable() {
@@ -37,6 +39,7 @@ public class Matrix extends JavaPlugin {
         this.configManager = new ConfigManager(this);
         this.abilityManager = new AbilityManager(this);
         this.dbManager = new DBManager("jdbc:mysql://localhost:6915/battlepass?useSSL=false", "root", "MatrixNtw1226!");
+        this.skinApi = ((SkinsRestorer)Matrix.getPlugin().getServer().getPluginManager().getPlugin("SkinsRestorer"));
 
         registerGlow();
 
@@ -163,6 +166,10 @@ public class Matrix extends JavaPlugin {
 
     public DBManager getDbManager() {
         return dbManager;
+    }
+
+    public SkinsRestorer getSkinsApi() {
+        return skinApi;
     }
 }
 

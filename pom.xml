@@ -36,6 +36,14 @@
         </dependency>
 
         <dependency>
+            <groupId>com.skins</groupId>
+            <artifactId>skins</artifactId>
+            <version>1.8.9</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/Utils/SkinsRestorer.jar</systemPath>
+        </dependency>
+
+        <dependency>
             <groupId>com.pex</groupId>
             <artifactId>pex</artifactId>
             <version>LATEST</version>

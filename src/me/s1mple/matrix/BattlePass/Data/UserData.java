@@ -3,7 +3,9 @@ package me.s1mple.matrix.BattlePass.Data;
 import com.hm.achievement.api.AdvancedAchievementsAPI;
 import com.hm.achievement.api.AdvancedAchievementsAPIFetcher;
 import me.s1mple.matrix.BattlePass.BattlePass;
+import me.s1mple.matrix.BattlePass.GUIUtil;
 import me.s1mple.matrix.Matrix;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
@@ -11,10 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class UserData {
     private static List<UserData> userDataList = new ArrayList<UserData>();
@@ -23,8 +22,9 @@ public class UserData {
     private Level actLevel;
     private String uuid;
     private boolean isPremium;
+    private Player player;
 
-    public UserData(List<String> achievementsCompleted, Level actLevel, String uuid, boolean isPremium) {
+    public UserData(List<String> achievementsCompleted, Level actLevel, String uuid, boolean isPremium, Player player) {
         if(achievementsCompleted.contains("full") && actLevel.getNextLevel() != null) {
             achievementsCompletedAtActualLevel = completedAtLevel(actLevel.getNextLevel(), Matrix.getPlugin().getServer().getPlayer(uuid));
             this.actLevel = actLevel.getNextLevel();
@@ -35,6 +35,7 @@ public class UserData {
         }
         this.isPremium = isPremium;
         this.uuid = uuid;
+        this.player = player;
     }
 
     public static UserData GetUserData(String arg) {
@@ -60,7 +61,7 @@ public class UserData {
     }
 
     public static List<String> completedAtLevel(Level level, Player player) {
-        List<String> levelAchievements = level.getAchievements();
+        Set<String> levelAchievements = level.getAchievements().keySet();
         List<String> returnVal = new ArrayList<>();
         UUID name = player.getUniqueId();
 
@@ -73,7 +74,7 @@ public class UserData {
         return  returnVal;
     }
 
-    public static List<String> achievementListFromString(String data) {
+    public static List<String> achievementListFromString(String data, Level level) {
         List<String> returnVal = new ArrayList<>();
 
         if(data == "none")
@@ -82,7 +83,8 @@ public class UserData {
         String[] split = data.split(",");
 
         for (String actData : split) {
-            returnVal.add(actData);
+            if(level.getAchievements().keySet().contains(actData))
+                returnVal.add(actData);
         }
 
         return returnVal;
@@ -121,11 +123,11 @@ public class UserData {
             UserData actUserData;
 
             if(!rs.next()) {
-                PermissionsEx.getUser(player).addGroup(Level.getLevel(1).getRank());
-                actUserData = new UserData(completedAtLevel(Level.getLevel(1), player), Level.getLevel(1), player.getName().toLowerCase(), false);
+                actUserData = new UserData(completedAtLevel(Level.getLevel(0), player), Level.getLevel(0), player.getName().toLowerCase(), false, player);
             }
             else {
-                actUserData = new UserData(achievementListFromString(rs.getString(4)), Level.getLevel(rs.getInt(2)), rs.getString(3), rs.getBoolean(5));
+                Level actLevel = Level.getLevel(rs.getInt(2));
+                actUserData = new UserData(achievementListFromString(rs.getString(4), actLevel), actLevel, rs.getString(3), rs.getBoolean(5), player);
             }
 
             userDataList.add(actUserData);
@@ -169,7 +171,8 @@ public class UserData {
 
                 preparedStatement.setString(4, actUserData.uuid);
 
-                preparedStatement.executeUpdate();            }
+                preparedStatement.executeUpdate();
+            }
 
             userDataList.add(actUserData);
         } catch (SQLException e) {
@@ -207,7 +210,7 @@ public class UserData {
      * @return True if the achievement has been added
      */
     public boolean addAchievement(String achievementName) {
-        if(actLevel.getAchievements().contains(achievementName)) {
+        if(actLevel.getAchievements().keySet().contains(achievementName)) {
             achievementsCompletedAtActualLevel.add(achievementName);
             SaveUser(this);
             return true;
@@ -225,10 +228,16 @@ public class UserData {
         }
 
         SaveUser(this);
+
+        player.openInventory(GUIUtil.getRewardGui(player));
     }
 
     public void makePremium() {
         this.isPremium = true;
         SaveUser(this);
+    }
+
+    public OfflinePlayer getPlayer() {
+        return this.player;
     }
 }

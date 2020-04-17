@@ -164,4 +164,8 @@ public class Util {
      * @return me.s1mple.matrix.AbilityManager
      */
     static public AbilityManager getAbilityManager() { return Matrix.abilityManager;}
+
+    public static String color(String s) {
+        return ChatColor.translateAlternateColorCodes('&', s);
+    }
 }
