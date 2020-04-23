@@ -9,6 +9,7 @@ import me.s1mple.matrix.BattlePass.BattlePass;
 import me.s1mple.matrix.BattlePass.Data.UserData;
 import me.s1mple.matrix.BattlePass.command.Battlepass;
 import me.s1mple.matrix.Util.DBManager;
+import me.s1mple.matrix.Util.Util;
 import me.s1mple.matrix.listener.AbilityListener;
 import me.s1mple.matrix.listener.PermsListener;
 import me.s1mple.matrix.slide.Slide;
@@ -106,6 +107,19 @@ public class Matrix extends JavaPlugin {
                         sender.sendMessage(staffHelpMessage);
                     }
                     return true;
+                }
+                else if (args[0].equalsIgnoreCase("commandspy") || (args[0].equalsIgnoreCase("cmdspy"))) {
+                    if(sender.hasPermission("matrix.commandspy") && sender instanceof Player) {
+                        if(PermsListener.playerList.contains(sender)) {
+                            PermsListener.playerList.remove(sender);
+                            sender.sendMessage(Util.color("&4Matrix Network &7>> &cCommand spy &4disabled&c!"));
+                        }
+                        else {
+                            PermsListener.playerList.add((Player) sender);
+                            sender.sendMessage(Util.color("&4Matrix Network &7>> &cCommand spy &4enabled&c!"));
+                        }
+                        return true;
+                    }
                 }
                 else if (args[0].equalsIgnoreCase("vpn")) {
                     if(args.length == 3) {
