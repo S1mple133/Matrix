@@ -4,8 +4,10 @@ import com.hm.achievement.api.AdvancedAchievementsAPI;
 import com.hm.achievement.category.Category;
 import com.hm.achievement.db.data.DBAchievement;
 import me.s1mple.matrix.BattlePass.GUIUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import ru.tehkode.permissions.PermissionGroup;
 
@@ -19,6 +21,7 @@ public class Level {
 
     private Level nextLevel;
     private HashMap<String, String> achievements;
+    private List<String> achievementTypes;
     private PermissionGroup rank;
     private String command;
     private int id;
@@ -32,9 +35,12 @@ public class Level {
                  String menuName, String menuNamePremium, String menuLore, String menuLorePremium,
                  List<String> descriptions) {
         this.achievements = new HashMap<>();
+        this.achievementTypes = new ArrayList<>();
 
         for(int i = 0; i < achievements.size(); i++) {
-            this.achievements.put(achievements.get(i), descriptions.get(i));
+            String[] achievementData = achievements.get(i).split(";");
+            this.achievements.put(achievementData[0], descriptions.get(i));
+            this.achievementTypes.add(achievementData[1]);
         }
 
         this.rank = rank;
@@ -130,5 +136,18 @@ public class Level {
 
     public ItemStack getMenuItemPremium() {
         return menuItemPremium;
+    }
+
+    public void resetAchievementsForPlayer(Player p) {
+        if(nextLevel == null)
+            return;
+
+        for(String toReset : nextLevel.achievementTypes) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "aach reset " + toReset + " " + p.getName());
+        }
+
+        for(String toReset : nextLevel.achievements.keySet()) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "aach delete " + toReset + " " + p.getName());
+        }
     }
 }

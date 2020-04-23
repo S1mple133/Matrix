@@ -29,10 +29,10 @@ public class AchievementHandler {
     /**
      * Handles an Achievement
      */
-    public void HandleAchievement(String achievementName, Player player) {
+    public boolean HandleAchievement(String achievementName, Player player) {
         UserData playerData = UserData.GetUserData(player);
         if(playerData == null)
-            return;
+            return false;
 
         if(playerData.addAchievement(achievementName)) {
             int cnt = playerData.getAchievementCount();
@@ -43,7 +43,11 @@ public class AchievementHandler {
                 playerData.rankUp();
                 player.sendMessage(ChatColor. GREEN + "Congrats! You've completed your battlepass level.");
             }
+
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -86,8 +90,11 @@ public class AchievementHandler {
         Level nextLevel = d.getLevel().getNextLevel();
 
         if(nextLevel != null) {
+            PermissionsEx.getUser(p).removeGroup(d.getLevel().getRank());
             PermissionsEx.getUser(p).addGroup(nextLevel.getRank());
         }
+
+        nextLevel.resetAchievementsForPlayer(p);
 
         if(d.getLevel().getId() != 0)
             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), (d.isPremium()) ?d.getLevel().getPremiumCommand().replace("%user%", p.getName()) : d.getLevel().getCommand().replace("%user%", p.getName()));

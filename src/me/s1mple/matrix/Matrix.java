@@ -10,6 +10,7 @@ import me.s1mple.matrix.BattlePass.Data.UserData;
 import me.s1mple.matrix.BattlePass.command.Battlepass;
 import me.s1mple.matrix.Util.DBManager;
 import me.s1mple.matrix.listener.AbilityListener;
+import me.s1mple.matrix.listener.PermsListener;
 import me.s1mple.matrix.slide.Slide;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -48,9 +49,11 @@ public class Matrix extends JavaPlugin {
         registerGlow();
 
         //plugin.getServer().getPluginManager().registerEvents(new Slide(), Matrix.plugin);
-        MatrixElement.init(this);
+        //MatrixElement.init(this);
         ArenaManager.init(this);
         BattlePass.init(this);
+        plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
+
     }
 
 

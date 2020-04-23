@@ -4,6 +4,7 @@ import com.hm.achievement.utils.PlayerAdvancedAchievementEvent;
 import fr.xephi.authme.events.LoginEvent;
 import me.s1mple.matrix.BattlePass.Data.UserData;
 import me.s1mple.matrix.Matrix;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,7 +29,9 @@ public class BattlePassListener implements Listener {
 
     @EventHandler
     public void onPrize(PlayerAdvancedAchievementEvent event) {
-        BattlePass.getAchievementHandler().HandleAchievement(event.getName(), event.getPlayer());
+        if(!BattlePass.getAchievementHandler().HandleAchievement(event.getName(), event.getPlayer())) {
+            event.setCancelled(true);
+        };
     }
 
     @EventHandler

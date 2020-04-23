@@ -111,7 +111,7 @@ public class Arena {
      * Reset the arena
      */
     public void reset() {
-        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "/world " + pastePosition.getWorld().getName());
+        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "/world " + pastePosition.getWorld().getName().toLowerCase());
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "/schem load " + schem.getName());
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "/paste -o");
     }
