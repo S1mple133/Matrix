@@ -12,6 +12,7 @@ import me.s1mple.matrix.Util.DBManager;
 import me.s1mple.matrix.Util.Util;
 import me.s1mple.matrix.listener.AbilityListener;
 import me.s1mple.matrix.listener.PermsListener;
+import me.s1mple.matrix.listener.SkillsListener;
 import me.s1mple.matrix.slide.Slide;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,8 +23,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.skills.api.SkillsAPI;
+import org.skills.main.SkillsPro;
+import com.clanjhoo.vampire.VampireRevamp;
 import skinsrestorer.bukkit.SkinsRestorer;
-
+import me.s1mple.matrix.Skills.Abilities.Human;
+import me.s1mple.matrix.Skills.Hunter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.UUID;
@@ -38,6 +43,8 @@ public class Matrix extends JavaPlugin {
     private DBManager dbManager;
     private SkinsRestorer skinApi;
     private WorldEditPlugin worldEditPlugin;
+    private SkillsPro skillsapi;
+    private VampireRevamp revamp;
 
     @Override
     public void onEnable() {
@@ -47,12 +54,15 @@ public class Matrix extends JavaPlugin {
         this.dbManager = new DBManager("jdbc:mysql://localhost:6915/battlepass?useSSL=false", "root", "MatrixNtw1226!");
         this.skinApi = ((SkinsRestorer) plugin.getServer().getPluginManager().getPlugin("SkinsRestorer"));
         this.worldEditPlugin = ((WorldEditPlugin) plugin.getServer().getPluginManager().getPlugin("WorldEdit"));
+        this.skillsapi = ((SkillsPro) plugin.getServer().getPluginManager().getPlugin("SkillsPro"));
+        this.revamp = ((VampireRevamp) plugin.getServer().getPluginManager().getPlugin("VampireRevamp"));
         registerGlow();
 
         //plugin.getServer().getPluginManager().registerEvents(new Slide(), Matrix.plugin);
         //MatrixElement.init(this);
         ArenaManager.init(this);
         BattlePass.init(this);
+        plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
 
     }
@@ -183,7 +193,12 @@ public class Matrix extends JavaPlugin {
     public DBManager getDbManager() {
         return dbManager;
     }
-
+    public VampireRevamp getRevamp() {
+    	return revamp;
+    }
+    public SkillsPro getSkillsApi() {
+    	return skillsapi;
+    }
     public SkinsRestorer getSkinsApi() {
         return skinApi;
     }

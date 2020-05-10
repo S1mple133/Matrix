@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>MatrixBending</groupId>
-  <artifactId>me.s1mple133.matrixbending</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <artifactId>MatrixPlugin</artifactId>
+  <version>1.1.1</version>
   <build>
     <sourceDirectory>${project.basedir}/src/</sourceDirectory>
     <defaultGoal>clean package install</defaultGoal>
@@ -95,49 +95,77 @@
       <artifactId>projectkorra</artifactId>
       <version>1.8.9</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/PK.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/PK.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.Essentials</groupId>
+      <artifactId>essentials</artifactId>
+      <version>1.8.9</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/Essentials.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.skills</groupId>
+      <artifactId>skills</artifactId>
+      <version>1.8.9</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/SkillsPro.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.skins</groupId>
       <artifactId>skins</artifactId>
       <version>1.8.9</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/SkinsRestorer.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/SkinsRestorer.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.werewolf</groupId>
+      <artifactId>swerewolf</artifactId>
+      <version>1.8.7</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/Werewolf.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.vampirerevamp</groupId>
+      <artifactId>vampirerevamp</artifactId>
+      <version>1.0.3</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/VampireRevamp.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.pex</groupId>
       <artifactId>pex</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/PermissionsEx-1.23.4.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/PermissionsEx-1.23.4.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.authme</groupId>
       <artifactId>authme</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/AuthMe.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/AuthMe.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.worldedit</groupId>
       <artifactId>worldedit</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/worldedit-bukkit-7.1.0.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/worldedit-bukkit-7.1.0.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.awe</groupId>
       <artifactId>awe</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/AsyncWorldEdit-3.6.19.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/AsyncWorldEdit-3.6.19.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.achievements</groupId>
       <artifactId>achievements</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>D:\Kali\Java\Snapchat\MatrixBending/src/Utils/AdvancedAchievements.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/AdvancedAchievements.jar</systemPath>
     </dependency>
   </dependencies>
 </project>

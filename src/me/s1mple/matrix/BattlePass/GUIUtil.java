@@ -41,7 +41,7 @@ public class GUIUtil {
         HashMap<String, String> achievementsAndDesc = data.getLevel().getAchievements();
         Set<String> achievements = achievementsAndDesc.keySet();
 
-        String skinName = Matrix.getPlugin().getSkinsApi().getSkinStorage().getPlayerSkin(data.getUUID());
+        String skinName = "CrashCringle12";
         skinName = skinName == null ? data.getPlayer().getName() : skinName;
         inv.addItem(generateSkullItem(skinName, data));
 
