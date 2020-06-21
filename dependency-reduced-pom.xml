@@ -95,77 +95,84 @@
       <artifactId>projectkorra</artifactId>
       <version>1.8.9</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/PK.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/PK.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.Essentials</groupId>
       <artifactId>essentials</artifactId>
       <version>1.8.9</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/Essentials.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/Essentials.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.skills</groupId>
       <artifactId>skills</artifactId>
       <version>1.8.9</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/SkillsPro.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/SkillsPro.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.factions</groupId>
+      <artifactId>factions</artifactId>
+      <version>1.8.9</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/Factions.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.skins</groupId>
       <artifactId>skins</artifactId>
       <version>1.8.9</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/SkinsRestorer.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/SkinsRestorer.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.werewolf</groupId>
       <artifactId>swerewolf</artifactId>
       <version>1.8.7</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/Werewolf.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/Werewolf.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.vampirerevamp</groupId>
       <artifactId>vampirerevamp</artifactId>
       <version>1.0.3</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/VampireRevamp.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/VampireRevamp.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.pex</groupId>
       <artifactId>pex</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/PermissionsEx-1.23.4.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/PermissionsEx-1.23.4.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.authme</groupId>
       <artifactId>authme</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/AuthMe.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/AuthMe.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.worldedit</groupId>
       <artifactId>worldedit</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/worldedit-bukkit-7.1.0.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/worldedit-bukkit-7.1.0.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.awe</groupId>
       <artifactId>awe</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/AsyncWorldEdit-3.6.19.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/AsyncWorldEdit-3.6.19.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.achievements</groupId>
       <artifactId>achievements</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Matrix-master\Matrix/src/Utils/AdvancedAchievements.jar</systemPath>
+      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/AdvancedAchievements.jar</systemPath>
     </dependency>
   </dependencies>
 </project>

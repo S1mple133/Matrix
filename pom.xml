@@ -50,7 +50,13 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/Utils/SkillsPro.jar</systemPath>
         </dependency>
-		
+		<dependency>
+            <groupId>com.factions</groupId>
+            <artifactId>factions</artifactId>
+            <version>1.8.9</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/Utils/Factions.jar</systemPath>
+		</dependency>
         <dependency>
             <groupId>com.skins</groupId>
             <artifactId>skins</artifactId>

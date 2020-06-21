@@ -27,8 +27,7 @@ import org.skills.api.SkillsAPI;
 import org.skills.main.SkillsPro;
 import com.clanjhoo.vampire.VampireRevamp;
 import skinsrestorer.bukkit.SkinsRestorer;
-import me.s1mple.matrix.Skills.Abilities.Human;
-import me.s1mple.matrix.Skills.Hunter;
+import me.s1mple.matrix.Skills.ExtraSkills;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.UUID;
@@ -48,6 +47,7 @@ public class Matrix extends JavaPlugin {
 
     @Override
     public void onEnable() {
+    	
         this.plugin = this;
         this.configManager = new ConfigManager(this);
         this.abilityManager = new AbilityManager(this);
@@ -57,11 +57,13 @@ public class Matrix extends JavaPlugin {
         this.skillsapi = ((SkillsPro) plugin.getServer().getPluginManager().getPlugin("SkillsPro"));
         this.revamp = ((VampireRevamp) plugin.getServer().getPluginManager().getPlugin("VampireRevamp"));
         registerGlow();
+        new ExtraSkills();
 
         //plugin.getServer().getPluginManager().registerEvents(new Slide(), Matrix.plugin);
         //MatrixElement.init(this);
         ArenaManager.init(this);
         BattlePass.init(this);
+        
         plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
 
