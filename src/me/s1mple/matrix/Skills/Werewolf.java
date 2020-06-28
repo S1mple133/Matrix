@@ -1,15 +1,15 @@
 package me.s1mple.matrix.Skills;
 
-
-import org.skills.types.Skill; 
+import org.skills.abilities.Ability;
+import org.skills.types.Skill;
 import org.skills.types.SkillManager;
 
 import me.s1mple.matrix.Skills.Abilities.VampireBatSwarm;
-import me.s1mple.matrix.Skills.Abilities.WerewolfPassive;
-public class ExtraSkills {
-    public ExtraSkills() {
-    	new VampireBatSwarm("Vampire", "BatSwarm", true);
-    	new WerewolfPassive();
+
+public class Werewolf {
+    public Werewolf() {
+    	//Ability batSwarm = new VampireBatSwarm("Vampire", "batSwarm", true);
+   
     	Skill skill = new Skill("Werewolf");
     	SkillManager.registerScalings(skill);
     	skill.register();

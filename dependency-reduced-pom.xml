@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>MatrixBending</groupId>
   <artifactId>MatrixPlugin</artifactId>
-  <version>1.1.1</version>
+  <version>1.2.2</version>
   <build>
     <sourceDirectory>${project.basedir}/src/</sourceDirectory>
     <defaultGoal>clean package install</defaultGoal>

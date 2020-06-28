@@ -1,6 +1,6 @@
 package me.s1mple.matrix;
 
-import Utils.Glow;
+import Utils.Glow; 
 import com.projectkorra.projectkorra.ability.CoreAbility;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import me.s1mple.matrix.Abilities.MatrixElement;
@@ -27,7 +27,8 @@ import org.skills.api.SkillsAPI;
 import org.skills.main.SkillsPro;
 import com.clanjhoo.vampire.VampireRevamp;
 import skinsrestorer.bukkit.SkinsRestorer;
-import me.s1mple.matrix.Skills.ExtraSkills;
+import me.s1mple.matrix.Skills.Werewolf;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.UUID;
@@ -57,7 +58,7 @@ public class Matrix extends JavaPlugin {
         this.skillsapi = ((SkillsPro) plugin.getServer().getPluginManager().getPlugin("SkillsPro"));
         this.revamp = ((VampireRevamp) plugin.getServer().getPluginManager().getPlugin("VampireRevamp"));
         registerGlow();
-        new ExtraSkills();
+        new Werewolf();
 
         //plugin.getServer().getPluginManager().registerEvents(new Slide(), Matrix.plugin);
         //MatrixElement.init(this);

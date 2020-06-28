@@ -19,15 +19,12 @@ public class VampireBatSwarm extends ActiveAbility {
 	public void useSkill(Player player) {
 		if (UPlayer.get(player) != null & UPlayer.get(player).isNosferatu()) {
 			player.performCommand("v batusi");
+			player.sendRawMessage("§cYou transform!");
 		}
 		else {
-			player.sendMessage("§cYou are not a Nosferatu Vampire!");
+			player.sendRawMessage("§cYou are not a Nosferatu Vampire!");
 		}
 	}
 	
 	
-	
-	
-	
-
 }
