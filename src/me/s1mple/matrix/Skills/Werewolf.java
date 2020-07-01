@@ -8,8 +8,7 @@ import me.s1mple.matrix.Skills.Abilities.VampireBatSwarm;
 
 public class Werewolf {
     public Werewolf() {
-    	//Ability batSwarm = new VampireBatSwarm("Vampire", "batSwarm", true);
-   
+    	new VampireBatSwarm("Werewolf", "batSwarm", true);
     	Skill skill = new Skill("Werewolf");
     	SkillManager.registerScalings(skill);
     	skill.register();
