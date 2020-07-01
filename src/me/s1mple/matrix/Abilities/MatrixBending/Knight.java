@@ -64,7 +64,7 @@ public class Knight extends CoreAbility implements AddonAbility {
         knight.damage(1.0D, target);
         knight.setHealth(knight.getHealth() + 1.0);
 
-        ParticleEffect.ANGRY_VILLAGER.display(target.getEyeLocation(), 7,(float)Math.random(), (float)Math.random(), (float)Math.random());
+        ParticleEffect.VILLAGER_ANGRY.display(target.getEyeLocation(), 7,(float)Math.random(), (float)Math.random(), (float)Math.random());
     }
     
     public void equipKnight(Player player, Skeleton knight) {
