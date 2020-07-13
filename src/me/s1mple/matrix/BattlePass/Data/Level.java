@@ -1,8 +1,7 @@
 package me.s1mple.matrix.BattlePass.Data;
 
-import com.hm.achievement.api.AdvancedAchievementsAPI;
+import com.hm.achievement.api.AdvancedAchievementsAPI; 
 import com.hm.achievement.category.Category;
-import com.hm.achievement.db.data.DBAchievement;
 import me.s1mple.matrix.BattlePass.GUIUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -1,8 +1,7 @@
 package me.s1mple.matrix.BattlePass;
 
 import Utils.Glow;
-import com.hm.achievement.AdvancedAchievements;
-import com.hm.achievement.db.AbstractDatabaseManager;
+import com.hm.achievement.api.AdvancedAchievementsAPI;
 import me.s1mple.matrix.BattlePass.Data.Level;
 import me.s1mple.matrix.BattlePass.Data.UserData;
 import me.s1mple.matrix.Matrix;
@@ -18,7 +17,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.h2.engine.User;
 import skinsrestorer.bukkit.SkinsRestorer;
 
 import javax.naming.Name;

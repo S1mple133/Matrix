@@ -2,11 +2,14 @@ package me.s1mple.matrix.Skills.Abilities;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.skills.abilities.AbilityManager;
 import org.skills.abilities.ActiveAbility;
+import org.skills.api.events.SkillActiveStateChangeEvent;
 import org.skills.data.managers.SkilledPlayer;
 
+import com.clanjhoo.vampire.VampireRevamp;
 import com.clanjhoo.vampire.entity.UPlayer;
 
 public class VampireBatSwarm extends ActiveAbility {
@@ -15,30 +18,35 @@ public class VampireBatSwarm extends ActiveAbility {
 	public VampireBatSwarm(String skill, String name, boolean activateOnReady) {
 		super(skill, name, activateOnReady);
 		AbilityManager.register(this);
-
 	}
-	
-	@Override
-	public void useSkill(Player player) {
+   @EventHandler
+	public void testingThing(SkillActiveStateChangeEvent event) {
+		Player player = event.getPlayer();
 		System.out.println("Testeroni");
-		if (UPlayer.get(player) != null & UPlayer.get(player).isNosferatu()) {
+		if (UPlayer.get(player) != null && UPlayer.get(player).isNosferatu()) {
 			player.performCommand("v batusi");
+			System.out.println("Success");
 			player.sendRawMessage("§cYou transform!");
 		}
 		else {
 			player.sendRawMessage("§cYou are not a Nosferatu Vampire!");
 		}
 	}
-    public void onSpawn(CreatureSpawnEvent event) {
-    	if (!(event.getEntityType() ==EntityType.WANDERING_TRADER)) {
-        if (event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.CUSTOM)) return;
-        if (!event.getLocation().getWorld().getName().equals(ConfigValues.adventurersGuildConfig.getString(AdventurersGuildConfig.GUILD_WORLD_NAME)))
-            return;
-
-        event.setCancelled(true);
-    	}
-
-    }
+	@Override
+	public void useSkill(Player player) {
+		System.out.println("Testeroni");
+		if (UPlayer.get(player) != null && UPlayer.get(player).isNosferatu()) {
+			player.performCommand("v batusi");
+			System.out.println("Success");
+			player.sendRawMessage("§cYou transform!");
+		}
+		else {
+			player.sendRawMessage("§cYou are not a Nosferatu Vampire!");
+		}
+	}
+	public SkilledPlayer activeCheckup(Player arg0) {
+		return SkilledPlayer.getSkilledPlayer(arg0);
+	}
 	@Override
 	public String getActivationKey(SkilledPlayer info) {
 		return "SSL";
