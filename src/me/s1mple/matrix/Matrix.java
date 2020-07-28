@@ -10,6 +10,7 @@ import me.s1mple.matrix.ArenaManager.ArenaManager;
 import me.s1mple.matrix.BattlePass.BattlePass;
 import me.s1mple.matrix.BattlePass.Data.UserData;
 import me.s1mple.matrix.BattlePass.command.Battlepass;
+import me.s1mple.matrix.Raid.RaidListener;
 import me.s1mple.matrix.Util.DBManager;
 import me.s1mple.matrix.Util.Util;
 import me.s1mple.matrix.listener.AbilityListener;
@@ -68,6 +69,7 @@ public class Matrix extends JavaPlugin {
         
         plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
+        plugin.getServer().getPluginManager().registerEvents(new RaidListener(), Matrix.plugin);
 
     }
 

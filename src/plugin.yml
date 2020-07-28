@@ -1,8 +1,8 @@
 main: me.s1mple.matrix.Matrix
 name: MatrixPlugin
 version: ${project.version}
-author: Simple, Crash Cringle
-depend: [ProjectKorra, AuthMe, SkillsPro, AdvancedAchievements, PermissionsEx]
+author: Simple
+#depend: [ProjectKorra, AuthMe, SkillsPro, AdvancedAchievements, PermissionsEx]
 description: Matrix Abilities.
 api-version: 1.13
 commands:

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
@@ -25,9 +25,54 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="Maven: com.Essentials:essentials:1.8.9">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/Utils/Essentials.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.skills:skills:1.8.9">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/Utils/SkillsPro.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.factions:factions:1.8.9">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/Utils/Factions.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="Maven: com.skins:skins:1.8.9">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/src/Utils/SkinsRestorer.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.werewolf:swerewolf:1.8.7">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/Utils/Werewolf.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.vampirerevamp:vampirerevamp:1.0.3">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/Utils/VampireRevamp.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -74,24 +119,6 @@
       <library name="Maven: com.achievements:achievements:LATEST">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/src/Utils/AdvancedAchievements.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/src/Utils/SkillsPro.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/src/Utils/VampireRevamp.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

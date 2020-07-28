@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="MatrixPlugin" />
         <module name="me.s1mple133.matrixbending" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="MatrixPlugin" target="8" />
       <module name="me.s1mple133.matrixbending" target="8" />
     </bytecodeTargetLevel>
   </component>

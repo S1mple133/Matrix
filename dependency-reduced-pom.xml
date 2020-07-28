@@ -57,24 +57,8 @@
   </build>
   <repositories>
     <repository>
-      <id>advanced-achievements-repo</id>
-      <url>https://raw.github.com/PyvesB/AdvancedAchievements/mvn-repo/</url>
-    </repository>
-    <repository>
-      <id>ess-repo</id>
-      <url>https://ci.ender.zone/plugin/repository/everything/</url>
-    </repository>
-    <repository>
-      <id>enginehub-maven</id>
-      <url>http://maven.enginehub.org/repo/</url>
-    </repository>
-    <repository>
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-    </repository>
-    <repository>
-      <id>codemc-snapshots</id>
-      <url>https://repo.codemc.org/repository/maven-snapshots/</url>
     </repository>
   </repositories>
   <dependencies>
@@ -85,8 +69,24 @@
       <scope>provided</scope>
       <exclusions>
         <exclusion>
+          <artifactId>commons-lang</artifactId>
+          <groupId>commons-lang</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>guava</artifactId>
+          <groupId>com.google.guava</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>gson</artifactId>
+          <groupId>com.google.code.gson</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>bungeecord-chat</artifactId>
           <groupId>net.md-5</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>snakeyaml</artifactId>
+          <groupId>org.yaml</groupId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -95,94 +95,84 @@
       <artifactId>projectkorra</artifactId>
       <version>1.8.9</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/PK.jar</systemPath>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/PK.jar</systemPath>
     </dependency>
     <dependency>
-      <groupId>net.ess3</groupId>
-      <artifactId>EssentialsX</artifactId>
-      <version>2.17.2</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>NMSProvider</artifactId>
-          <groupId>net.ess3</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>UpdatedMetaProvider</artifactId>
-          <groupId>net.ess3</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>LegacyProvider</artifactId>
-          <groupId>net.ess3</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>ReflectionProvider</artifactId>
-          <groupId>net.ess3</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>FlattenedProvider</artifactId>
-          <groupId>net.ess3</groupId>
-        </exclusion>
-      </exclusions>
+      <groupId>com.Essentials</groupId>
+      <artifactId>essentials</artifactId>
+      <version>1.8.9</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/Essentials.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.skills</groupId>
       <artifactId>skills</artifactId>
       <version>1.8.9</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/SkillsPro.jar</systemPath>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/SkillsPro.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.factions</groupId>
       <artifactId>factions</artifactId>
       <version>1.8.9</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/Factions.jar</systemPath>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/Factions.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.skins</groupId>
+      <artifactId>skins</artifactId>
+      <version>1.8.9</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/SkinsRestorer.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.werewolf</groupId>
+      <artifactId>swerewolf</artifactId>
+      <version>1.8.7</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/Werewolf.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.vampirerevamp</groupId>
       <artifactId>vampirerevamp</artifactId>
       <version>1.0.3</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/VampireRevamp.jar</systemPath>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/VampireRevamp.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.pex</groupId>
       <artifactId>pex</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/PermissionsEx-1.23.4.jar</systemPath>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/PermissionsEx-1.23.4.jar</systemPath>
     </dependency>
     <dependency>
-      <groupId>fr.xephi</groupId>
+      <groupId>com.authme</groupId>
       <artifactId>authme</artifactId>
-      <version>5.6.0-SNAPSHOT</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>postgresql</artifactId>
-          <groupId>org.postgresql</groupId>
-        </exclusion>
-      </exclusions>
+      <version>LATEST</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/AuthMe.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.worldedit</groupId>
+      <artifactId>worldedit</artifactId>
+      <version>LATEST</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/worldedit-bukkit-7.1.0.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.awe</groupId>
       <artifactId>awe</artifactId>
       <version>LATEST</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Lamar Cooley\Documents\Projects\Minecraft\Repositories\Matrix-master\Matrix/src/Utils/AsyncWorldEdit-3.6.19.jar</systemPath>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/AsyncWorldEdit-3.6.19.jar</systemPath>
     </dependency>
     <dependency>
-      <groupId>com.hm.achievement</groupId>
-      <artifactId>advanced-achievements-api</artifactId>
-      <version>1.4.0</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>commons-lang3</artifactId>
-          <groupId>org.apache.commons</groupId>
-        </exclusion>
-      </exclusions>
+      <groupId>com.achievements</groupId>
+      <artifactId>achievements</artifactId>
+      <version>LATEST</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\pavel\Desktop\Matrix\Matrix/src/Utils/AdvancedAchievements.jar</systemPath>
     </dependency>
   </dependencies>
 </project>
