@@ -1,19 +1,17 @@
 package me.s1mple.matrix.listener;
 
-import com.clanjhoo.vampire.event.EventVampirePlayerVampireChange; 
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.skills.api.SkillsAPI;
 import org.skills.types.SkillManager;
-
+import com.clanjhoo.vampire.event.VampireTypeChangeEvent;
 public class SkillsListener implements Listener{
 	
 	
 	   @EventHandler
-		public void vampCmdListener(EventVampirePlayerVampireChange event) {
- 
+		public void vampCmdListener(VampireTypeChangeEvent event) { 
 			if(event.isVampire()) {
 				SkillsAPI.getSkilledPlayer(event.getUplayer().getOfflinePlayer()).setActiveSkill(SkillManager.getSkill("Vampire"));
 				event.getUplayer().getPlayer().sendRawMessage("§cYou have unlocked the §4Vampire§c skill tree. §4Do /skills improve");

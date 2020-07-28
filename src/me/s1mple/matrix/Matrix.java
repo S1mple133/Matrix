@@ -1,6 +1,8 @@
 package me.s1mple.matrix;
 
-import Utils.Glow; 
+import Utils.Glow;
+
+import com.clanjhoo.vampire.VampireRevamp;
 import com.projectkorra.projectkorra.ability.CoreAbility;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import me.s1mple.matrix.Abilities.MatrixElement;
@@ -25,7 +27,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.skills.api.SkillsAPI;
 import org.skills.main.SkillsPro;
-import com.clanjhoo.vampire.VampireRevamp;
 import skinsrestorer.bukkit.SkinsRestorer;
 import me.s1mple.matrix.Skills.Werewolf;
 

