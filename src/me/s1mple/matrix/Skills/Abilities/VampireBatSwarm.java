@@ -52,6 +52,7 @@ public class VampireBatSwarm extends ActiveAbility {
 		else {
 			player.sendRawMessage("§cYou are not a Nosferatu Vampire!");
 		}
+    	
 	}
 	public SkilledPlayer activeCheckup(Player arg0) {
 		return SkilledPlayer.getSkilledPlayer(arg0);

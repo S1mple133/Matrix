@@ -5,6 +5,8 @@ import Utils.Glow;
 import com.clanjhoo.vampire.VampireRevamp;
 import com.projectkorra.projectkorra.ability.CoreAbility;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+
+import me.libraryaddict.disguise.LibsDisguises;
 import me.s1mple.matrix.Abilities.MatrixElement;
 import me.s1mple.matrix.ArenaManager.ArenaManager;
 import me.s1mple.matrix.BattlePass.BattlePass;
@@ -41,13 +43,13 @@ public class Matrix extends JavaPlugin {
     public static ConfigManager configManager;
     public static AbilityManager abilityManager;
     public static String version = "1.10";
-    public static String author = "S1mple";
+    public static String author = "S1mpleCrash";
     private DBManager dbManager;
     private SkinsRestorer skinApi;
     private WorldEditPlugin worldEditPlugin;
     private SkillsPro skillsapi;
     private VampireRevamp revamp;
-
+    private LibsDisguises disguise;
     @Override
     public void onEnable() {
     	
@@ -59,6 +61,7 @@ public class Matrix extends JavaPlugin {
         this.worldEditPlugin = ((WorldEditPlugin) plugin.getServer().getPluginManager().getPlugin("WorldEdit"));
         this.skillsapi = ((SkillsPro) plugin.getServer().getPluginManager().getPlugin("SkillsPro"));
         this.revamp = ((VampireRevamp) plugin.getServer().getPluginManager().getPlugin("VampireRevamp"));
+        this.disguise = ((LibsDisguises) plugin.getServer().getPluginManager().getPlugin("LibsDisguises"));
         registerGlow();
         new Werewolf();
 
@@ -137,6 +140,19 @@ public class Matrix extends JavaPlugin {
                         return true;
                     }
                 }
+                else if (args[0].equalsIgnoreCase("startRaid")) {
+                    if(sender.hasPermission("matrix.commandspy") && sender instanceof Player) {
+                    	if (RaidListener.forceStart) {
+                        	RaidListener.forceStart = false;
+                            sender.sendMessage(Util.color("&4Matrix Network &7>> &cNext Raid will not be a Pirate Raid"));
+                    	}
+                    	else {
+                        	RaidListener.forceStart = true;
+                            sender.sendMessage(Util.color("&4Matrix Network &7>> &cNext Raid will be a Pirate Raid"));
+                    	}
+                    	return true;
+                    }
+                }
                 else if (args[0].equalsIgnoreCase("vpn")) {
                     if(args.length == 3) {
                         if(sender.hasPermission("matrix.vpn")) {
@@ -201,6 +217,9 @@ public class Matrix extends JavaPlugin {
     }
     public VampireRevamp getRevamp() {
     	return revamp;
+    }
+    public LibsDisguises getDisguises() {
+    	return disguise;
     }
     public SkillsPro getSkillsApi() {
     	return skillsapi;
