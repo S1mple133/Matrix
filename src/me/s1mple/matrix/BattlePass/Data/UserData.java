@@ -7,7 +7,6 @@ import me.s1mple.matrix.BattlePass.GUIUtil;
 import me.s1mple.matrix.Matrix;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
