@@ -6,6 +6,7 @@
 *.iml
 .project
 .classpath
+dependency-reduced-pom.xml
 
 # User-specific stuff
 .idea/**/workspace.xml

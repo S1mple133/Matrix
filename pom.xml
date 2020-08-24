@@ -39,12 +39,6 @@
 
 	<!--Dependencies -->
 	<dependencies>
-		<!-- LibsDisguises -->
-		<dependency>
-			<groupId>LibsDisguises</groupId>
-			<artifactId>LibsDisguises</artifactId>
-			<version>10.0.15</version>
-		</dependency>
 		<!--Spigot -->
 		<dependency>
 			<groupId>org.spigotmc</groupId>
@@ -61,6 +55,15 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/Utils/PK.jar</systemPath>
 		</dependency>
+
+		<!-- LibsDisguises -->
+		<dependency>
+			<groupId>LibsDisguises</groupId>
+			<artifactId>LibsDisguises</artifactId>
+			<version>10.0.12-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/Utils/LibsDisguises-10.0.15-Free.jar</systemPath>
+        </dependency>
 
 		<dependency>
 			<groupId>net.ess3</groupId>
@@ -99,17 +102,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.pex</groupId>
-			<artifactId>pex</artifactId>
-			<version>LATEST</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/Utils/PermissionsEx-1.23.4.jar</systemPath>
-		</dependency>
-
-		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.45</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.comphenix.protocol</groupId>
+			<artifactId>ProtocolLib</artifactId>
+			<version>4.5.0</version>
 		</dependency>
 
 		<dependency>
@@ -139,6 +140,13 @@
 			<version>1.4.0</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>net.luckperms</groupId>
+			<artifactId>api</artifactId>
+			<version>LATEST</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -163,6 +171,9 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
+					<compilerArgs>
+						<arg>-Xlint</arg>
+					</compilerArgs>
 					<source>8</source>
 					<target>8</target>
 				</configuration>

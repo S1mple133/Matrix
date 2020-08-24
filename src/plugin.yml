@@ -2,7 +2,7 @@ main: me.s1mple.matrix.Matrix
 name: MatrixPlugin
 version: ${project.version}
 author: SimpleCrash
-depend: [ProjectKorra, AuthMe, SkillsPro, AdvancedAchievements, PermissionsEx, LibsDisguises, VampireRevamp]
+depend: [ProjectKorra, AuthMe, SkillsPro, AdvancedAchievements, LibsDisguises, VampireRevamp, LuckPerms, ProtocolLib]
 description: Matrix Abilities.
 api-version: 1.13
 commands:
