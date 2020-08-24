@@ -1,16 +1,12 @@
 package me.s1mple.matrix.BattlePass.Data;
 
-import com.hm.achievement.api.AdvancedAchievementsAPI; 
-import com.hm.achievement.category.Category;
 import me.s1mple.matrix.BattlePass.GUIUtil;
-import net.luckperms.api.node.types.PermissionNode;
-
+import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,7 +18,7 @@ public class Level {
     private Level nextLevel;
     private HashMap<String, String> achievements;
     private List<String> achievementTypes;
-    private PermissionNode rank;
+    private Group rank;
     private String command;
     private int id;
     private String premiumCommand;
@@ -30,7 +26,7 @@ public class Level {
     private ItemStack menuItemPremium;
 
     public Level(List<String> achievements,
-                 PermissionNode rank, String command,String description, int id,
+                 Group rank, String command, String description, int id,
                  String premiumCommand, String menuItem, String menuItemPremium,
                  String menuName, String menuNamePremium, String menuLore, String menuLorePremium,
                  List<String> descriptions) {
@@ -96,7 +92,7 @@ public class Level {
      * Returns the rank
      * @return
      */
-    public PermissionNode getRank() {
+    public Group getRank() {
         return rank;
     }
 

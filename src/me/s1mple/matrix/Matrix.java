@@ -19,6 +19,8 @@ import me.s1mple.matrix.listener.AbilityListener;
 import me.s1mple.matrix.listener.PermsListener;
 import me.s1mple.matrix.listener.SkillsListener;
 import me.s1mple.matrix.slide.Slide;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -50,6 +52,8 @@ public class Matrix extends JavaPlugin {
     private SkillsPro skillsapi;
     private VampireRevamp revamp;
     private LibsDisguises disguise;
+    private LuckPerms api;
+
     @Override
     public void onEnable() {
     	
@@ -62,6 +66,7 @@ public class Matrix extends JavaPlugin {
         this.skillsapi = ((SkillsPro) plugin.getServer().getPluginManager().getPlugin("SkillsPro"));
         this.revamp = ((VampireRevamp) plugin.getServer().getPluginManager().getPlugin("VampireRevamp"));
         this.disguise = ((LibsDisguises) plugin.getServer().getPluginManager().getPlugin("LibsDisguises"));
+        this.api = LuckPermsProvider.get();
         registerGlow();
         new Werewolf();
 
@@ -232,6 +237,8 @@ public class Matrix extends JavaPlugin {
     public WorldEditPlugin getWorldEditPlugin() {
         return worldEditPlugin;
     }
+
+    public LuckPerms getLuckPerms() { return api; };
 }
 
 

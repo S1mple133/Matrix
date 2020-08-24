@@ -10,9 +10,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import ru.tehkode.permissions.PermissionGroup;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -65,7 +62,7 @@ public class AchievementHandler {
             String actSection = "Lvl." + i + ".";
 
             Level.addLevel(new Level(config.getStringList(actSection+"Achievements"),
-                    PermissionsEx.getPermissionManager().getGroup(config.getString(actSection+"Rank")),
+                    plugin.getLuckPerms().getGroupManager().getGroup(config.getString(actSection+"Rank")),
                     config.getString(actSection+"Command"),
                     config.getString(actSection+"Description"), i,
                     config.getString(actSection+"PremiumCommand"),
@@ -89,8 +86,7 @@ public class AchievementHandler {
         Level nextLevel = d.getLevel().getNextLevel();
 
         if(nextLevel != null) {
-            PermissionsEx.getUser(p).removeGroup(d.getLevel().getRank());
-            PermissionsEx.getUser(p).addGroup(nextLevel.getRank());
+            plugin.getLuckPerms().getUserManager().getUser(p.getUniqueId()).setPrimaryGroup(nextLevel.getRank().getName());
         }
 
         nextLevel.resetAchievementsForPlayer(p);
