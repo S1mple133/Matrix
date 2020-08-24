@@ -2,6 +2,8 @@ package me.s1mple.matrix.Raid;
 
 
 import me.s1mple.matrix.Matrix;
+import net.luckperms.api.node.Node;
+import net.luckperms.api.LuckPerms;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -25,6 +27,7 @@ import me.libraryaddict.disguise.disguisetypes.FlagWatcher;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 
 public class RaidListener implements Listener {
+	LuckPerms api;
 	int num = 1;
 	public static boolean forceStart = false;
 	Raid pirateRaid;
@@ -37,7 +40,12 @@ public class RaidListener implements Listener {
 				num = forceStart ? 5 : (int) (Math.random() * 100) + 1;
 				System.out.println(num);
 				if (num % 5 == 0){
-					//Message broadcasted to the server.
+		       if (event.getPlayer().hasPermission("quest.raid.Pirate.Lose")) {
+		           Bukkit.broadcastMessage("Pirates have returned to finish what they started " + event.getPlayer().getName() + "!");
+		         } else if (event.getPlayer().hasPermission("quest.raid.Pirate.Lose")) {
+		           Bukkit.broadcastMessage("Pirates are invading " + event.getPlayer().getName() + "!");
+		         } 					
+		       	//Message broadcasted to the server.
 					Bukkit.broadcastMessage("§eThe Pirates are Invading!");
 					//We want max levels for the raid so that all possible entities spawn
 					event.getRaid().setBadOmenLevel(5);
@@ -74,12 +82,6 @@ public class RaidListener implements Listener {
 	@EventHandler
 	public void onEndRaid(RaidStopEvent event) {
 		if (num % 5 == 0) {
-			if (pirateRaid == event.getRaid()) {
-				System.out.println("Raids are Equal");
-			}
-			if (pirateLocation == event.getRaid().getLocation()) {
-				System.out.println("Locations are equal");
-			}
 			if (event.getRaid().getStatus() == Raid.RaidStatus.VICTORY) {
 		    	for (UUID apple : event.getRaid().getHeroes()) {
 		    		Player player = Bukkit.getPlayer(apple);
@@ -94,14 +96,21 @@ public class RaidListener implements Listener {
 				       	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mgive " + player.getName() + " BadDayArrow " + (int) (((Math.random() * 100) + 0)/4));
 				       	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mgive " + player.getName() + " LuckyBlock 1");
 				       	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mgive " + player.getName() + " ParrotEgg " + (int) (((Math.random() * 100) + 0)/4));
+						api.getUserManager().getUser(player.getUniqueId()).data().add(Node.builder("quest.raid.Pirate.Win").build());
+						api.getUserManager().getUser(player.getUniqueId()).data().remove(Node.builder("quest.raid.Pirate.Lose").build());
+					    api.getUserManager().saveUser(api.getUserManager().getUser(player.getUniqueId()));
 			    	}
 		    	}
 			} else
 			{
+				Bukkit.broadcastMessage("Pirates have successfully pillaged our heroes!");
 		    	for (UUID apple : event.getRaid().getHeroes()) {
 		    		Player player = Bukkit.getPlayer(apple);
 		    		if (player != null) {		
 			       	 	player.sendMessage("The Pirates have stolen your cheese!");
+						api.getUserManager().getUser(player.getUniqueId()).data().remove(Node.builder("quest.raid.Pirate.Win").build());
+						api.getUserManager().getUser(player.getUniqueId()).data().add(Node.builder("quest.raid.Pirate.Lose").build());
+					    api.getUserManager().saveUser(api.getUserManager().getUser(player.getUniqueId()));
 				       	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "eco take " + player.getName() + " 25%");
 		    		}
 		       	

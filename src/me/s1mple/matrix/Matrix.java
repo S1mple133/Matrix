@@ -68,7 +68,7 @@ public class Matrix extends JavaPlugin {
         //plugin.getServer().getPluginManager().registerEvents(new Slide(), Matrix.plugin);
         //MatrixElement.init(this);
         ArenaManager.init(this);
-        BattlePass.init(this);
+       // BattlePass.init(this);
         
         plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
@@ -107,7 +107,8 @@ public class Matrix extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         String helpMessage = ChatColor.AQUA + "/matrix vpn add: " + ChatColor.BLUE + "Creates vpn key\n";
         String staffHelpMessage = ChatColor.AQUA + "/matrix vpn getip <name>: " + ChatColor.BLUE + "Returns the real ip of the player.\n" +
-                ChatColor.AQUA + "/matrix premium <name>: " + ChatColor.BLUE + "Makes player's battlepass premium.";
+                ChatColor.AQUA + "/matrix premium <name>: " + ChatColor.BLUE + "Makes player's battlepass premium."
+                + ChatColor.AQUA + "/matrix startRaid: " + ChatColor.BLUE + "Toggles whether the next raid is a Pirate Raid";
         // VPN perm: matrix.vpn
         // Staff perm: matrix.staff
 

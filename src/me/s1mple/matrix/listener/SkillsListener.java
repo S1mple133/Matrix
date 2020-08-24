@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.skills.api.SkillsAPI;
+import org.skills.api.*;
 import org.skills.types.SkillManager;
 import com.clanjhoo.vampire.event.VampireTypeChangeEvent;
 
@@ -27,15 +27,16 @@ public class SkillsListener implements Listener{
 			if(event.isVampire()) {
 				SkillsAPI.getSkilledPlayer(player).setActiveSkill(SkillManager.getSkill("Vampire"));
 				event.getUplayer().getPlayer().sendRawMessage("§cYou have unlocked the §4Vampire§c skill tree. §4Do /skills improve");
-				DataMutateResult result = api.getUserManager().getUser(player.getUniqueId()).data().add(Node.builder("-skills.select.*").build());
+				api.getUserManager().getUser(player.getUniqueId()).data().add(Node.builder("-skills.select.*").build());
 			}
 			else {
 				SkillsAPI.getSkilledPlayer(player).setActiveSkill(SkillManager.getSkill("Arbalist"));
 				event.getUplayer().getPlayer().sendRawMessage("§cYou have been removed from the Vampire skill tree!");
-				DataMutateResult result = api.getUserManager().getUser(player.getUniqueId()).data().add(Node.builder("-skills.select.*").build());
+				api.getUserManager().getUser(player.getUniqueId()).data().remove(Node.builder("-skills.select.*").build());
 			}
 			
-			
+		    api.getUserManager().saveUser(api.getUserManager().getUser(player.getUniqueId()));
+
 			
 			
 			

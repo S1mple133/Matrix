@@ -1,6 +1,6 @@
 package me.s1mple.matrix.BattlePass;
 
-import me.s1mple.matrix.BattlePass.Data.Level; 
+import me.s1mple.matrix.BattlePass.Data.Level;
 import me.s1mple.matrix.BattlePass.Data.UserData;
 import me.s1mple.matrix.Matrix;
 import org.bukkit.Bukkit;
