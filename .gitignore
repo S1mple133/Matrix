@@ -5,6 +5,7 @@
 .settings
 *.iml
 .project
+.classpath
 
 # User-specific stuff
 .idea/**/workspace.xml
