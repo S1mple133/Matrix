@@ -3,6 +3,8 @@
 
 .idea
 .settings
+*.iml
+.project
 
 # User-specific stuff
 .idea/**/workspace.xml
