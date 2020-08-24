@@ -6,7 +6,7 @@
 
 	<groupId>MatrixBending</groupId>
 	<artifactId>MatrixPlugin</artifactId>
-	<version>1.2.2</version>
+	<version>1.4.1</version>
 
 	<!--Repositories -->
 	<repositories>
