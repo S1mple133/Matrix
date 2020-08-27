@@ -45,6 +45,13 @@
 			<artifactId>LibsDisguises</artifactId>
 			<version>10.0.15</version>
 		</dependency>
+
+		<!-- JSON -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180130</version>
+		</dependency>
 		<!--Spigot -->
 		<dependency>
 			<groupId>org.spigotmc</groupId>

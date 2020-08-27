@@ -14,3 +14,7 @@ commands:
     description: Handles the arena manager
     aliases:
       - am
+  tournament:
+    description: Basic tournament command.
+    aliases:
+      - tt
