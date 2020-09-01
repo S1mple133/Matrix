@@ -5,19 +5,16 @@ import me.s1mple.matrix.ArenaManager.Data.Arena;
 import me.s1mple.matrix.Tournament.CommandHandler.TournamentCommandHandler;
 import me.s1mple.matrix.Tournament.Data.PlayerData;
 
+import me.s1mple.matrix.Tournament.Data.Tournament;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.json.JSONObject;
 
 import de.schlichtherle.io.FileWriter;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -27,12 +24,20 @@ public class TournamentHandler {
     private static File arena_data;
 
     private static List<Arena> arenas;
+    private static List<PlayerData> playerDatas;
+    private static List<Tournament> tournaments;
+
+    public static HashMap<Player, Tournament> playersInGame;
 
     /**
      * Loads player data to memory
      * if player has no data, empty playerdata is loaded
      */
     public static PlayerData loadPlayerData(Player player) {
+        for(PlayerData actdata : playerDatas)
+            if(actdata.getPlayer().equals(player))
+                return actdata;
+
         File actFile = new File(player_data, player.getUniqueId().toString() + ".json");
 
         if(!actFile.exists())
@@ -48,6 +53,8 @@ public class TournamentHandler {
 
         return new PlayerData(player, 0, 0, 0, 0);
     }
+
+    public static List<PlayerData> getPlayerDatas() { return playerDatas; }
 
     /**
      * Save player data to disk
@@ -130,7 +137,17 @@ public class TournamentHandler {
             arena_data.mkdir();
 
         arenas = new ArrayList<>();
+        tournaments = new ArrayList<>();
+        playerDatas = new ArrayList<>();
+        playersInGame = new HashMap<>();
         loadArenas();
     }
 
+    public static List<Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    public static void removeTournament(Tournament toStop) {
+        tournaments.remove(toStop);
+    }
 }

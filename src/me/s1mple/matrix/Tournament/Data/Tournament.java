@@ -1,78 +1,168 @@
 package me.s1mple.matrix.Tournament.Data;
 
+import me.s1mple.matrix.Matrix;
+import me.s1mple.matrix.Tournament.Messages;
+import me.s1mple.matrix.Tournament.TournamentHandler;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Tournament {
-    private static List<Player> fightingPlayers = new ArrayList<>();
+    private static Server server = Matrix.getPlugin().getServer();
 
-    private List<Arena> arenas;
+    private int round;
+
+    private List<Arena> freeArenas;
 
     private List<PlayerData> participators;
-    private List<PlayerData[]> orderedPairs;
+    private List<Round> rounds;
     private List<PlayerData> actRoundWinners;
-    private List<PlayerData> actRoundLosers;
+    private List<PlayerData> losers;
 
     public Tournament() {
         participators = new ArrayList<>();
-        orderedPairs = new ArrayList<>();
-        actRoundLosers = new ArrayList<>();
+        losers = new ArrayList<>();
         actRoundWinners = new ArrayList<>();
+        round = 0;
     }
 
     /**
      * Starts round
+     * @return true if round could be started, playerdata amount should be even
      */
-    public void startRound() {
+    public boolean startRound() {
         // If first round, order participators and start more rounds (as long as arenas are free)
-        throw new NotImplementedException();
+        if(round == 0) {
+            if (participators.size() % 2 != 0) return false;
+            orderPairs(participators);
+        }
+
+        Arena actArena;
+        while((actArena = searchFreeArena()) != null && round < rounds.size()) {
+            rounds.get(round).start(actArena, this);
+            round++;
+        }
+
+        return true;
     }
 
     /**
      * Called when round is finished
      * aka a player gets killed
-     * @param winner
      * @param looser
      */
-    public void finishRound(Player winner, Player looser) {
-        // if it was last round, re-order participators
-        throw new NotImplementedException();
+    public void finishRound(Player looser) {
+        Round toRemove = getRoundOfPlayerData(TournamentHandler.loadPlayerData(looser));
+        PlayerData winnerData = toRemove.getPlayerData1().getPlayer().equals(looser) ? toRemove.getPlayerData2() : toRemove.getPlayerData1();
+        Player winner = toRemove.getPlayerData1().getPlayer().equals(looser) ? toRemove.getPlayerData2().getPlayer() : toRemove.getPlayerData1().getPlayer();
+
+        server.broadcastMessage(String.format(Messages.ROUND_WON, winner.getName(), looser.getName()));
+        looser.sendMessage(Messages.LOOSER_MESSAGE);
+
+        actRoundWinners.add(winnerData);
+        losers.add(TournamentHandler.loadPlayerData(looser));
+        winnerData.wonRound();
+
+        TournamentHandler.playersInGame.remove(winner);
+        TournamentHandler.playersInGame.remove(looser);
+
+        // Free arena
+        if(toRemove != null) {
+            toRemove.getArena().freeArena();
+            freeArenas.add(toRemove.getArena());
+            rounds.remove(toRemove);
+        }
+
+        // Set tournament winner
+        if(round == rounds.size() && actRoundWinners.size() == 0) {
+            TournamentHandler.loadPlayerData(winner).wonTournament();
+            server.broadcastMessage(String.format(Messages.TOURNAMENT_WON, winner.getName()));
+            // Start losers tournament
+            server.broadcastMessage(String.format(Messages.STARTING_LOSERS_TOURNAMENT));
+            orderPairs(losers);
+        }
+        // Start new layer of battles
+        else if(round == rounds.size()) {
+            orderPairs(actRoundWinners);
+            actRoundWinners.clear();
+        }
+    }
+
+    private Round getRoundOfPlayerData(PlayerData winnerData) {
+        for (Round round : rounds) {
+            if (round.getPlayerData1().equals(winnerData) || round.getPlayerData2().equals(winnerData)) {
+                return round;
+            }
+        }
+
+        return null;
     }
 
     /**
      * Orders partivipators in pairs
      */
-    private void orderPairs(List<PlayerData> toOrder) {
+    private void orderPairs(List<PlayerData> list) {
         // Order the given list and save it to @{orderedPairs}
-        throw new NotImplementedException();
+        rounds.clear();
+        round = 0;
+        List<PlayerData> toOrder = new ArrayList<>(list);
+        Collections.sort(toOrder);
+
+        for (int i = 0; i < toOrder.size(); i += 2) {
+            rounds.add(new Round(round, toOrder.get(i), toOrder.get(i+1)));
+        }
     }
 
     /**
      * Adds participator to tournament
      * @param participator
+     * @return bool if the player could be added
      */
-    public void addParticipator(UUID participator) {
-        // make sure round has an even amount of participators
-        throw new NotImplementedException();
+    public boolean addParticipator(Player participator) {
+        PlayerData data = TournamentHandler.loadPlayerData(participator);
+
+        if(participators.contains(data))
+            return false;
+
+        participators.add(data);
+        return true;
     }
 
     /**
      * When a participator does /tt leave
      * @param participator
      */
-    public void removeParticipator(Player participator) {
-        throw new NotImplementedException();
+    public static void removeParticipator(Player participator) {
+        PlayerData pd = TournamentHandler.loadPlayerData(participator);
+        Round round;
+
+        for(Tournament t : TournamentHandler.getTournaments()) {
+            round = t.getRoundOfPlayerData(pd);
+
+            if(round != null) {
+                t.finishRound(participator);
+                break;
+            }
+        }
     }
 
     /**
      * Searches for a free arena and returns it.
      */
     public Arena searchFreeArena() {
-        throw new NotImplementedException();
+        Arena a = null;
+
+        for (int i = 0; i < freeArenas.size(); i++) {
+            if(!freeArenas.get(i).isOccupied()) {
+                a = freeArenas.get(i);
+                break;
+            }
+        }
+
+        freeArenas.remove(a);
+        return a;
     }
 
 

@@ -2,8 +2,9 @@ package me.s1mple.matrix.Tournament.Data;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.jetbrains.annotations.NotNull;
 
-public class PlayerData {
+public class PlayerData implements Comparable<PlayerData> {
     private int roundsWon;
     private int tournamentsWon;
     private int roundsLost;
@@ -46,11 +47,24 @@ public class PlayerData {
         return player;
     }
 
+    private double killDeathRate() {
+        return roundsWon / (double)roundsLost;
+    }
+
     /**
      * Returns amount of tournaments this player participated in.
      * @return
      */
     public int getParticipatedInTournaments() {
         return participatedInTournaments;
+    }
+
+    public void wonRound() {
+        this.roundsWon++;
+    }
+
+    @Override
+    public int compareTo(@NotNull PlayerData o) {
+        return (int) Math.round(killDeathRate() - o.killDeathRate());
     }
 }

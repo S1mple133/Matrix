@@ -29,32 +29,52 @@ public class Arena {
      * @return If the arena could be occupied
      */
     public boolean occupyArena() {
-        throw new NotImplementedException();
+        if(!this.isAvailable)
+            return false;
+
+        this.isAvailable = false;
+        return true;
     }
 
     /**
      * Sets the arena as free
      */
     public void freeArena() {
-        throw new NotImplementedException();
+        this.isAvailable = true;
     }
 
     public Location getSpawnPoint1() {
         return spawnPoint1;
     }
 
-    public void setSpawnPoint1(Location spawnPoint1) {
-        // Make sure both spawnpoints are in the same world
-        throw new NotImplementedException();
+    /**
+     * Sets the arena spawn point 1
+     * @return false if location not valid
+     * @param spawnPoint1
+     */
+    public boolean setSpawnPoint1(Location spawnPoint1) {
+        if(getSpawnPoint2().getWorld().equals(spawnPoint1.getWorld())) {
+            this.spawnPoint1 = spawnPoint1;
+        }
+
+        return this.spawnPoint1 != null;
     }
 
     public Location getSpawnPoint2() {
         return spawnPoint2;
     }
 
-    public void setSpawnPoint2(Location spawnPoint2) {
-        // Make sure both spawnpoints are in the same world
-        throw new NotImplementedException();
+    /**
+     * Sets the second arena spawn point
+     * @param spawnPoint2
+     * @return
+     */
+    public boolean setSpawnPoint2(Location spawnPoint2) {
+        if(getSpawnPoint1().getWorld().equals(spawnPoint2.getWorld())) {
+            this.spawnPoint2 = spawnPoint2;
+        }
+
+        return this.spawnPoint2 != null;
     }
 
     public Location getSpectatorPoint() {
@@ -62,7 +82,10 @@ public class Arena {
     }
 
     public void setSpectatorPoint(Location spectatorPoint) {
-        // Make sure both spawnpoints are in the same world
-        throw new NotImplementedException();
+        this.spectatorPoint = spectatorPoint;
+    }
+
+    public boolean isOccupied() {
+        return !isAvailable;
     }
 }
