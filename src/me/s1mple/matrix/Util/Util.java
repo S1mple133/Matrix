@@ -172,7 +172,7 @@ public class Util {
     }
 
     public static File getSchematicFile(String schemFileName) {
-        File schem = (new File("." + File.separator + Matrix.getPlugin().getWorldEditPlugin().getDataFolder(), "schematics/" + File.separator + schemFileName + ".schem"));
+        File schem = (new File("." + File.separator + Matrix.getPlugin().getWorldEditPlugin(), "schematics/" + File.separator + schemFileName + ".schem"));
         if(!schem.exists())
             schem =  (new File("." + File.separator +Matrix.getPlugin().getWorldEditPlugin().getDataFolder(), "schematics/" + File.separator + schemFileName + ".schematic"));
         if(!schem.exists())

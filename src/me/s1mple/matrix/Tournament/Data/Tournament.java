@@ -21,11 +21,14 @@ public class Tournament {
     private List<PlayerData> actRoundWinners;
     private List<PlayerData> losers;
 
-    public Tournament() {
+    private String Name;
+
+    public Tournament(String name) {
         participators = new ArrayList<>();
         losers = new ArrayList<>();
         actRoundWinners = new ArrayList<>();
-        round = 0;
+        round = -1;
+        this.Name = name;
     }
 
     /**
@@ -34,7 +37,7 @@ public class Tournament {
      */
     public boolean startRound() {
         // If first round, order participators and start more rounds (as long as arenas are free)
-        if(round == 0) {
+        if(round <= 0) {
             if (participators.size() % 2 != 0) return false;
             orderPairs(participators);
         }
@@ -46,6 +49,18 @@ public class Tournament {
         }
 
         return true;
+    }
+
+    public int getRound() { return round; }
+
+
+    /**
+     * Returns torunament state
+     * @return
+     */
+    @Override
+    public String toString() {
+        throw new NotImplementedException();
     }
 
     /**
@@ -166,4 +181,11 @@ public class Tournament {
     }
 
 
+    public String getName() {
+        return Name;
+    }
+
+    public boolean started() {
+        return getRound() != -1;
+    }
 }

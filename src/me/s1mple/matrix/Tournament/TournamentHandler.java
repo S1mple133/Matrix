@@ -1,9 +1,9 @@
 package me.s1mple.matrix.Tournament;
 
 import me.s1mple.matrix.Matrix;
-import me.s1mple.matrix.ArenaManager.Data.Arena;
 import me.s1mple.matrix.Tournament.CommandHandler.TournamentCommandHandler;
 import me.s1mple.matrix.Tournament.Data.PlayerData;
+import me.s1mple.matrix.Tournament.Data.Arena;
 
 import me.s1mple.matrix.Tournament.Data.Tournament;
 import org.bukkit.entity.Player;
@@ -26,6 +26,8 @@ public class TournamentHandler {
     private static List<Arena> arenas;
     private static List<PlayerData> playerDatas;
     private static List<Tournament> tournaments;
+
+    private static HashMap<Player, Arena> arenasInCreation;
 
     public static HashMap<Player, Tournament> playersInGame;
 
@@ -53,6 +55,8 @@ public class TournamentHandler {
 
         return new PlayerData(player, 0, 0, 0, 0);
     }
+
+    public static List<Arena> getArenas() { return arenas; }
 
     public static List<PlayerData> getPlayerDatas() { return playerDatas; }
 
@@ -140,8 +144,15 @@ public class TournamentHandler {
         tournaments = new ArrayList<>();
         playerDatas = new ArrayList<>();
         playersInGame = new HashMap<>();
+        arenasInCreation = new HashMap<>();
         loadArenas();
     }
+
+    public static Arena getArenaOfPlayerInCreation(Player p) {
+        return arenasInCreation.containsKey(p) ? arenasInCreation.get(p) : null;
+    }
+
+    public static void createArenaInCreation(Player p, Arena a) { arenasInCreation.put(p, a); }
 
     public static List<Tournament> getTournaments() {
         return tournaments;
@@ -149,5 +160,14 @@ public class TournamentHandler {
 
     public static void removeTournament(Tournament toStop) {
         tournaments.remove(toStop);
+    }
+
+    public static Tournament getTournament(String arg) {
+        for(Tournament t : tournaments) {
+            if(t.getName().equalsIgnoreCase(arg))
+                return t;
+        }
+
+        return null;
     }
 }

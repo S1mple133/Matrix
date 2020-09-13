@@ -88,4 +88,8 @@ public class Arena {
     public boolean isOccupied() {
         return !isAvailable;
     }
+
+    public String getName() {
+        return name;
+    }
 }
