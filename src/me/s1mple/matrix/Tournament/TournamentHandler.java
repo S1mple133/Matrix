@@ -6,6 +6,7 @@ import me.s1mple.matrix.Tournament.Data.PlayerData;
 import me.s1mple.matrix.Tournament.Data.Arena;
 
 import me.s1mple.matrix.Tournament.Data.Tournament;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
@@ -103,7 +104,11 @@ public class TournamentHandler {
      * Saves arena to disk
      * @param toSave
      */
-    public static void saveArena(Arena toSave) {
+    public static boolean saveArena(Arena toSave) {
+        if(toSave.getSpawnPoint1() == null || toSave.getSpawnPoint2() == null || toSave.getSpectatorPoint() == null) {
+            return false;
+        }
+
         String output = new Gson().toJson(toSave);
         File actFile = new File(arena_data, toSave.getName() + ".json");
 
@@ -114,9 +119,11 @@ public class TournamentHandler {
             BufferedWriter writer = new BufferedWriter(new FileWriter(actFile.getPath(), true));
             writer.write(output);
             writer.close();
+            return true;
         }
         catch(Exception ex) {
             Matrix.getPlugin().getLogger().info("Could not save arena " + toSave.getName());
+            return false;
         }
     }
 

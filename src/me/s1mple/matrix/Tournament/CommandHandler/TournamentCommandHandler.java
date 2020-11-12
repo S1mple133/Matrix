@@ -42,6 +42,7 @@ public class TournamentCommandHandler implements CommandExecutor {
         /tt prize add <TournamentsWon> <Command> %winner% as placeholder for winner name
         /tt leave Leave arena
          */
+
         if(!command.getName().equalsIgnoreCase("tournament"))
             return false;
 
@@ -101,12 +102,11 @@ public class TournamentCommandHandler implements CommandExecutor {
                 else if(args[1].equalsIgnoreCase("save")) {
                     Arena ar = TournamentHandler.getArenaOfPlayerInCreation((Player)sender);
 
-                    if(ar.getSpawnPoint1() == null || ar.getSpawnPoint2() == null || ar.getSpectatorPoint() == null) {
+                    if(TournamentHandler.saveArena(ar)) {
                         sender.sendMessage(ChatColor.RED + "Cannot save arena! Some spawnpoints were not set!");
                         return false;
                     }
 
-                    TournamentHandler.saveArena(ar);
                     sender.sendMessage(ChatColor.GREEN + "Success!");
                     return true;
                 }
