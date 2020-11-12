@@ -70,10 +70,8 @@ public class Matrix extends JavaPlugin {
         registerGlow();
         new Werewolf();
 
-        //plugin.getServer().getPluginManager().registerEvents(new Slide(), Matrix.plugin);
         //MatrixElement.init(this);
         ArenaManager.init(this);
-       // BattlePass.init(this);
         
         plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
