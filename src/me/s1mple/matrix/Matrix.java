@@ -31,7 +31,6 @@ import java.util.UUID;
 public class Matrix extends JavaPlugin {
     public static Matrix plugin;
     public static ConfigManager configManager;
-    public static AbilityManager abilityManager;
     public static String version = "1.10";
     public static String author = "S1mpleCrash";
     private SkinsRestorer skinApi;
@@ -46,7 +45,6 @@ public class Matrix extends JavaPlugin {
     	
         this.plugin = this;
         this.configManager = new ConfigManager(this);
-        this.abilityManager = new AbilityManager(this);
 
         this.skinApi = ((SkinsRestorer) plugin.getServer().getPluginManager().getPlugin("SkinsRestorer"));
         this.worldEditPlugin = ((WorldEditPlugin) plugin.getServer().getPluginManager().getPlugin("WorldEdit"));
@@ -57,7 +55,6 @@ public class Matrix extends JavaPlugin {
         registerGlow();
         new Werewolf();
 
-        //MatrixElement.init(this);
         ArenaManager.init(this);
         
         plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
