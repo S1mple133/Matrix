@@ -23,10 +23,12 @@ public class Tournament {
 
     private String Name;
 
-    public Tournament(String name) {
+    public Tournament(String name, List<Arena> arenas) {
         participators = new ArrayList<>();
         losers = new ArrayList<>();
         actRoundWinners = new ArrayList<>();
+        this.freeArenas = arenas;
+        this.rounds = new ArrayList<Round>();
         round = -1;
         this.Name = name;
     }

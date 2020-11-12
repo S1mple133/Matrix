@@ -3,6 +3,8 @@ package me.s1mple.matrix.Tournament.Data;
 import org.bukkit.Location;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Map;
+
 public class Arena {
     private Location spawnPoint1;
     private Location spawnPoint2;
@@ -18,6 +20,14 @@ public class Arena {
         this.spectatorPoint = spectatorPoint;
         isAvailable = true;
         this.name = name;
+    }
+
+    public static SaveArena toSaveArena(Arena arena) {
+        return new SaveArena(arena.getSpawnPoint1().serialize(), arena.getSpawnPoint2().serialize(), arena.getSpectatorPoint().serialize(), arena.name);
+    }
+
+    public static Arena fromSaveArena(SaveArena arena) {
+        return new Arena(Location.deserialize(arena.getSpawnpoint1()), Location.deserialize(arena.getSpawnpoint2()), Location.deserialize(arena.getSpectatorPoint()), arena.getName());
     }
 
     public Arena(String name) {
@@ -53,11 +63,11 @@ public class Arena {
      * @param spawnPoint1
      */
     public boolean setSpawnPoint1(Location spawnPoint1) {
-        if(getSpawnPoint2().getWorld().equals(spawnPoint1.getWorld())) {
+        if(getSpawnPoint2() == null ||(getSpawnPoint2() != null && getSpawnPoint2().getWorld().equals(spawnPoint1.getWorld()))) {
             this.spawnPoint1 = spawnPoint1;
         }
 
-        return this.spawnPoint1 != null;
+        return this.spawnPoint2 != null;
     }
 
     public Location getSpawnPoint2() {
@@ -70,7 +80,7 @@ public class Arena {
      * @return
      */
     public boolean setSpawnPoint2(Location spawnPoint2) {
-        if(getSpawnPoint1().getWorld().equals(spawnPoint2.getWorld())) {
+        if(getSpawnPoint2() == null || (getSpawnPoint1() != null && getSpawnPoint1().getWorld().equals(spawnPoint2.getWorld()))) {
             this.spawnPoint2 = spawnPoint2;
         }
 

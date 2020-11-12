@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TournamentCommandHandler implements CommandExecutor {
@@ -19,8 +20,8 @@ public class TournamentCommandHandler implements CommandExecutor {
             "&a * To join a tournament, wait until an admin starts one and then do /warp tournament.");
     private String helpMessageAdmin = ChatColor.translateAlternateColorCodes('&', "&a * /tt arena create <Name> <SchemFileName> &b Starts an arena creation session. You need to be on the place where the schem file will be pasted. \n" +
             "&a * /tt arena setspawnpoint1 &bSets first spawnpoint\n" +
-            "&a * /tt arena setspawnpoint1 &bSets second spawnpoint\n" +
-            "&a * /tt arena setspawnpoint1 &bSets spectator spawnpoint\n" +
+            "&a * /tt arena setspawnpoint2 &bSets second spawnpoint\n" +
+            "&a * /tt arena setspectatorpoint &bSets spectator spawnpoint\n" +
             "&a * /tt arena save &bSaves arena\n" +
             "&a * /tt arena list &bLists arenas\n" +
             "&a * /tt prepare <Arena> <TournamentName> &bStarts tournament, waiting for people to join\n" +
@@ -46,6 +47,14 @@ public class TournamentCommandHandler implements CommandExecutor {
         if(!command.getName().equalsIgnoreCase("tournament"))
             return false;
 
+        if(args.length == 0) {
+            sender.sendMessage(helpMessage);
+
+            if(sender.hasPermission("tournament.admin"))
+                sender.sendMessage(helpMessageAdmin);
+
+            return true;
+        }
         if(args.length == 1) {
             if(args[0].equalsIgnoreCase("help")) {
                 sender.sendMessage(helpMessage);
@@ -81,10 +90,25 @@ public class TournamentCommandHandler implements CommandExecutor {
                 }
             }
             else if(args[0].equalsIgnoreCase("arena") && sender.hasPermission("tournament.admin")) {
-                if(TournamentHandler.getArenaOfPlayerInCreation((Player) sender) == null) {
+                if(args[1].equalsIgnoreCase("list")) {
+                    List<Arena> arenas = TournamentHandler.getArenas();
+                    int size = TournamentHandler.getArenas().size();
+                    StringBuilder message = new StringBuilder(ChatColor.AQUA + "Occupied arenas are red, unoccupied arenas show up green\n");
+
+                    for(int i = 0; i < size; i++) {
+                        message.append(arenas.get(i).isOccupied() ? ChatColor.RED : ChatColor.GREEN).append(arenas.get(i).getName());
+                        if(i != size-1)
+                            message.append(", ");
+                    }
+
+                    sender.sendMessage(message.toString());
+                    return true;
+                }
+                else if(TournamentHandler.getArenaOfPlayerInCreation((Player) sender) == null) {
                     sender.sendMessage(ChatColor.RED + "You are not creating any arena! DO /arena create before using this command!");
                     return false;
                 }
+
 
                 if(args[1].equalsIgnoreCase("setspawnpoint1")) {
                     sender.sendMessage(TournamentHandler.getArenaOfPlayerInCreation((Player)sender).setSpawnPoint1(((Player) sender).getLocation()) ? ChatColor.GREEN + "Success!" : ChatColor.RED + "Failure!");
@@ -102,7 +126,7 @@ public class TournamentCommandHandler implements CommandExecutor {
                 else if(args[1].equalsIgnoreCase("save")) {
                     Arena ar = TournamentHandler.getArenaOfPlayerInCreation((Player)sender);
 
-                    if(TournamentHandler.saveArena(ar)) {
+                    if(!TournamentHandler.saveArena(ar, (Player)sender)) {
                         sender.sendMessage(ChatColor.RED + "Cannot save arena! Some spawnpoints were not set!");
                         return false;
                     }
@@ -110,27 +134,12 @@ public class TournamentCommandHandler implements CommandExecutor {
                     sender.sendMessage(ChatColor.GREEN + "Success!");
                     return true;
                 }
-                else if(args[1].equalsIgnoreCase("list")) {
-                    List<Arena> arenas = TournamentHandler.getArenas();
-                    int size = TournamentHandler.getArenas().size();
-                    StringBuilder message = new StringBuilder(ChatColor.AQUA + "Occupied arenas are red, unoccupied arenas show up green\n");
-
-                    for(int i = 0; i < size; i++) {
-                        message.append(arenas.get(i).isOccupied() ? ChatColor.RED : ChatColor.GREEN).append(arenas.get(i).getName());
-                        if(i != size-1)
-                            message.append(", ");
-                    }
-
-                    sender.sendMessage(message.toString());
-                }
             }
         }
-        else if(args.length == 4) {
-            if(args[0].equalsIgnoreCase("arena")) {
-                if(args[1].equalsIgnoreCase("create")) {
-                    TournamentHandler.createArenaInCreation((Player)sender, new Arena(args[2]));
-                }
-            }
+        else if(args.length == 4  && sender.hasPermission("tournament.admin") && args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("prepare")) {
+            sender.sendMessage(ChatColor.RED + String.format("You started creation of %s", args[2]));
+            TournamentHandler.createArenaInCreation((Player)sender, new Arena(args[2]));
+            return true;
         }
 
         sender.sendMessage(ChatColor.RED + "Unknown command! Use /tt help for help.");

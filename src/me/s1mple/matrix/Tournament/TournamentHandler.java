@@ -5,16 +5,19 @@ import me.s1mple.matrix.Tournament.CommandHandler.TournamentCommandHandler;
 import me.s1mple.matrix.Tournament.Data.PlayerData;
 import me.s1mple.matrix.Tournament.Data.Arena;
 
+import me.s1mple.matrix.Tournament.Data.SaveArena;
 import me.s1mple.matrix.Tournament.Data.Tournament;
+import net.minecraft.server.v1_16_R1.Items;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import de.schlichtherle.io.FileWriter;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 import com.google.gson.Gson;
@@ -61,6 +64,10 @@ public class TournamentHandler {
 
     public static List<PlayerData> getPlayerDatas() { return playerDatas; }
 
+    public static void createTournament(String name, List<Arena> arenas) {
+        tournaments.add(new Tournament(name, arenas));
+    }
+
     /**
      * Save player data to disk
      * @param data
@@ -72,10 +79,8 @@ public class TournamentHandler {
         try{
             if(!actFile.exists())
                 actFile.createNewFile();
-            
-            BufferedWriter writer = new BufferedWriter(new FileWriter(actFile.getPath(), true));
-            writer.write(output);
-            writer.close();
+
+            Files.write(actFile.toPath(), output.getBytes());
         }
         catch(Exception ex) {
             Matrix.getPlugin().getLogger().info("Could not save tournament Player data of " + data.getPlayer().getName());
@@ -91,7 +96,7 @@ public class TournamentHandler {
                 try {
                     Scanner sc = new Scanner(f);
                     sc.useDelimiter("\\Z");
-                    arenas.add(new Gson().fromJson(sc.next(), Arena.class));
+                    arenas.add(Arena.fromSaveArena(new Gson().fromJson(sc.next(), SaveArena.class)));
                     sc.close();
                 } catch(Exception ex) {
                     Matrix.getPlugin().getLogger().info("Could not load " + f.getName());
@@ -104,21 +109,21 @@ public class TournamentHandler {
      * Saves arena to disk
      * @param toSave
      */
-    public static boolean saveArena(Arena toSave) {
+    public static boolean saveArena(Arena toSave, Player saver) {
         if(toSave.getSpawnPoint1() == null || toSave.getSpawnPoint2() == null || toSave.getSpectatorPoint() == null) {
             return false;
         }
 
-        String output = new Gson().toJson(toSave);
+        String output = new Gson().toJson(Arena.toSaveArena(toSave));
         File actFile = new File(arena_data, toSave.getName() + ".json");
 
         try{
             if(!actFile.exists())
                 actFile.createNewFile();
-            
-            BufferedWriter writer = new BufferedWriter(new FileWriter(actFile.getPath(), true));
-            writer.write(output);
-            writer.close();
+
+            Files.write(actFile.toPath(), output.getBytes());
+            arenas.add(toSave);
+            arenasInCreation.remove(saver);
             return true;
         }
         catch(Exception ex) {
@@ -173,6 +178,15 @@ public class TournamentHandler {
         for(Tournament t : tournaments) {
             if(t.getName().equalsIgnoreCase(arg))
                 return t;
+        }
+
+        return null;
+    }
+
+    public static Arena getArena(String arg) {
+        for(Arena ar : arenas) {
+            if(ar.getName().equals(arg))
+                return ar;
         }
 
         return null;
