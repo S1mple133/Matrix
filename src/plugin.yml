@@ -1,15 +1,13 @@
 main: me.s1mple.matrix.Matrix
 name: MatrixPlugin
 version: ${project.version}
-author: SimpleCrash
-depend: [ProjectKorra, AuthMe, SkillsPro, AdvancedAchievements, LibsDisguises, VampireRevamp, LuckPerms, ProtocolLib]
-description: Matrix Abilities.
+author: S1mple, CrashCringle12
+depend: [ProjectKorra, SkillsPro, VampireRevamp, LuckPerms, WorldEdit, LibsDisguises]
+description: Matrix Plugin.
 api-version: 1.13
 commands:
   matrix:
     description: Shows help on the plugin.
-  battlepass:
-    description: Shows battlepass menu.
   arenamanager:
     description: Handles the arena manager
     aliases:

@@ -44,10 +44,11 @@ public class VampireBatSwarm extends ActiveAbility {
 	    SkilledPlayer info = activeCheckup(player);
 	    if (info == null) 
 	    	return;
+
 	    System.out.println("Use Skill successfully triggered");
+
 		if (UPlayer.get(player) != null && UPlayer.get(player).isNosferatu()) {
 			player.performCommand("v batusi");
-			
 		}
 		else {
 			player.sendRawMessage("§cYou are not a Nosferatu Vampire!");

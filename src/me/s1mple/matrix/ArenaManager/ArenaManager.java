@@ -27,20 +27,18 @@ public class ArenaManager {
      */
     private static void LoadArenas() {
         configFile = new File(plugin.getDataFolder(), "arenamanager.yml");
+
         if (!configFile.exists()) {
             plugin.saveResource("arenamanager.yml", false);
         }
+
         config = YamlConfiguration.loadConfiguration(configFile);
 
-        try {
-            int cnt = 0;
-            while(true) {
-                Arena.addArena(new Arena(config.getString("Arenas."+cnt+".Name"), config.getString("Arenas."+cnt+".Schematic"),
-                        new Location(plugin.getServer().getWorld(config.getString("Arenas."+cnt+".World")), config.getDouble("Arenas."+cnt+".X"), config.getDouble("Arenas."+cnt+".Y"), config.getDouble("Arenas."+cnt+".Z"))));
-                cnt++;
-            }
-        } catch (Exception ex) {
-            plugin.getLogger().info("Loaded Arenas!");
+        int cnt = 0;
+        while(config.get("Arenas."+cnt+".Name") != null) {
+            Arena.addArena(new Arena(config.getString("Arenas."+cnt+".Name"), config.getString("Arenas."+cnt+".Schematic"),
+                    new Location(plugin.getServer().getWorld(config.getString("Arenas."+cnt+".World")), config.getDouble("Arenas."+cnt+".X"), config.getDouble("Arenas."+cnt+".Y"), config.getDouble("Arenas."+cnt+".Z"))));
+            cnt++;
         }
     }
 

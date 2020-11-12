@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 
 public class AMCommand implements CommandExecutor {
     private Matrix plugin;
+
     private String helpMessage = ChatColor.BLUE + "/am create <schematic_name> <name>: " + ChatColor.AQUA + " Creates arena (IMPORTANT: )\n" +
             ChatColor.AQUA + "1. Create a schematic and note the name. "+
             ChatColor.AQUA + "1a. (you can skip this step if the schematic already exists) "+

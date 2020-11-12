@@ -1,4 +1,4 @@
-package Utils;
+package me.s1mple.matrix.Util;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;

@@ -1,7 +1,6 @@
 package me.s1mple.matrix;
 
-import com.projectkorra.projectkorra.ProjectKorra;
-import com.projectkorra.projectkorra.configuration.Config;
+
 import me.s1mple.matrix.Matrix;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -18,7 +17,6 @@ import java.util.Arrays;
 
 public class ConfigManager {
     private final Matrix plugin;
-    private final ProjectKorra pk;
     private final FileConfiguration config;
     private final File configFile;
 
@@ -26,7 +24,6 @@ public class ConfigManager {
         this.plugin = plugin;
         this.configFile = new File(plugin.getDataFolder(), "bending.yml");
         this.config = YamlConfiguration.loadConfiguration(this.configFile);
-        this.pk = ProjectKorra.plugin;
 
         createDefaultConfigFile();
         //changePKConfig();
@@ -108,27 +105,6 @@ public class ConfigManager {
         config.addDefault("Abilities.MatrixPassive.Enabled", true);
         saveConfig();
     }
-
-    /**
-     * Change ProjectKorra config
-     */
-    /*private void changePKConfig() {
-        Config pConf = com.projectkorra.projectkorra.configuration.ConfigManager.languageConfig;
-        FileConfiguration pkConf = pConf.get();
-        String bendingColor = pkConf.getString("Chat.Colors.Matrix");
-        String bendingPrefix = pkConf.getString("Chat.Prefixes.Matrix");
-        String matrixBendingColor = getBendingColor();
-        String matrixBendingPrefix = getBendingPrefix();
-
-        if(((bendingColor.length() > 0) && (bendingPrefix.length() > 0) && (bendingColor.equals(matrixBendingColor) && bendingPrefix.equals(matrixBendingPrefix)))) {
-                pkConf.options().copyDefaults(true);
-                pkConf.addDefault("Chat.Colors.Matrix", matrixBendingColor);
-                pkConf.addDefault("Chat.Prefixes.Matrix", matrixBendingPrefix);
-                pConf.save();
-                pConf.reload();
-        }
-    }
-    */
 
     /**
      * @return Chat Color of a MatrixBender
