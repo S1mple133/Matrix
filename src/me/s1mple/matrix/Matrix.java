@@ -1,36 +1,24 @@
 package me.s1mple.matrix;
 
-import Utils.Glow;
-
 import com.clanjhoo.vampire.VampireRevamp;
-import com.projectkorra.projectkorra.ability.CoreAbility;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 import me.libraryaddict.disguise.LibsDisguises;
-import me.s1mple.matrix.Abilities.MatrixElement;
 import me.s1mple.matrix.ArenaManager.ArenaManager;
-import me.s1mple.matrix.BattlePass.BattlePass;
-import me.s1mple.matrix.BattlePass.Data.UserData;
-import me.s1mple.matrix.BattlePass.command.Battlepass;
 import me.s1mple.matrix.Raid.RaidListener;
-import me.s1mple.matrix.Util.DBManager;
+import me.s1mple.matrix.Util.Glow;
 import me.s1mple.matrix.Util.Util;
-import me.s1mple.matrix.listener.AbilityListener;
-import me.s1mple.matrix.listener.PermsListener;
-import me.s1mple.matrix.listener.SkillsListener;
-import me.s1mple.matrix.slide.Slide;
+import me.s1mple.matrix.Listener.PermsListener;
+import me.s1mple.matrix.Listener.SkillsListener;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.skills.api.SkillsAPI;
 import org.skills.main.SkillsPro;
 import skinsrestorer.bukkit.SkinsRestorer;
 import me.s1mple.matrix.Skills.Werewolf;
@@ -46,7 +34,6 @@ public class Matrix extends JavaPlugin {
     public static AbilityManager abilityManager;
     public static String version = "1.10";
     public static String author = "S1mpleCrash";
-    private DBManager dbManager;
     private SkinsRestorer skinApi;
     private WorldEditPlugin worldEditPlugin;
     private SkillsPro skillsapi;
@@ -60,7 +47,7 @@ public class Matrix extends JavaPlugin {
         this.plugin = this;
         this.configManager = new ConfigManager(this);
         this.abilityManager = new AbilityManager(this);
-        this.dbManager = new DBManager("jdbc:mysql://localhost:6915/battlepass?useSSL=false", "root", "MatrixNtw1226!");
+
         this.skinApi = ((SkinsRestorer) plugin.getServer().getPluginManager().getPlugin("SkinsRestorer"));
         this.worldEditPlugin = ((WorldEditPlugin) plugin.getServer().getPluginManager().getPlugin("WorldEdit"));
         this.skillsapi = ((SkillsPro) plugin.getServer().getPluginManager().getPlugin("SkillsPro"));
@@ -82,10 +69,13 @@ public class Matrix extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("me.s1mple.matrix.Matrix plugin is stopping...");
+        getLogger().info("MatrixPlugin is stopping...");
         this.plugin.saveConfig();
     }
 
+    /**
+     * Add glow effect
+     */
     public void registerGlow() {
         try {
             Field f = Enchantment.class.getDeclaredField("acceptingNew");
@@ -177,16 +167,6 @@ public class Matrix extends JavaPlugin {
                         }
                     }
                 }
-                else if(args[0].equalsIgnoreCase("premium") && args.length == 2 && sender.hasPermission("matrix.premium")) {
-                    if(Bukkit.getServer().getPlayer(args[1]) != null) {
-                        UserData.GetUserData(args[1]).makePremium();
-                        sender.sendMessage(ChatColor.GREEN + "Made " + args[1] + "'s battlepass premium.");
-                    }
-                    else {
-                        sender.sendMessage(ChatColor.RED + "Player doesnt exist!");
-                        return false;
-                    }
-                }
             }
         }
         sender.sendMessage(ChatColor.RED + "Unknown command! Use /matrix help");
@@ -216,9 +196,6 @@ public class Matrix extends JavaPlugin {
         return plugin;
     }
 
-    public DBManager getDbManager() {
-        return dbManager;
-    }
     public VampireRevamp getRevamp() {
     	return revamp;
     }

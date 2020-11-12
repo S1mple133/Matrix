@@ -1,4 +1,4 @@
-package me.s1mple.matrix.listener;
+package me.s1mple.matrix.Listener;
 
 import me.s1mple.matrix.Matrix;
 import me.s1mple.matrix.Util.Util;
@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;

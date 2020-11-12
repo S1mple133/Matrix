@@ -6,7 +6,7 @@
 
 	<groupId>MatrixBending</groupId>
 	<artifactId>MatrixPlugin</artifactId>
-	<version>1.4.1</version>
+	<version>1.4.2</version>
 
 	<!--Repositories -->
 	<repositories>
@@ -37,15 +37,13 @@
 	</repositories>
 
 
-	<!--Dependencies -->
 	<dependencies>
-		<!-- LibsDisguises -->
 		<dependency>
 			<groupId>LibsDisguises</groupId>
 			<artifactId>LibsDisguises</artifactId>
 			<version>10.0.15</version>
 		</dependency>
-		<!--Spigot -->
+
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
@@ -53,7 +51,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!--ProjectKorra -->
 		<dependency>
 			<groupId>com.github.ProjectKorra</groupId>
 			<artifactId>ProjectKorra</artifactId>
@@ -72,7 +69,7 @@
 			<artifactId>skills</artifactId>
 			<version>1.8.9</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/Utils/SkillsPro.jar</systemPath>
+			<systemPath>${project.basedir}/util/SkillsPro.jar</systemPath>
 		</dependency>
 
 		<dependency>
@@ -80,20 +77,21 @@
 			<artifactId>factions</artifactId>
 			<version>1.8.9</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/Utils/Factions.jar</systemPath>
+			<systemPath>${project.basedir}/util/Factions.jar</systemPath>
 		</dependency>
-		<!-- SkinsRestorer API -->
+
 		<dependency>
 			<groupId>com</groupId>
 			<artifactId>skinsrestorer</artifactId>
 			<version>13.7.5-SNAPSHOT</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.vampirerevamp</groupId>
 			<artifactId>vampirerevamp</artifactId>
 			<version>1.0.3</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/Utils/VampireRevamp.jar</systemPath>
+			<systemPath>${project.basedir}/util/VampireRevamp.jar</systemPath>
 		</dependency>
 
 		<dependency>
@@ -102,17 +100,11 @@
 			<version>5.1</version>
 			<scope>provided</scope>
 		</dependency>
-	<dependency>
-		<groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-		<version>8.0.16</version>
-	</dependency>
 
 		<dependency>
-			<groupId>fr.xephi</groupId>
-			<artifactId>authme</artifactId>
-			<version>5.6.0-SNAPSHOT</version>
-			<scope>provided</scope>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.16</version>
 		</dependency>
 
 		<dependency>
@@ -120,15 +112,6 @@
 			<artifactId>worldedit-bukkit</artifactId>
 			<version>7.1.0-SNAPSHOT</version>
 		</dependency>
-
-		<dependency>
-			<groupId>com.awe</groupId>
-			<artifactId>awe</artifactId>
-			<version>LATEST</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/Utils/AsyncWorldEdit-3.6.19.jar</systemPath>
-		</dependency>
-
 	</dependencies>
 
 	<build>
