@@ -13,7 +13,6 @@ public class Round {
         this.playerData1 = playerData1;
         this.playerData2 = playerData2;
         this.roundId = id;
-        this.arena = arena;
     }
 
     public PlayerData getPlayerData1() {
@@ -33,5 +32,8 @@ public class Round {
         this.arena = arena;
         TournamentHandler.playersInGame.put(playerData1.getPlayer(), t);
         TournamentHandler.playersInGame.put(playerData2.getPlayer(), t);
+
+        playerData1.getPlayer().teleport(arena.getSpawnPoint1());
+        playerData2.getPlayer().teleport(arena.getSpawnPoint2());
     }
 }

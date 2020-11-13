@@ -4,6 +4,7 @@ import me.s1mple.matrix.Matrix;
 import me.s1mple.matrix.Tournament.CommandHandler.TournamentCommandHandler;
 import me.s1mple.matrix.Tournament.Data.*;
 
+import me.s1mple.matrix.Tournament.Listener.TournamentListener;
 import net.minecraft.server.v1_16_R1.Items;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -171,6 +172,8 @@ public class TournamentHandler {
         playerDatas = new TreeSet<>();
         playersInGame = new HashMap<>();
         arenasInCreation = new HashMap<>();
+
+        plugin.getServer().getPluginManager().registerEvents(new TournamentListener(), plugin);
         loadArenas();
     }
 
@@ -207,7 +210,7 @@ public class TournamentHandler {
         Round round;
 
         for(Tournament t : TournamentHandler.getTournaments()) {
-            round = t.getRoundOfPlayerData(pd);
+            round = t.getRoundOfPlayer(pd.getPlayer());
 
             if(round != null) {
                 t.finishRound(participator);

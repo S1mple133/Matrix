@@ -87,9 +87,18 @@ public class Tournament {
      * @param looser
      */
     public void finishRound(Player looser) {
-        Round toRemove = getRoundOfPlayerData(TournamentHandler.loadPlayerData(looser));
-        PlayerData winnerData = toRemove.getPlayerData1().getPlayer().equals(looser) ? toRemove.getPlayerData2() : toRemove.getPlayerData1();
-        Player winner = toRemove.getPlayerData1().getPlayer().equals(looser) ? toRemove.getPlayerData2().getPlayer() : toRemove.getPlayerData1().getPlayer();
+        Round toRemove = getRoundOfPlayer(looser);
+        PlayerData winnerData;
+        Player winner;
+
+        if(toRemove.getPlayerData1().getPlayer().equals(looser)) {
+            winnerData = toRemove.getPlayerData2();
+            winner = toRemove.getPlayerData2().getPlayer();
+        }
+        else {
+            winnerData = toRemove.getPlayerData1();
+            winner = toRemove.getPlayerData1().getPlayer();
+        }
 
         server.broadcastMessage(String.format(Messages.ROUND_WON, winner.getName(), looser.getName()));
         looser.sendMessage(Messages.LOOSER_MESSAGE);
@@ -101,34 +110,38 @@ public class Tournament {
         TournamentHandler.playersInGame.remove(winner);
         TournamentHandler.playersInGame.remove(looser);
 
+        winnerData.leftTournament();
+        PlayerData looserData = TournamentHandler.getPlayerData(looser);
+        looserData.leftTournament();
+
         // Free arena
-        if(toRemove != null) {
-            toRemove.getArena().freeArena();
-            freeArenas.add(toRemove.getArena());
-            rounds.remove(toRemove);
-        }
+        toRemove.getArena().freeArena();
+        freeArenas.add(toRemove.getArena());
+        rounds.remove(toRemove);
 
         // Set tournament winner
-        if(round == rounds.size() && actRoundWinners.size() == 0) {
+        if(round >= rounds.size() && actRoundWinners.size() == 1) {
             TournamentHandler.loadPlayerData(winner).wonTournament();
             server.broadcastMessage(String.format(Messages.TOURNAMENT_WON, winner.getName()));
             // Start losers tournament
+            // TODO: Fix loosers tournament
             server.broadcastMessage(String.format(Messages.STARTING_LOSERS_TOURNAMENT));
             orderPairs(losers);
         }
         // Start new layer of battles
         else if(round == rounds.size()) {
+            // TODO: Test out with more layers of players, More Arenas
             orderPairs(actRoundWinners);
             actRoundWinners.clear();
         }
 
         TournamentHandler.savePlayerData(winnerData);
-        TournamentHandler.savePlayerData(TournamentHandler.getPlayerData(looser));
+        TournamentHandler.savePlayerData(looserData);
     }
 
-    public Round getRoundOfPlayerData(PlayerData winnerData) {
+    public Round getRoundOfPlayer(Player winner) {
         for (Round round : rounds) {
-            if (round.getPlayerData1().equals(winnerData) || round.getPlayerData2().equals(winnerData)) {
+            if (round.getPlayerData1().getPlayer().equals(winner) || round.getPlayerData2().getPlayer().equals(winner)) {
                 return round;
             }
         }

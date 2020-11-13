@@ -1,14 +1,17 @@
 package me.s1mple.matrix.Tournament.Data;
 
+import me.s1mple.matrix.Matrix;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 public class PlayerData implements Comparable<PlayerData> {
     private int roundsWon;
     private int tournamentsWon;
     private int roundsLost;
-    private Player player;
+    private UUID player;
     private int participatedInTournaments;
     private boolean isInTournament;
 
@@ -16,7 +19,7 @@ public class PlayerData implements Comparable<PlayerData> {
         this.roundsLost = roundsLost;
         this.tournamentsWon = tournamentsWon;
         this.roundsWon = roundsWon;
-        this.player = player;
+        this.player = player.getUniqueId();
         this.participatedInTournaments = participatedInTournaments;
         isInTournament = false;
     }
@@ -47,7 +50,7 @@ public class PlayerData implements Comparable<PlayerData> {
     }
 
     public Player getPlayer() {
-        return player;
+        return Matrix.getPlugin().getServer().getPlayer(player);
     }
 
     private double killDeathRate() {
