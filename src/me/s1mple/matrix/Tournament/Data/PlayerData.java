@@ -10,6 +10,7 @@ public class PlayerData implements Comparable<PlayerData> {
     private int roundsLost;
     private Player player;
     private int participatedInTournaments;
+    private boolean isInTournament;
 
     public PlayerData(Player player, int roundsLost, int tournamentsWon, int roundsWon, int participatedInTournaments) {
         this.roundsLost = roundsLost;
@@ -17,6 +18,7 @@ public class PlayerData implements Comparable<PlayerData> {
         this.roundsWon = roundsWon;
         this.player = player;
         this.participatedInTournaments = participatedInTournaments;
+        isInTournament = false;
     }
 
     public void wonTournament() {
@@ -25,6 +27,7 @@ public class PlayerData implements Comparable<PlayerData> {
 
     public void joinedTournament() {
         this.participatedInTournaments++;
+        isInTournament = true;
     }
 
     public void lostRound() {
@@ -66,5 +69,13 @@ public class PlayerData implements Comparable<PlayerData> {
     @Override
     public int compareTo(@NotNull PlayerData o) {
         return (int) Math.round(killDeathRate() - o.killDeathRate());
+    }
+
+    public boolean inTournament() {
+        return isInTournament;
+    }
+
+    public void leftTournament() {
+        isInTournament = false;
     }
 }

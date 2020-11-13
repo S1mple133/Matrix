@@ -11,6 +11,7 @@ public class Arena {
     private Location spectatorPoint;
 
     private boolean isAvailable;
+    private boolean isReserved; // Used by tournament
 
     private String name;
 
@@ -18,6 +19,7 @@ public class Arena {
         this.spawnPoint1 = spawnPoint1;
         this.spawnPoint2 = spawnPoint2;
         this.spectatorPoint = spectatorPoint;
+        this.isReserved = false;
         isAvailable = true;
         this.name = name;
     }
@@ -101,5 +103,13 @@ public class Arena {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isReserved() {
+        return isReserved;
+    }
+
+    public void reserve() {
+        this.isReserved = true;
     }
 }

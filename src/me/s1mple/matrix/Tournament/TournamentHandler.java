@@ -2,11 +2,8 @@ package me.s1mple.matrix.Tournament;
 
 import me.s1mple.matrix.Matrix;
 import me.s1mple.matrix.Tournament.CommandHandler.TournamentCommandHandler;
-import me.s1mple.matrix.Tournament.Data.PlayerData;
-import me.s1mple.matrix.Tournament.Data.Arena;
+import me.s1mple.matrix.Tournament.Data.*;
 
-import me.s1mple.matrix.Tournament.Data.SaveArena;
-import me.s1mple.matrix.Tournament.Data.Tournament;
 import net.minecraft.server.v1_16_R1.Items;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -28,7 +25,7 @@ public class TournamentHandler {
     private static File arena_data;
 
     private static List<Arena> arenas;
-    private static List<PlayerData> playerDatas;
+    private static TreeSet<PlayerData> playerDatas;
     private static List<Tournament> tournaments;
 
     private static HashMap<Player, Arena> arenasInCreation;
@@ -62,9 +59,26 @@ public class TournamentHandler {
 
     public static List<Arena> getArenas() { return arenas; }
 
-    public static List<PlayerData> getPlayerDatas() { return playerDatas; }
+    public static boolean existsTournament(String t) {
+        return getTournament(t) != null;
+    }
+
+    public static List<PlayerData> getPlayerDatas() { return new ArrayList<>(playerDatas); }
+
+    public static PlayerData getPlayerData(Player p) {
+        for (PlayerData data : playerDatas) {
+            if(data.getPlayer().equals(p)) {
+                return data;
+            }
+        }
+
+        return loadPlayerData(p);
+    }
 
     public static void createTournament(String name, List<Arena> arenas) {
+        for (Arena a : arenas) {
+            a.reserve();
+        }
         tournaments.add(new Tournament(name, arenas));
     }
 
@@ -154,7 +168,7 @@ public class TournamentHandler {
 
         arenas = new ArrayList<>();
         tournaments = new ArrayList<>();
-        playerDatas = new ArrayList<>();
+        playerDatas = new TreeSet<>();
         playersInGame = new HashMap<>();
         arenasInCreation = new HashMap<>();
         loadArenas();
@@ -183,10 +197,38 @@ public class TournamentHandler {
         return null;
     }
 
+    /**
+     * When a participator does /tt leave
+     * @param participator
+     */
+    public static void removeParticipatorFromTournament(Player participator) {
+        PlayerData pd = TournamentHandler.loadPlayerData(participator);
+        pd.leftTournament();
+        Round round;
+
+        for(Tournament t : TournamentHandler.getTournaments()) {
+            round = t.getRoundOfPlayerData(pd);
+
+            if(round != null) {
+                t.finishRound(participator);
+                break;
+            }
+        }
+    }
+
     public static Arena getArena(String arg) {
         for(Arena ar : arenas) {
             if(ar.getName().equals(arg))
                 return ar;
+        }
+
+        return null;
+    }
+
+    public static Tournament getTournamentOfPlayer(Player sender) {
+        for (Tournament t : tournaments) {
+            if(t.hasParticipator(sender))
+                return t;
         }
 
         return null;

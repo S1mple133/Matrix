@@ -25,7 +25,7 @@ public class TournamentListener implements Listener {
 
         for (PlayerData pd : data) {
             if (pd.getPlayer().equals(event.getPlayer())) {
-                Tournament.removeParticipator(event.getPlayer());
+                TournamentHandler.removeParticipatorFromTournament(event.getPlayer());
                 TournamentHandler.getPlayerDatas().remove(pd);
                 break;
             }

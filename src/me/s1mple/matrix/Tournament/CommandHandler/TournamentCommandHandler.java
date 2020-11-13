@@ -1,5 +1,6 @@
 package me.s1mple.matrix.Tournament.CommandHandler;
 
+import me.s1mple.matrix.Tournament.Data.PlayerData;
 import me.s1mple.matrix.Tournament.Data.Tournament;
 import me.s1mple.matrix.Tournament.Data.Arena;
 import me.s1mple.matrix.Tournament.TournamentHandler;
@@ -17,14 +18,15 @@ public class TournamentCommandHandler implements CommandExecutor {
             "&a * /tournament info <TournamentName> &b Shows tournament info\n" +
             "&a * /tournament help &b Shows the help page\n" +
             "&a * /tournament leave &b Leave the tournament\n" +
-            "&a * To join a tournament, wait until an admin starts one and then do /warp tournament.");
+//            "&a * To join a tournament, wait until an admin starts one and then do /warp tournament.\n"+
+            "&a * /tournament join <TournamentName> &b joins tournament");
     private String helpMessageAdmin = ChatColor.translateAlternateColorCodes('&', "&a * /tt arena create <Name> <SchemFileName> &b Starts an arena creation session. You need to be on the place where the schem file will be pasted. \n" +
             "&a * /tt arena setspawnpoint1 &bSets first spawnpoint\n" +
             "&a * /tt arena setspawnpoint2 &bSets second spawnpoint\n" +
             "&a * /tt arena setspectatorpoint &bSets spectator spawnpoint\n" +
             "&a * /tt arena save &bSaves arena\n" +
             "&a * /tt arena list &bLists arenas\n" +
-            "&a * /tt prepare <Arena> <TournamentName> &bStarts tournament, waiting for people to join\n" +
+            "&a * /tt prepare <Arenas> <TournamentName> &bStarts tournament, waiting for people to join ex. /tt prepare MyArena1,MyArena2 MyTournamentName\n" +
             "&a * /tt start <TournamentName> &bStarts tournament.");
 
     @Override
@@ -38,10 +40,11 @@ public class TournamentCommandHandler implements CommandExecutor {
         ##/tt arena setspectatorpoint tournament.admin set spectator spawnpoint of arena, needs to be in session
         ##/tt arena save tournament.admin saves arena
         ##/tt arena list tournament.admin list arenas
-        /tt prepare <Arena> <TournamentName> tournament.admin Prepares arena (should be used before adding players)
+        ##/tt prepare <Arena> <TournamentName> tournament.admin Prepares arena (should be used before adding players)
         ## /tt start TournamentName tournament.admin starts tournament, sends �Do /tt accept to join the tournament� to the first set of players
         /tt prize add <TournamentsWon> <Command> %winner% as placeholder for winner name
-        /tt leave Leave arena
+        ##/tt leave Leave arena
+        ##/tt join <TournamentName>
          */
 
         if(!command.getName().equalsIgnoreCase("tournament"))
@@ -64,19 +67,46 @@ public class TournamentCommandHandler implements CommandExecutor {
 
                 return true;
             }
-        }
-        else if(args.length == 2) {
-            if(args[0].equalsIgnoreCase("start") && sender.hasPermission("tournament.admin")) {
-                for(Tournament t : TournamentHandler.getTournaments()) {
-                    if(t.getName().equalsIgnoreCase(args[1]) && !t.started()) {
-                        t.startRound();
-                        sender.sendMessage(ChatColor.RED + "Tournament started!");
-                        return true;
-                    }
+            else if(args[0].equalsIgnoreCase("leave")) {
+                PlayerData pd = TournamentHandler.getPlayerData((Player)sender);
+                if(pd == null || !pd.inTournament()) {
+                    sender.sendMessage(ChatColor.RED + "You're not partitipating in any tournament");
+                    return false;
                 }
 
-                sender.sendMessage(ChatColor.RED + "Could not start tournament! It either doesnt exist or it was already started.");
-                return false;
+                TournamentHandler.removeParticipatorFromTournament((Player)sender);
+                sender.sendMessage(ChatColor.RED + "You left the tournament!");
+                return true;
+            }
+        }
+        else if(args.length == 2) {
+            if(args[0].equalsIgnoreCase("join")) {
+                if(!TournamentHandler.existsTournament(args[1])) {
+                    sender.sendMessage(ChatColor.RED + "Tournament " + args[1] + " does not exist.");
+                    return false;
+                }
+                else if(TournamentHandler.getPlayerData((Player) sender).inTournament()) {
+                    sender.sendMessage(ChatColor.RED + "You are already participating in a tournament!");
+                    return false;
+                }
+
+                TournamentHandler.getTournament(args[1]).addParticipator((Player) sender);
+                sender.sendMessage(ChatColor.GREEN + "Successfully joined " + args[1]);
+                return true;
+            }
+            if(args[0].equalsIgnoreCase("start") && sender.hasPermission("tournament.admin")) {
+                Tournament t = TournamentHandler.getTournament(args[1]);
+
+                if(t == null || t.started()) {
+                    sender.sendMessage(ChatColor.RED + "Could not start tournament! It either doesnt exist or it was already started.");
+                    return false;
+                }
+
+                if(t.startRound())
+                    sender.sendMessage(ChatColor.GREEN + "Tournament started!");
+                else
+                    sender.sendMessage(ChatColor.RED + "Could not start tournament! Player amount not even");
+                return true;
             }
             else if(args[0].equalsIgnoreCase("info")) {
                 Tournament t = TournamentHandler.getTournament(args[1]);
@@ -136,13 +166,31 @@ public class TournamentCommandHandler implements CommandExecutor {
                 }
             }
         }
+        else if(args.length == 3 && sender.hasPermission("tournament.admin") && args[0].equalsIgnoreCase("prepare")) {
+            String[] arenaNames = args[1].split(",");
+            List<Arena> arenas = new ArrayList<>();
+
+            for(String arenaName : arenaNames) {
+                if(TournamentHandler.getArena(arenaName) == null || TournamentHandler.getArena(arenaName).isReserved()) {
+                    sender.sendMessage(ChatColor.RED + "Arena " + arenaName + "doesnt exist or is not available !");
+                    return false;
+                }
+                else {
+                    arenas.add(TournamentHandler.getArena(arenaName));
+                }
+            }
+
+            TournamentHandler.createTournament(args[2], arenas);
+            sender.sendMessage(ChatColor.GREEN + "Arena Preparation started!");
+            return true;
+        }
         else if(args.length == 4  && sender.hasPermission("tournament.admin") && args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("prepare")) {
             sender.sendMessage(ChatColor.RED + String.format("You started creation of %s", args[2]));
             TournamentHandler.createArenaInCreation((Player)sender, new Arena(args[2]));
             return true;
         }
 
-        sender.sendMessage(ChatColor.RED + "Unknown command! Use /tt help for help.");
+        sender.sendMessage(ChatColor.RED + "Unknown command or wrong syntax! Use /tt help for help.");
 
 
         /*

@@ -3,6 +3,7 @@ package me.s1mple.matrix.Tournament.Data;
 import me.s1mple.matrix.Matrix;
 import me.s1mple.matrix.Tournament.Messages;
 import me.s1mple.matrix.Tournament.TournamentHandler;
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -62,7 +63,22 @@ public class Tournament {
      */
     @Override
     public String toString() {
-        throw new NotImplementedException();
+        StringBuilder participatorPl = new StringBuilder();
+        StringBuilder arenasPl = new StringBuilder();
+
+        for (PlayerData p : participators) {
+            participatorPl.append(ChatColor.DARK_GREEN + " * " + ChatColor.GREEN).append(p.getPlayer().getName()).append("\n");
+        }
+
+        for(Arena a : freeArenas) {
+            arenasPl.append(ChatColor.DARK_GREEN + " * " + ChatColor.GREEN).append(a.getName()).append("\n");
+        }
+
+        return ChatColor.DARK_GREEN + "===== " + ChatColor.GREEN +getName() + ChatColor.DARK_GREEN + " =====\n" +
+                ChatColor.DARK_GREEN + "Participators\n" +
+                participatorPl +
+                ChatColor.DARK_GREEN + "Arenas\n" +
+                arenasPl;
     }
 
     /**
@@ -105,9 +121,12 @@ public class Tournament {
             orderPairs(actRoundWinners);
             actRoundWinners.clear();
         }
+
+        TournamentHandler.savePlayerData(winnerData);
+        TournamentHandler.savePlayerData(TournamentHandler.getPlayerData(looser));
     }
 
-    private Round getRoundOfPlayerData(PlayerData winnerData) {
+    public Round getRoundOfPlayerData(PlayerData winnerData) {
         for (Round round : rounds) {
             if (round.getPlayerData1().equals(winnerData) || round.getPlayerData2().equals(winnerData)) {
                 return round;
@@ -139,30 +158,16 @@ public class Tournament {
      */
     public boolean addParticipator(Player participator) {
         PlayerData data = TournamentHandler.loadPlayerData(participator);
+        data.joinedTournament();
+
+        if(freeArenas.size() != 0)
+            participator.teleport(freeArenas.get(0).getSpectatorPoint());
 
         if(participators.contains(data))
             return false;
 
         participators.add(data);
         return true;
-    }
-
-    /**
-     * When a participator does /tt leave
-     * @param participator
-     */
-    public static void removeParticipator(Player participator) {
-        PlayerData pd = TournamentHandler.loadPlayerData(participator);
-        Round round;
-
-        for(Tournament t : TournamentHandler.getTournaments()) {
-            round = t.getRoundOfPlayerData(pd);
-
-            if(round != null) {
-                t.finishRound(participator);
-                break;
-            }
-        }
     }
 
     /**
@@ -189,5 +194,14 @@ public class Tournament {
 
     public boolean started() {
         return getRound() != -1;
+    }
+
+    public boolean hasParticipator(Player sender) {
+        for(PlayerData p : participators) {
+            if(p.getPlayer().equals(sender))
+                return true;
+        }
+
+        return false;
     }
 }
