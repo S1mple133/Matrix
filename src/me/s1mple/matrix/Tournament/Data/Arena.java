@@ -9,31 +9,35 @@ public class Arena {
     private Location spawnPoint1;
     private Location spawnPoint2;
     private Location spectatorPoint;
+    private Location schemPasteLoc;
 
     private boolean isAvailable;
     private boolean isReserved; // Used by tournament
 
     private String name;
+    private String schem;
 
-    public Arena(Location spawnPoint1, Location spawnPoint2, Location spectatorPoint, String name) {
+    public Arena(Location spawnPoint1, Location spawnPoint2, Location spectatorPoint, String name, String schem, Location schemPasteLoc) {
         this.spawnPoint1 = spawnPoint1;
         this.spawnPoint2 = spawnPoint2;
         this.spectatorPoint = spectatorPoint;
         this.isReserved = false;
         isAvailable = true;
         this.name = name;
+        this.schemPasteLoc = schemPasteLoc;
+        this.schem = schem;
     }
 
     public static SaveArena toSaveArena(Arena arena) {
-        return new SaveArena(arena.getSpawnPoint1().serialize(), arena.getSpawnPoint2().serialize(), arena.getSpectatorPoint().serialize(), arena.name);
+        return new SaveArena(arena.getSpawnPoint1().serialize(), arena.getSpawnPoint2().serialize(), arena.getSpectatorPoint().serialize(), arena.name, arena.schem, arena.getSchemPasteLoc().serialize());
     }
 
     public static Arena fromSaveArena(SaveArena arena) {
-        return new Arena(Location.deserialize(arena.getSpawnpoint1()), Location.deserialize(arena.getSpawnpoint2()), Location.deserialize(arena.getSpectatorPoint()), arena.getName());
+        return new Arena(Location.deserialize(arena.getSpawnpoint1()), Location.deserialize(arena.getSpawnpoint2()), Location.deserialize(arena.getSpectatorPoint()), arena.getName(), arena.getSchem(), Location.deserialize(arena.getSchemPasteLoc()));
     }
 
-    public Arena(String name) {
-        this(null, null, null, name);
+    public Arena(String name, String schem, Location schemPasteLoc) {
+        this(null, null, null, name, schem, schemPasteLoc);
     }
 
     /**
@@ -59,13 +63,21 @@ public class Arena {
         return spawnPoint1;
     }
 
+    public String getSchemName() {
+        return schem;
+    }
+
+    public Location getSchemPasteLoc() {
+        return schemPasteLoc;
+    }
+
     /**
      * Sets the arena spawn point 1
      * @return false if location not valid
      * @param spawnPoint1
      */
     public boolean setSpawnPoint1(Location spawnPoint1) {
-        if(getSpawnPoint2() == null ||(getSpawnPoint2() != null && getSpawnPoint2().getWorld().equals(spawnPoint1.getWorld()))) {
+        if(getSpawnPoint1() == null ||(getSpawnPoint2() != null && getSpawnPoint2().getWorld().equals(spawnPoint1.getWorld()))) {
             this.spawnPoint1 = spawnPoint1;
         }
 
@@ -111,5 +123,9 @@ public class Arena {
 
     public void reserve() {
         this.isReserved = true;
+    }
+
+    public void unReserve() {
+        this.isReserved = false;
     }
 }

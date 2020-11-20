@@ -23,6 +23,8 @@ public class Tournament {
     private List<PlayerData> losers;
 
     private String Name;
+    private boolean isFirstRound;
+    private boolean isLoosersTournament;
 
     public Tournament(String name, List<Arena> arenas) {
         participators = new ArrayList<>();
@@ -32,6 +34,8 @@ public class Tournament {
         this.rounds = new ArrayList<Round>();
         round = -1;
         this.Name = name;
+        isFirstRound = true;
+        isLoosersTournament = false;
     }
 
     /**
@@ -40,8 +44,7 @@ public class Tournament {
      */
     public boolean startRound() {
         // If first round, order participators and start more rounds (as long as arenas are free)
-        if(round <= 0) {
-            if (participators.size() % 2 != 0) return false;
+        if(round < 0) {
             orderPairs(participators);
         }
 
@@ -104,7 +107,8 @@ public class Tournament {
         looser.sendMessage(Messages.LOOSER_MESSAGE);
 
         actRoundWinners.add(winnerData);
-        losers.add(TournamentHandler.loadPlayerData(looser));
+        if(isFirstRound)
+            losers.add(TournamentHandler.loadPlayerData(looser));
         winnerData.wonRound();
 
         TournamentHandler.playersInGame.remove(winner);
@@ -115,28 +119,56 @@ public class Tournament {
         looserData.leftTournament();
 
         // Free arena
-        toRemove.getArena().freeArena();
+        Arena ar = toRemove.getArena();
+        ar.freeArena();
         freeArenas.add(toRemove.getArena());
-        rounds.remove(toRemove);
+
+        winner.teleport(ar.getSpectatorPoint());
+
+        TournamentHandler.pasteArena(ar);
 
         // Set tournament winner
-        if(round > rounds.size() && actRoundWinners.size() == 1) {
-            TournamentHandler.loadPlayerData(winner).wonTournament();
-            server.broadcastMessage(String.format(Messages.TOURNAMENT_WON, winner.getName()));
-            // Start losers tournament
-            // TODO: Fix loosers tournament
-            server.broadcastMessage(String.format(Messages.STARTING_LOSERS_TOURNAMENT));
-            orderPairs(losers);
+        if(rounds.size() == 1) {
+            if(actRoundWinners.size() == 1) {
+                TournamentHandler.loadPlayerData(winner).wonTournament();
+                if(isLoosersTournament) {
+                    server.broadcastMessage(String.format(Messages.TOURNAMENT_LOOSER_WON, winner.getName()));
+                    end();
+                }
+                else {
+                    isLoosersTournament = true;
+                    server.broadcastMessage(String.format(Messages.TOURNAMENT_WON, winner.getName()));
+                    server.broadcastMessage(String.format(Messages.STARTING_LOSERS_TOURNAMENT));
+                    actRoundWinners.clear();
+                    orderPairs(losers);
+                    startRound();
+                }
+            }
+            else {
+                // TODO: Test out with More Arenas
+                if(isFirstRound)
+                    isFirstRound=false;
+
+                orderPairs(actRoundWinners);
+                actRoundWinners.clear();
+                startRound();
+            }
         }
-        // Start new layer of battles
-        else if(round == rounds.size()) {
-            // TODO: Test out with more layers of players, More Arenas
-            orderPairs(actRoundWinners);
-            actRoundWinners.clear();
+        else {
+            startRound();
         }
 
+        rounds.remove(toRemove);
         TournamentHandler.savePlayerData(winnerData);
         TournamentHandler.savePlayerData(looserData);
+    }
+
+    public void end() {
+        for(Arena ar : freeArenas) {
+            ar.unReserve();
+        }
+
+        TournamentHandler.removeTournament(this);
     }
 
     public Round getRoundOfPlayer(Player winner) {
@@ -158,6 +190,13 @@ public class Tournament {
         round = 0;
         List<PlayerData> toOrder = new ArrayList<>(list);
         Collections.sort(toOrder);
+
+        if(toOrder.size() % 2 != 0) {
+            PlayerData toRemove = toOrder.get(0);
+            Matrix.getPlugin().getServer().broadcastMessage(ChatColor.AQUA + toRemove.getPlayer().getName() + " will skip the round, uneven amount of players.");
+            this.actRoundWinners.add(toRemove);
+            toOrder.remove(toRemove);
+        }
 
         for (int i = 0; i < toOrder.size(); i += 2) {
             rounds.add(new Round(round, toOrder.get(i), toOrder.get(i+1)));

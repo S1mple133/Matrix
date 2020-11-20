@@ -38,6 +38,10 @@
 			<id>ssh-repository</id>
 			<url>scpexe://repository.mycompany.com/repository</url>
 		</repository>
+		<repository>
+			<id>IntellectualSites</id>
+			<url>https://mvn.intellectualsites.com/content/repositories/releases/</url>
+		  </repository>
 	</repositories>
 
 
@@ -106,15 +110,16 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.sk89q.worldedit</groupId>
-			<artifactId>worldedit-bukkit</artifactId>
-			<version>7.1.0-SNAPSHOT</version>
-		</dependency>
+			<groupId>com.intellectualsites.fawe</groupId>
+			<artifactId>FAWE-Bukkit</artifactId>
+			<version>1.16-434</version>
+		  </dependency>
 	</dependencies>
 
 	<build>
 		<defaultGoal>clean package install</defaultGoal>
 		<finalName>${project.name}-${project.version}</finalName>
+		<sourceDirectory>${project.basedir}/src</sourceDirectory>
 		<resources>
 			<resource>
 				<targetPath>.</targetPath>

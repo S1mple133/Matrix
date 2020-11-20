@@ -173,7 +173,7 @@ public class TournamentCommandHandler implements CommandExecutor {
 
             for(String arenaName : arenaNames) {
                 if(TournamentHandler.getArena(arenaName) == null || TournamentHandler.getArena(arenaName).isReserved()) {
-                    sender.sendMessage(ChatColor.RED + "Arena " + arenaName + "doesnt exist or is not available !");
+                    sender.sendMessage(ChatColor.RED + "Arena " + arenaName + " doesnt exist or is not available !");
                     return false;
                 }
                 else {
@@ -183,12 +183,12 @@ public class TournamentCommandHandler implements CommandExecutor {
 
             TournamentHandler.createTournament(args[2], arenas);
             sender.sendMessage(ChatColor.GREEN + "Arena Preparation started!");
-            Matrix.getPlugin().getServer().broadcastMessage(ChatColor.AQUA + "Tournament " + args[2] + "started! Do /tt join " + args[2] + "to join!");
+            Matrix.getPlugin().getServer().broadcastMessage(ChatColor.AQUA + "Tournament " + args[2] + " started! Do /tt join " + args[2] + " to join!");
             return true;
         }
         else if(args.length == 4  && sender.hasPermission("tournament.admin") && args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("create")) {
             sender.sendMessage(ChatColor.RED + String.format("You started creation of %s", args[2]));
-            TournamentHandler.createArenaInCreation((Player)sender, new Arena(args[2]));
+            TournamentHandler.createArenaInCreation((Player)sender, new Arena(args[2], args[3], ((Player)(sender)).getLocation()));
             return true;
         }
 
