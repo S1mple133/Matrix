@@ -120,7 +120,7 @@ public class Tournament {
         rounds.remove(toRemove);
 
         // Set tournament winner
-        if(round >= rounds.size() && actRoundWinners.size() == 1) {
+        if(round > rounds.size() && actRoundWinners.size() == 1) {
             TournamentHandler.loadPlayerData(winner).wonTournament();
             server.broadcastMessage(String.format(Messages.TOURNAMENT_WON, winner.getName()));
             // Start losers tournament

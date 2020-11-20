@@ -34,6 +34,10 @@
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
 		</repository>
+		<repository>
+			<id>ssh-repository</id>
+			<url>scpexe://repository.mycompany.com/repository</url>
+		</repository>
 	</repositories>
 
 
@@ -111,7 +115,6 @@
 	<build>
 		<defaultGoal>clean package install</defaultGoal>
 		<finalName>${project.name}-${project.version}</finalName>
-		<sourceDirectory>${project.basedir}/src/</sourceDirectory>
 		<resources>
 			<resource>
 				<targetPath>.</targetPath>
