@@ -123,7 +123,7 @@ public class Tournament {
         ar.freeArena();
         freeArenas.add(toRemove.getArena());
 
-        winner.teleport(ar.getSpectatorPoint());
+        TournamentHandler.teleportPlayerWithMsg(winner, ar.getSpectatorPoint(), ChatColor.GREEN + "ROUND WON!");
 
         TournamentHandler.pasteArena(ar);
 
@@ -213,7 +213,7 @@ public class Tournament {
         data.joinedTournament();
 
         if(freeArenas.size() != 0)
-            participator.teleport(freeArenas.get(0).getSpectatorPoint());
+            TournamentHandler.teleportPlayerWithMsg(participator, freeArenas.get(0).getSpectatorPoint(), ChatColor.GREEN + "Joining Tournament . . .!");
 
         if(participators.contains(data))
             return false;

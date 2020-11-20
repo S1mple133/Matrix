@@ -7,9 +7,12 @@ import me.s1mple.matrix.Tournament.Data.*;
 import me.s1mple.matrix.Tournament.Listener.TournamentListener;
 import net.minecraft.server.v1_16_R1.Items;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.BufferedWriter;
@@ -32,10 +35,13 @@ import com.sk89q.worldedit.world.World;
 public class TournamentHandler {
     private static File player_data;
     private static File arena_data;
+    private static File extra_data;
 
     private static List<Arena> arenas;
     private static TreeSet<PlayerData> playerDatas;
     private static List<Tournament> tournaments;
+
+    private static Location tournamentLobby;
 
     private static HashMap<Player, Arena> arenasInCreation;
 
@@ -93,6 +99,17 @@ public class TournamentHandler {
             a.reserve();
         }
         tournaments.add(new Tournament(name, arenas));
+    }
+
+    public static boolean saveTournamentLobby(Location lobby) {
+        try {
+            Files.write(extra_data.toPath(), (new Gson()).toJson(lobby.serialize()).getBytes());
+            tournamentLobby = lobby;
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -168,6 +185,24 @@ public class TournamentHandler {
 
         player_data = new File(Matrix.getPlugin().getDataFolder(), "tournaments");
 
+        extra_data = new File(player_data, "extras.yml");
+
+        if(!extra_data.exists()) {
+            try {
+                extra_data.createNewFile();
+                tournamentLobby = null;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                tournamentLobby = Location.deserialize(new Gson().fromJson(Files.readAllLines(extra_data.toPath()).get(0), Map.class));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         if (!player_data.exists())
             player_data.mkdir();
 
@@ -185,6 +220,8 @@ public class TournamentHandler {
         playerDatas = new TreeSet<>();
         playersInGame = new HashMap<>();
         arenasInCreation = new HashMap<>();
+
+
 
         plugin.getServer().getPluginManager().registerEvents(new TournamentListener(), plugin);
         loadArenas();
@@ -267,5 +304,29 @@ public class TournamentHandler {
         }
 
         return null;
+    }
+
+    public static void teleportPlayerWithMsg(Player player, Location teleportTo, String msg) {
+        BukkitTask runnable = new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    player.sendMessage(msg);
+                    player.sendMessage(ChatColor.YELLOW + "Teleporting in 3...");
+                    this.wait(1000);
+                    player.sendMessage(ChatColor.YELLOW + "Teleporting in 2...");
+                    this.wait(1000);
+                    player.sendMessage(ChatColor.YELLOW + "Teleporting in 1...");
+                    this.wait(1000);
+                    player.teleport(teleportTo);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.runTaskAsynchronously(Matrix.getPlugin());
+    }
+
+    public static Location getTournamentLobby() {
+        return tournamentLobby;
     }
 }

@@ -2,6 +2,7 @@ package me.s1mple.matrix.Tournament.Data;
 
 import com.sk89q.worldedit.entity.Player;
 import me.s1mple.matrix.Tournament.TournamentHandler;
+import org.bukkit.ChatColor;
 
 public class Round {
     private PlayerData playerData1;
@@ -33,7 +34,7 @@ public class Round {
         TournamentHandler.playersInGame.put(playerData1.getPlayer(), t);
         TournamentHandler.playersInGame.put(playerData2.getPlayer(), t);
 
-        playerData1.getPlayer().teleport(arena.getSpawnPoint1());
-        playerData2.getPlayer().teleport(arena.getSpawnPoint2());
+        TournamentHandler.teleportPlayerWithMsg(playerData1.getPlayer(), arena.getSpawnPoint1(), ChatColor.AQUA + "You will fight " + playerData2.getPlayer().getName());
+        TournamentHandler.teleportPlayerWithMsg(playerData2.getPlayer(), arena.getSpawnPoint2(), ChatColor.AQUA + "You will fight " + playerData1.getPlayer().getName());
     }
 }

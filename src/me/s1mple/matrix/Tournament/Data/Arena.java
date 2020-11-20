@@ -77,11 +77,11 @@ public class Arena {
      * @param spawnPoint1
      */
     public boolean setSpawnPoint1(Location spawnPoint1) {
-        if(getSpawnPoint1() == null ||(getSpawnPoint2() != null && getSpawnPoint2().getWorld().equals(spawnPoint1.getWorld()))) {
+        if(getSpawnPoint1() == null || (getSpawnPoint2() != null && getSpawnPoint2().getWorld().equals(spawnPoint1.getWorld()))) {
             this.spawnPoint1 = spawnPoint1;
         }
 
-        return this.spawnPoint2 != null;
+        return this.spawnPoint1 != null;
     }
 
     public Location getSpawnPoint2() {

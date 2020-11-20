@@ -27,6 +27,7 @@ public class TournamentCommandHandler implements CommandExecutor {
             "&a * /tt arena setspectatorpoint &bSets spectator spawnpoint\n" +
             "&a * /tt arena save &bSaves arena\n" +
             "&a * /tt arena list &bLists arenas\n" +
+            "&a * /tt setlobby &bSets lobby for tournament\n" +
             "&a * /tt prepare <Arenas> <TournamentName> &bStarts tournament, waiting for people to join ex. /tt prepare MyArena1,MyArena2 MyTournamentName\n" +
             "&a * /tt start <TournamentName> &bStarts tournament.");
 
@@ -42,6 +43,7 @@ public class TournamentCommandHandler implements CommandExecutor {
         ##/tt arena save tournament.admin saves arena
         ##/tt arena list tournament.admin list arenas
         ##/tt prepare <Arena> <TournamentName> tournament.admin Prepares arena (should be used before adding players)
+        /tt setlobby
         ## /tt start TournamentName tournament.admin starts tournament, sends �Do /tt accept to join the tournament� to the first set of players
         /tt prize add <TournamentsWon> <Command> %winner% as placeholder for winner name
         ##/tt leave Leave arena
@@ -77,6 +79,16 @@ public class TournamentCommandHandler implements CommandExecutor {
 
                 TournamentHandler.removeParticipatorFromTournament((Player)sender);
                 sender.sendMessage(ChatColor.RED + "You left the tournament!");
+                return true;
+            }
+            else if(args[0].equalsIgnoreCase("setlobby") && sender.hasPermission("tournament.admin")) {
+                if(TournamentHandler.saveTournamentLobby(((Player)sender).getLocation())) {
+                    sender.sendMessage(ChatColor.GREEN + "Successfully saved lobby!");
+                }
+                else {
+                    sender.sendMessage(ChatColor.RED + "Failed to save lobby!");
+                }
+
                 return true;
             }
         }
@@ -170,6 +182,11 @@ public class TournamentCommandHandler implements CommandExecutor {
         else if(args.length == 3 && sender.hasPermission("tournament.admin") && args[0].equalsIgnoreCase("prepare")) {
             String[] arenaNames = args[1].split(",");
             List<Arena> arenas = new ArrayList<>();
+
+            if(TournamentHandler.getTournamentLobby() == null) {
+                sender.sendMessage(ChatColor.RED + "The tournament lobby is not set! Set it by doin /tt setlobby");
+                return false;
+            }
 
             for(String arenaName : arenaNames) {
                 if(TournamentHandler.getArena(arenaName) == null || TournamentHandler.getArena(arenaName).isReserved()) {
