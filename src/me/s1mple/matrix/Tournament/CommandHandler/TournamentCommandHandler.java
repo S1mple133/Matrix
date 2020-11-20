@@ -1,5 +1,6 @@
 package me.s1mple.matrix.Tournament.CommandHandler;
 
+import me.s1mple.matrix.Matrix;
 import me.s1mple.matrix.Tournament.Data.PlayerData;
 import me.s1mple.matrix.Tournament.Data.Tournament;
 import me.s1mple.matrix.Tournament.Data.Arena;
@@ -182,9 +183,10 @@ public class TournamentCommandHandler implements CommandExecutor {
 
             TournamentHandler.createTournament(args[2], arenas);
             sender.sendMessage(ChatColor.GREEN + "Arena Preparation started!");
+            Matrix.getPlugin().getServer().broadcastMessage(ChatColor.AQUA + "Tournament " + args[2] + "started! Do /tt join " + args[2] + "to join!");
             return true;
         }
-        else if(args.length == 4  && sender.hasPermission("tournament.admin") && args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("prepare")) {
+        else if(args.length == 4  && sender.hasPermission("tournament.admin") && args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("create")) {
             sender.sendMessage(ChatColor.RED + String.format("You started creation of %s", args[2]));
             TournamentHandler.createArenaInCreation((Player)sender, new Arena(args[2]));
             return true;
@@ -211,6 +213,9 @@ public class TournamentCommandHandler implements CommandExecutor {
 
             [ 0 Players ]
           -----------------
+
+          TODO: TOURNAMENT NEEDS LOBBY
+          TODO: When player joined tournament, broadcast message that someone joined
          */
         return false;
     }
