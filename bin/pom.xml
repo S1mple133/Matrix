@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>MatrixBending</groupId>
+	<artifactId>MatrixPlugin</artifactId>
+	<version>1.4.2</version>
+
+	<!--Repositories -->
+	<repositories>
+		<repository>
+			<id>ess-repo</id>
+			<url>https://ci.ender.zone/plugin/repository/everything/</url>
+		</repository>
+		<repository>
+			<id>enginehub-maven</id>
+			<url>http://maven.enginehub.org/repo/</url>
+		</repository>
+		<repository>
+			<id>spigot-repo</id>
+			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+			<id>codemc-snapshots</id>
+			<url>https://repo.codemc.org/repository/maven-snapshots/</url>
+		</repository>
+		<repository>
+			<id>md_5-public</id>
+			<url>http://repo.md-5.net/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+		<repository>
+			<id>ssh-repository</id>
+			<url>scpexe://repository.mycompany.com/repository</url>
+		</repository>
+	</repositories>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>LibsDisguises</groupId>
+			<artifactId>LibsDisguises</artifactId>
+			<version>10.0.15</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot-api</artifactId>
+			<version>1.16.1-R0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.ess3</groupId>
+			<artifactId>EssentialsX</artifactId>
+			<version>2.17.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.skills</groupId>
+			<artifactId>skills</artifactId>
+			<version>1.8.9</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/util/SkillsPro.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.factions</groupId>
+			<artifactId>factions</artifactId>
+			<version>1.8.9</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/util/Factions.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com</groupId>
+			<artifactId>skinsrestorer</artifactId>
+			<version>13.7.5-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.vampirerevamp</groupId>
+			<artifactId>vampirerevamp</artifactId>
+			<version>1.0.3</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/util/VampireRevamp.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>net.luckperms</groupId>
+			<artifactId>api</artifactId>
+			<version>5.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.16</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sk89q.worldedit</groupId>
+			<artifactId>worldedit-bukkit</artifactId>
+			<version>7.1.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>clean package install</defaultGoal>
+		<finalName>${project.name}-${project.version}</finalName>
+		<sourceDirectory>${project.basedir}/src</sourceDirectory>
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>${project.basedir}/src/</directory>
+				<includes>
+					<include>plugin.yml</include>
+					<include>battlepass.yml</include>
+					<include>arenamanager.yml</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>8</source>
+					<target>8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

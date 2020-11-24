@@ -84,6 +84,13 @@ public class Tournament {
                 arenasPl;
     }
 
+    public void remvoveParticipator(Player participator) {
+        PlayerData pd = TournamentHandler.getPlayerData(participator);
+        participators.remove(pd);
+        actRoundWinners.remove(pd);
+        losers.remove(pd);
+    }
+
     /**
      * Called when round is finished
      * aka a player gets killed
@@ -117,15 +124,16 @@ public class Tournament {
         winnerData.leftTournament();
         PlayerData looserData = TournamentHandler.getPlayerData(looser);
         looserData.leftTournament();
+        looserData.lostRound();
 
         // Free arena
         Arena ar = toRemove.getArena();
         ar.freeArena();
         freeArenas.add(toRemove.getArena());
 
-        TournamentHandler.teleportPlayerWithMsg(winner, ar.getSpectatorPoint(), ChatColor.GREEN + "ROUND WON!");
+        TournamentHandler.teleportPlayerWithMsg(winner, ar.getSpectatorPoint(), ChatColor.GREEN + "You won the round!");
 
-        TournamentHandler.pasteArena(ar);
+        //TournamentHandler.pasteArena(ar);
 
         // Set tournament winner
         if(rounds.size() == 1) {
@@ -136,6 +144,15 @@ public class Tournament {
                     end();
                 }
                 else {
+                    if(losers.size() == 1) {
+                        server.broadcastMessage(String.format(Messages.TOURNAMENT_WON, winner.getName()));
+                        isLoosersTournament = false;
+                        rounds.remove(toRemove);
+                        TournamentHandler.savePlayerData(winnerData);
+                        TournamentHandler.savePlayerData(looserData);
+                        end();
+                        return;
+                    }
                     isLoosersTournament = true;
                     server.broadcastMessage(String.format(Messages.TOURNAMENT_WON, winner.getName()));
                     server.broadcastMessage(String.format(Messages.STARTING_LOSERS_TOURNAMENT));
@@ -213,7 +230,7 @@ public class Tournament {
         data.joinedTournament();
 
         if(freeArenas.size() != 0)
-            TournamentHandler.teleportPlayerWithMsg(participator, freeArenas.get(0).getSpectatorPoint(), ChatColor.GREEN + "Joining Tournament . . .!");
+            TournamentHandler.teleportPlayerWithMsg(participator, TournamentHandler.getTournamentLobby(), ChatColor.GREEN + "Joining Tournament . . .!");
 
         if(participators.contains(data))
             return false;

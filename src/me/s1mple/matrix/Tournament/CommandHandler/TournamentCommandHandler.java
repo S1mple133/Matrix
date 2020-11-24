@@ -19,6 +19,7 @@ public class TournamentCommandHandler implements CommandExecutor {
             "&a * /tournament info <TournamentName> &b Shows tournament info\n" +
             "&a * /tournament help &b Shows the help page\n" +
             "&a * /tournament leave &b Leave the tournament\n" +
+            "&a * /tournament stats &b Shows you your stats\n" +
 //            "&a * To join a tournament, wait until an admin starts one and then do /warp tournament.\n"+
             "&a * /tournament join <TournamentName> &b joins tournament");
     private String helpMessageAdmin = ChatColor.translateAlternateColorCodes('&', "&a * /tt arena create <Name> <SchemFileName> &b Starts an arena creation session. You need to be on the place where the schem file will be pasted. \n" +
@@ -68,6 +69,10 @@ public class TournamentCommandHandler implements CommandExecutor {
                 if(sender.hasPermission("tournament.admin"))
                     sender.sendMessage(helpMessageAdmin);
 
+                return true;
+            }
+            else if(args[0].equalsIgnoreCase("stats")) {
+                sender.sendMessage(TournamentHandler.getPlayerData((Player) sender).toString());
                 return true;
             }
             else if(args[0].equalsIgnoreCase("leave")) {

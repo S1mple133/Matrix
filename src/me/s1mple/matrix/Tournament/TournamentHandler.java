@@ -274,18 +274,13 @@ public class TournamentHandler {
      * @param participator
      */
     public static void removeParticipatorFromTournament(Player participator) {
-        PlayerData pd = TournamentHandler.loadPlayerData(participator);
-        pd.leftTournament();
-        Round round;
-
-        for(Tournament t : TournamentHandler.getTournaments()) {
-            round = t.getRoundOfPlayer(pd.getPlayer());
-
-            if(round != null) {
-                t.finishRound(participator);
-                break;
-            }
+        if(TournamentHandler.playersInGame.containsKey(participator)) {
+            TournamentHandler.playersInGame.get(participator).finishRound(participator);
         }
+
+        PlayerData pd = TournamentHandler.loadPlayerData(participator);
+        getTournamentOfPlayer(participator).remvoveParticipator(participator);
+        pd.leftTournament();
     }
 
     public static Arena getArena(String arg) {
@@ -306,6 +301,10 @@ public class TournamentHandler {
         return null;
     }
 
+    public static Arena getArenaOfPlayer(Player player) {
+        return getTournamentOfPlayer(player).getRoundOfPlayer(player).getArena();
+    }
+
     public static void teleportPlayerWithMsg(Player player, Location teleportTo, String msg) {
         BukkitTask runnable = new BukkitRunnable() {
             private int seconds = 3;
@@ -322,7 +321,7 @@ public class TournamentHandler {
                 player.sendMessage(ChatColor.YELLOW + "Teleporting in " + seconds-- + ". . .");
             }
 
-        }.runTaskTimerAsynchronously(Matrix.getPlugin(), 0, 20);
+        }.runTaskTimer(Matrix.getPlugin(), 0, 20);
     }
 
     public static Location getTournamentLobby() {
