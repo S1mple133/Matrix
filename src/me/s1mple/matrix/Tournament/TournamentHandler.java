@@ -308,22 +308,21 @@ public class TournamentHandler {
 
     public static void teleportPlayerWithMsg(Player player, Location teleportTo, String msg) {
         BukkitTask runnable = new BukkitRunnable() {
+            private int seconds = 3;
+
             @Override
             public void run() {
-                try {
+                if(seconds == 3)
                     player.sendMessage(msg);
-                    player.sendMessage(ChatColor.YELLOW + "Teleporting in 3...");
-                    this.wait(1000);
-                    player.sendMessage(ChatColor.YELLOW + "Teleporting in 2...");
-                    this.wait(1000);
-                    player.sendMessage(ChatColor.YELLOW + "Teleporting in 1...");
-                    this.wait(1000);
+                if(seconds <= 0) {
                     player.teleport(teleportTo);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Matrix.getPlugin().getServer().getScheduler().cancelTask(this.getTaskId());
                 }
+
+                player.sendMessage(ChatColor.YELLOW + "Teleporting in " + seconds-- + ". . .");
             }
-        }.runTaskAsynchronously(Matrix.getPlugin());
+
+        }.runTaskTimerAsynchronously(Matrix.getPlugin(), 0, 20);
     }
 
     public static Location getTournamentLobby() {
