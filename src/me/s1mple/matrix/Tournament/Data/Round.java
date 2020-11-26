@@ -1,8 +1,11 @@
 package me.s1mple.matrix.Tournament.Data;
 
 import com.sk89q.worldedit.entity.Player;
+import me.s1mple.matrix.Matrix;
 import me.s1mple.matrix.Tournament.TournamentHandler;
 import org.bukkit.ChatColor;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class Round {
     private PlayerData playerData1;
@@ -34,7 +37,15 @@ public class Round {
         TournamentHandler.playersInGame.put(playerData1.getPlayer(), t);
         TournamentHandler.playersInGame.put(playerData2.getPlayer(), t);
 
-        TournamentHandler.teleportPlayerWithMsg(playerData1.getPlayer(), arena.getSpawnPoint1(), ChatColor.AQUA + "You will fight " + playerData2.getPlayer().getName());
-        TournamentHandler.teleportPlayerWithMsg(playerData2.getPlayer(), arena.getSpawnPoint2(), ChatColor.AQUA + "You will fight " + playerData1.getPlayer().getName());
+        TournamentHandler.teleportPlayerWithMsg(playerData1.getPlayer(), arena.getSpectatorPoint(), ChatColor.AQUA + "You will fight " + playerData2.getPlayer().getName() + ", you will be teleported in a few seconds!");
+        TournamentHandler.teleportPlayerWithMsg(playerData2.getPlayer(), arena.getSpectatorPoint(), ChatColor.AQUA + "You will fight " + playerData1.getPlayer().getName() + ", you will be teleported in a few seconds!");
+
+        BukkitTask runnable = new BukkitRunnable() {
+            @Override
+            public void run() {
+                TournamentHandler.teleportPlayerWithMsg(playerData1.getPlayer(), arena.getSpawnPoint1(), ChatColor.AQUA + "Fight is starting . . .");
+                TournamentHandler.teleportPlayerWithMsg(playerData2.getPlayer(), arena.getSpawnPoint2(), ChatColor.AQUA + "Fight is starting . . .");
+            }
+        }.runTaskLater(Matrix.getPlugin(), 20*7);
     }
 }

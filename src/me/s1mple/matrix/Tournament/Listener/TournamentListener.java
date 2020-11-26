@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,5 +41,11 @@ public class TournamentListener implements Listener {
         TournamentHandler.removeParticipatorFromTournament(event.getPlayer());
 
         TournamentHandler.getPlayerDatas().remove(TournamentHandler.getPlayerData(event.getPlayer()));
+    }
+
+    @EventHandler
+    public void onTP(PlayerTeleportEvent event) {
+        if(event.getCause() != PlayerTeleportEvent.TeleportCause.PLUGIN && TournamentHandler.getTournamentOfPlayer(event.getPlayer()) != null)
+            event.setCancelled(true);
     }
 }

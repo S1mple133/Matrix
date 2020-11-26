@@ -84,8 +84,7 @@ public class Tournament {
                 arenasPl;
     }
 
-    public void remvoveParticipator(Player participator) {
-        PlayerData pd = TournamentHandler.getPlayerData(participator);
+    public void remvoveParticipator(PlayerData pd) {
         participators.remove(pd);
         actRoundWinners.remove(pd);
         losers.remove(pd);
@@ -229,8 +228,7 @@ public class Tournament {
         PlayerData data = TournamentHandler.loadPlayerData(participator);
         data.joinedTournament();
 
-        if(freeArenas.size() != 0)
-            TournamentHandler.teleportPlayerWithMsg(participator, TournamentHandler.getTournamentLobby(), ChatColor.GREEN + "Joining Tournament . . .!");
+        TournamentHandler.teleportPlayerWithMsg(participator, TournamentHandler.getTournamentLobby(), ChatColor.GREEN + "Joining Tournament . . .!");
 
         if(participators.contains(data))
             return false;

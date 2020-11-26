@@ -274,13 +274,16 @@ public class TournamentHandler {
      * @param participator
      */
     public static void removeParticipatorFromTournament(Player participator) {
-        if(TournamentHandler.playersInGame.containsKey(participator)) {
-            TournamentHandler.playersInGame.get(participator).finishRound(participator);
+        PlayerData pd = TournamentHandler.loadPlayerData(participator);
+
+        if(getTournamentOfPlayer(participator) != null) {
+            getTournamentOfPlayer(participator).remvoveParticipator(pd);
+            pd.leftTournament();
         }
 
-        PlayerData pd = TournamentHandler.loadPlayerData(participator);
-        getTournamentOfPlayer(participator).remvoveParticipator(participator);
-        pd.leftTournament();
+        if(playersInGame.containsKey(participator)) {
+            playersInGame.get(participator).finishRound(participator);
+        }
     }
 
     public static Arena getArena(String arg) {
@@ -318,7 +321,10 @@ public class TournamentHandler {
                     Matrix.getPlugin().getServer().getScheduler().cancelTask(this.getTaskId());
                 }
 
-                player.sendMessage(ChatColor.YELLOW + "Teleporting in " + seconds-- + ". . .");
+                if(seconds <= 0)
+                    player.sendMessage(ChatColor.YELLOW + "Teleporting. . .");
+                else
+                    player.sendMessage(ChatColor.YELLOW + "Teleporting in " + seconds-- + ". . .");
             }
 
         }.runTaskTimer(Matrix.getPlugin(), 0, 20);
