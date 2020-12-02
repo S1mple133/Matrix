@@ -34,10 +34,26 @@
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
 		</repository>
-	</repositories>
-
+	  <!-- Releases are published to github -->
+	  <repository>
+	      <id>elmakers-github</id>
+	      <url>https://maven.pkg.github.com/elBukkit/MagicPlugin</url>
+	  </repository>
+	  <!-- Snapshots are published to the elMakers repository, which also has all of the dependencies -->
+	  <repository>
+	      <id>elmakers-repo</id>
+	      <url>http://maven.elmakers.com/repository/</url>
+	  </repository>
+</repositories>
 
 	<dependencies>
+	
+	  <dependency>
+	      <groupId>com.elmakers.mine.bukkit</groupId>
+	      <artifactId>MagicAPI</artifactId>
+	      <version>7.9.6</version>
+	      <scope>provided</scope>
+ 	 </dependency>
 		<dependency>
 			<groupId>LibsDisguises</groupId>
 			<artifactId>LibsDisguises</artifactId>

@@ -1,6 +1,7 @@
 package me.s1mple.matrix;
 
 import com.clanjhoo.vampire.VampireRevamp;
+import com.elmakers.mine.bukkit.api.magic.MagicAPI;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 import me.libraryaddict.disguise.LibsDisguises;
@@ -12,13 +13,17 @@ import me.s1mple.matrix.Listener.PermsListener;
 import me.s1mple.matrix.Listener.SkillsListener;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 import org.skills.main.SkillsPro;
 import skinsrestorer.bukkit.SkinsRestorer;
 import me.s1mple.matrix.Skills.Werewolf;
@@ -40,6 +45,7 @@ public class Matrix extends JavaPlugin {
     private VampireRevamp revamp;
     private LibsDisguises disguise;
     private LuckPerms api;
+	private static MagicAPI magicAPI;
 
     @Override
     public void onEnable() {
@@ -54,6 +60,8 @@ public class Matrix extends JavaPlugin {
         this.revamp = ((VampireRevamp) plugin.getServer().getPluginManager().getPlugin("VampireRevamp"));
         this.disguise = ((LibsDisguises) plugin.getServer().getPluginManager().getPlugin("LibsDisguises"));
         this.api = LuckPermsProvider.get();
+        Matrix.magicAPI = (MagicAPI) Bukkit.getPluginManager().getPlugin("Magic");
+        
         registerGlow();
         new Werewolf();
 
@@ -62,7 +70,8 @@ public class Matrix extends JavaPlugin {
         
         plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
-        plugin.getServer().getPluginManager().registerEvents(new RaidListener(), Matrix.plugin);
+        if (magicAPI != null)
+        	plugin.getServer().getPluginManager().registerEvents(new RaidListener(), Matrix.plugin);
 
     }
 
@@ -211,6 +220,10 @@ public class Matrix extends JavaPlugin {
 
     public WorldEditPlugin getWorldEditPlugin() {
         return worldEditPlugin;
+    }
+    
+    public static MagicAPI getMagicPlugin() {
+    	return magicAPI;
     }
 
     public LuckPerms getLuckPerms() { return api; };
