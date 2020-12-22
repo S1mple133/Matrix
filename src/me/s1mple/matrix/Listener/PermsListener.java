@@ -1,6 +1,7 @@
 package me.s1mple.matrix.Listener;
 
 import me.s1mple.matrix.Matrix;
+import me.s1mple.matrix.MatrixMethods;
 import me.s1mple.matrix.Util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
