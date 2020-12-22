@@ -115,4 +115,5 @@ public class Arena {
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "/schem load " + schem.getName());
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "/paste -o");
     }
+
 }

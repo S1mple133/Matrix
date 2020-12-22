@@ -7,14 +7,14 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import me.libraryaddict.disguise.LibsDisguises;
 import me.s1mple.matrix.ArenaManager.ArenaManager;
 import me.s1mple.matrix.Raid.RaidListener;
+import me.s1mple.matrix.Tournament.Data.Tournament;
+import me.s1mple.matrix.Tournament.TournamentHandler;
 import me.s1mple.matrix.Util.Glow;
 import me.s1mple.matrix.Util.Util;
 import me.s1mple.matrix.Listener.PermsListener;
 import me.s1mple.matrix.Listener.SkillsListener;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
-
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
@@ -67,6 +67,8 @@ public class Matrix extends JavaPlugin {
 
         //MatrixElement.init(this);
         ArenaManager.init(this);
+       // BattlePass.init(this);
+        TournamentHandler.init(this);
         
         plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
