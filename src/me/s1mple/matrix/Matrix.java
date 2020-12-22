@@ -15,15 +15,15 @@ import me.s1mple.matrix.Listener.PermsListener;
 import me.s1mple.matrix.Listener.SkillsListener;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Nullable;
 import org.skills.main.SkillsPro;
 import skinsrestorer.bukkit.SkinsRestorer;
 import me.s1mple.matrix.Skills.Werewolf;
@@ -36,7 +36,6 @@ import java.util.UUID;
 public class Matrix extends JavaPlugin {
     public static Matrix plugin;
     public static ConfigManager configManager;
-    public static AbilityManager abilityManager;
     public static String version = "1.10";
     public static String author = "S1mpleCrash";
     private SkinsRestorer skinApi;
@@ -52,7 +51,6 @@ public class Matrix extends JavaPlugin {
     	
         this.plugin = this;
         this.configManager = new ConfigManager(this);
-        this.abilityManager = new AbilityManager(this);
 
         this.skinApi = ((SkinsRestorer) plugin.getServer().getPluginManager().getPlugin("SkinsRestorer"));
         this.worldEditPlugin = ((WorldEditPlugin) plugin.getServer().getPluginManager().getPlugin("WorldEdit"));
