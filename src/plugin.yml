@@ -2,9 +2,9 @@ main: me.s1mple.matrix.Matrix
 name: MatrixPlugin
 version: ${project.version}
 author: S1mple, CrashCringle12
-depend: [ProjectKorra, SkillsPro, VampireRevamp, MagicPlugin, LuckPerms, WorldEdit, LibsDisguises]
+depend: [LuckPerms, LibsDisguises, VampireRevamp, SkillsPro, CustomDimensions]
 description: Matrix Plugin.
-api-version: 1.13
+api-version: 1.14
 commands:
   matrix:
     description: Shows help on the plugin.
