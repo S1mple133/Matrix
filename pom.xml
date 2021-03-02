@@ -62,6 +62,13 @@
 			<version>1.16.5-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>itsSpigot</artifactId>
+			<version>1.16.5</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/util/spigot-1.16.5.jar</systemPath>
+		</dependency>
 	  <dependency>
 	      <groupId>com.elmakers.mine.bukkit</groupId>
 	      <artifactId>MagicAPI</artifactId>

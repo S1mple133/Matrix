@@ -14,6 +14,7 @@ import org.skills.types.SkillManager;
 
 import com.clanjhoo.vampire.VampireRevamp;
 import com.clanjhoo.vampire.entity.UPlayer;
+import com.clanjhoo.vampire.entity.UPlayerColl;
 
 public class VampireBatSwarm extends ActiveAbility {
 	String Vampire;
@@ -35,7 +36,7 @@ public class VampireBatSwarm extends ActiveAbility {
 		if (SkilledPlayer.getSkilledPlayer(player).getSkill() != SkillManager.getSkill("Vampire"))
 		{
 			
-		} else if (UPlayer.get(player) != null && UPlayer.get(player).isNosferatu()) {
+		} else if (UPlayerColl.get(player.getUniqueId()) != null && UPlayerColl.get(player.getUniqueId()).isNosferatu()) {
 			player.performCommand("v batusi");
 		}
    }
@@ -47,7 +48,7 @@ public class VampireBatSwarm extends ActiveAbility {
 
 	    System.out.println("Use Skill successfully triggered");
 
-		if (UPlayer.get(player) != null && UPlayer.get(player).isNosferatu()) {
+		if (UPlayerColl.get(player.getUniqueId()) != null && UPlayerColl.get(player.getUniqueId()).isNosferatu()) {
 			player.performCommand("v batusi");
 		}
 		else {
