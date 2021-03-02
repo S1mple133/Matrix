@@ -6,7 +6,6 @@ import me.s1mple.matrix.MatrixMethods;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.skills.data.managers.SkilledPlayer;
 
 import org.bukkit.Material;
 import org.bukkit.Raid;
@@ -22,6 +21,8 @@ import org.bukkit.event.raid.RaidStopEvent;
 import org.bukkit.event.raid.RaidTriggerEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.skills.data.managers.SkilledPlayer;
+
 import me.libraryaddict.disguise.disguisetypes.FlagWatcher;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 
@@ -36,24 +37,23 @@ public class RaidListener implements Listener {
 
 		// Check if player with Bad Omen is above level 60
 		if (SkilledPlayer.getSkilledPlayer(event.getPlayer()).getLevel() >= 60 || forceStart) {
-
 			// If the player is above level 60 then there is a 1/5 chance that a Pirate Raid
 			// occurs
 			num = forceStart ? 5 : (int) (Math.random() * 100) + 1;
 
 			System.out.println(num);
-			if (num % 5 == 0) {
+			if (num % 7== 0) {
 
 				// Depending on the result of the player's previous raid, broadcast a message
 				// accordingly.
 				if (event.getPlayer().hasPermission("quest.raid.Pirate.Lose"))
-					Bukkit.broadcastMessage("�ePirates have returned to finish what they started �b"
-							+ event.getPlayer().getName() + "�e!");
+					Bukkit.broadcastMessage("&ePirates have returned to finish what they started &b"
+							+ event.getPlayer().getName() + "&e!");
 				else if (event.getPlayer().hasPermission("quest.raid.Pirate.Win"))
-					Bukkit.broadcastMessage("�eThe Pirates have returned with a vengeance for �b"
-							+ event.getPlayer().getName() + "�e!");
+					Bukkit.broadcastMessage("&eThe Pirates have returned with a vengeance for &b"
+							+ event.getPlayer().getName() + "&e!");
 				else
-					Bukkit.broadcastMessage("�ePirates are invading �b" + event.getPlayer().getName() + "�e!");
+					Bukkit.broadcastMessage("&ePirates are invading &b" + event.getPlayer().getName() + "&e!");
 
 				// We want max levels for the raid so that all possible entities spawn
 				event.getRaid().setBadOmenLevel(5);
@@ -76,7 +76,6 @@ public class RaidListener implements Listener {
 				}, 2980L);
 			}
 		}
-
 	}
 
 	/**
@@ -111,7 +110,7 @@ public class RaidListener implements Listener {
 						MatrixMethods.ConsoleCmd(
 								"mgive " + player.getName() + " chaojuice " + (int) (((Math.random() * 200) + 0) / 4));
 						MatrixMethods.ConsoleCmd("mgive " + player.getName() + " Enchanted_Golden_Apple "
-								+ (int) (((Math.random() * 260) + 0) / 4));
+								+ (int) (((Math.random() * 260) + 0) / 3));
 						MatrixMethods.ConsoleCmd("mgive " + player.getName() + " ChemicalX 1");
 						MatrixMethods.ConsoleCmd("mgive " + player.getName() + " BadDayArrow "
 								+ (int) (((Math.random() * 100) + 0) / 4));
@@ -131,7 +130,7 @@ public class RaidListener implements Listener {
 						MatrixMethods.removePermission(player, "quest.raid.Pirate.Win");
 						MatrixMethods.addPermission(player, "quest.raid.Pirate.Lose");
 
-						MatrixMethods.ConsoleCmd("eco take " + player.getName() + " 25%");
+						MatrixMethods.ConsoleCmd("eco take " + player.getName() + " 15%");
 					}
 
 				}
