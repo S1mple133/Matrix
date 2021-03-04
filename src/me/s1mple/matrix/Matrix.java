@@ -2,16 +2,16 @@ package me.s1mple.matrix;
 
 import com.clanjhoo.vampire.VampireRevamp;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-
 import me.libraryaddict.disguise.LibsDisguises;
 import me.s1mple.matrix.ArenaManager.ArenaManager;
+import me.s1mple.matrix.Listener.PermsListener;
+import me.s1mple.matrix.Listener.SkillsListener;
+import me.s1mple.matrix.Listener.VPNListener;
 import me.s1mple.matrix.Raid.RaidListener;
-import me.s1mple.matrix.Tournament.Data.Tournament;
+import me.s1mple.matrix.Skills.Werewolf;
 import me.s1mple.matrix.Tournament.TournamentHandler;
 import me.s1mple.matrix.Util.Glow;
 import me.s1mple.matrix.Util.Util;
-import me.s1mple.matrix.Listener.PermsListener;
-import me.s1mple.matrix.Listener.SkillsListener;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.ChatColor;
@@ -23,7 +23,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.skills.main.SkillsPro;
 import skinsrestorer.bukkit.SkinsRestorer;
-import me.s1mple.matrix.Skills.Werewolf;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -44,7 +43,7 @@ public class Matrix extends JavaPlugin {
 
     @Override
     public void onEnable() {
-    	
+
         this.plugin = this;
         this.configManager = new ConfigManager(this);
 
@@ -58,10 +57,11 @@ public class Matrix extends JavaPlugin {
         new Werewolf();
 
         ArenaManager.init(this);
-       // BattlePass.init(this);
+        // BattlePass.init(this);
         TournamentHandler.init(this);
-        
+
         plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
+        plugin.getServer().getPluginManager().registerEvents(new VPNListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new RaidListener(), Matrix.plugin);
     }
@@ -81,17 +81,14 @@ public class Matrix extends JavaPlugin {
             Field f = Enchantment.class.getDeclaredField("acceptingNew");
             f.setAccessible(true);
             f.set(null, true);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            Glow glow = new Glow(new NamespacedKey( Matrix.plugin, "glow_ench"));
+            Glow glow = new Glow(new NamespacedKey(Matrix.plugin, "glow_ench"));
             Enchantment.registerEnchantment(glow);
-        }
-        catch (IllegalArgumentException e){
-        }
-        catch(Exception e){
+        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -105,63 +102,55 @@ public class Matrix extends JavaPlugin {
         // VPN perm: matrix.vpn
         // Staff perm: matrix.staff
 
-        if(cmd.getName().equalsIgnoreCase("matrix")) {
-            if(args.length == 0) {
-                if(sender.hasPermission("matrix.staff")) {
+        if (cmd.getName().equalsIgnoreCase("matrix")) {
+            if (args.length == 0) {
+                if (sender.hasPermission("matrix.staff")) {
                     sender.sendMessage(staffHelpMessage);
                 }
                 //sender.sendMessage(helpMessage);
                 return true;
-            }
-            else if (args.length >= 1) {
-                if(args[0].equalsIgnoreCase("help")) {
+            } else if (args.length >= 1) {
+                if (args[0].equalsIgnoreCase("help")) {
                     //sender.sendMessage(helpMessage);
-                    if(sender.hasPermission("matrix.staff")) {
+                    if (sender.hasPermission("matrix.staff")) {
                         sender.sendMessage(staffHelpMessage);
                     }
                     return true;
-                }
-                else if (args[0].equalsIgnoreCase("commandspy") || (args[0].equalsIgnoreCase("cmdspy"))) {
-                    if(sender.hasPermission("matrix.commandspy") && sender instanceof Player) {
-                        if(PermsListener.playerList.contains(sender)) {
+                } else if (args[0].equalsIgnoreCase("commandspy") || (args[0].equalsIgnoreCase("cmdspy"))) {
+                    if (sender.hasPermission("matrix.commandspy") && sender instanceof Player) {
+                        if (PermsListener.playerList.contains(sender)) {
                             PermsListener.playerList.remove(sender);
                             sender.sendMessage(Util.color("&4Matrix Network &7>> &cCommand spy &4disabled&c!"));
-                        }
-                        else {
+                        } else {
                             PermsListener.playerList.add((Player) sender);
                             sender.sendMessage(Util.color("&4Matrix Network &7>> &cCommand spy &4enabled&c!"));
                         }
                         return true;
                     }
-                }
-                else if (args[0].equalsIgnoreCase("startRaid")) {
-                    if(sender.hasPermission("matrix.commandspy") && sender instanceof Player) {
-                    	if (RaidListener.forceStart) {
-                        	RaidListener.forceStart = false;
+                } else if (args[0].equalsIgnoreCase("startRaid")) {
+                    if (sender.hasPermission("matrix.commandspy") && sender instanceof Player) {
+                        if (RaidListener.forceStart) {
+                            RaidListener.forceStart = false;
                             sender.sendMessage(Util.color("&4Matrix Network &7>> &cNext Raid will not be a Pirate Raid"));
-                    	}
-                    	else {
-                        	RaidListener.forceStart = true;
+                        } else {
+                            RaidListener.forceStart = true;
                             sender.sendMessage(Util.color("&4Matrix Network &7>> &cNext Raid will be a Pirate Raid"));
-                    	}
-                    	return true;
+                        }
+                        return true;
                     }
-                }
-                else if (args[0].equalsIgnoreCase("vpn")) {
-                    if(args.length == 3) {
-                        if(sender.hasPermission("matrix.vpn")) {
-                            if(args[1].equalsIgnoreCase("getip")) {
+                } else if (args[0].equalsIgnoreCase("vpn")) {
+                    if (args.length == 3) {
+                        if (sender.hasPermission("matrix.vpn")) {
+                            if (args[1].equalsIgnoreCase("getip")) {
                                 sender.sendMessage(getIpOfVpnPlayer(args[2]));
                                 return true;
                             }
-                        }
-                        else {
-                            sender.sendMessage(ChatColor.RED+ "Not enough permissions!");
+                        } else {
+                            sender.sendMessage(ChatColor.RED + "Not enough permissions!");
                             return false;
                         }
-                    }
-                    else if(args.length == 2) {
-                        if(args[1].equalsIgnoreCase("add")) {
+                    } else if (args.length == 2) {
+                        if (args[1].equalsIgnoreCase("add")) {
                             sender.sendMessage(addVpnKeyForPlayer(plugin.getServer().getPlayer(args[2])));
                             return true;
                         }
@@ -197,14 +186,17 @@ public class Matrix extends JavaPlugin {
     }
 
     public VampireRevamp getRevamp() {
-    	return revamp;
+        return revamp;
     }
+
     public LibsDisguises getDisguises() {
-    	return disguise;
+        return disguise;
     }
+
     public SkillsPro getSkillsApi() {
-    	return skillsapi;
+        return skillsapi;
     }
+
     public SkinsRestorer getSkinsApi() {
         return skinApi;
     }
@@ -213,7 +205,11 @@ public class Matrix extends JavaPlugin {
         return worldEditPlugin;
     }
 
-    public LuckPerms getLuckPerms() { return api; };
+    public LuckPerms getLuckPerms() {
+        return api;
+    }
+
+    ;
 }
 
 
