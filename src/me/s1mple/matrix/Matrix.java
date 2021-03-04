@@ -6,6 +6,8 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import me.libraryaddict.disguise.LibsDisguises;
 import me.s1mple.matrix.ArenaManager.ArenaManager;
 import me.s1mple.matrix.Raid.RaidListener;
+import me.s1mple.matrix.Tournament.Data.Tournament;
+import me.s1mple.matrix.Tournament.TournamentHandler;
 import me.s1mple.matrix.Util.Glow;
 import me.s1mple.matrix.Util.Util;
 import me.s1mple.matrix.Listener.PermsListener;
@@ -31,7 +33,6 @@ import java.util.UUID;
 public class Matrix extends JavaPlugin {
     public static Matrix plugin;
     public static ConfigManager configManager;
-    public static AbilityManager abilityManager;
     public static String version = "1.10";
     public static String author = "S1mpleCrash";
     private SkinsRestorer skinApi;
@@ -46,7 +47,6 @@ public class Matrix extends JavaPlugin {
     	
         this.plugin = this;
         this.configManager = new ConfigManager(this);
-        this.abilityManager = new AbilityManager(this);
 
         this.skinApi = ((SkinsRestorer) plugin.getServer().getPluginManager().getPlugin("SkinsRestorer"));
         this.worldEditPlugin = ((WorldEditPlugin) plugin.getServer().getPluginManager().getPlugin("WorldEdit"));
@@ -57,13 +57,13 @@ public class Matrix extends JavaPlugin {
         registerGlow();
         new Werewolf();
 
-        //MatrixElement.init(this);
         ArenaManager.init(this);
+       // BattlePass.init(this);
+        TournamentHandler.init(this);
         
         plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new RaidListener(), Matrix.plugin);
-
     }
 
 
