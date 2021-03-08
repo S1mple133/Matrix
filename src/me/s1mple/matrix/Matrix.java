@@ -18,16 +18,32 @@ import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.skills.main.SkillsPro;
+
+import com.clanjhoo.vampire.VampireRevamp;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.elmakers.mine.bukkit.api.magic.MagicAPI;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+
+import me.libraryaddict.disguise.LibsDisguises;
+import me.s1mple.matrix.Listener.DreamListener;
+import me.s1mple.matrix.Listener.PermsListener;
+import me.s1mple.matrix.Listener.SkillsListener;
+import me.s1mple.matrix.Raid.RaidListener;
+import me.s1mple.matrix.Skills.Werewolf;
+import me.s1mple.matrix.Util.Glow;
+import me.s1mple.matrix.Util.Util;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.minecraft.server.v1_16_R3.EntityPlayer;
+import net.minecraft.server.v1_16_R3.PacketPlayOutGameStateChange;
+import net.minecraft.server.v1_16_R3.PacketPlayOutGameStateChange.a;
 import skinsrestorer.bukkit.SkinsRestorer;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.UUID;
-
 
 public class Matrix extends JavaPlugin {
     public static Matrix plugin;
@@ -52,14 +68,16 @@ public class Matrix extends JavaPlugin {
         this.skillsapi = ((SkillsPro) plugin.getServer().getPluginManager().getPlugin("SkillsPro"));
         this.revamp = ((VampireRevamp) plugin.getServer().getPluginManager().getPlugin("VampireRevamp"));
         this.disguise = ((LibsDisguises) plugin.getServer().getPluginManager().getPlugin("LibsDisguises"));
-        this.api = LuckPermsProvider.get();
+		this.api = LuckPermsProvider.get();
+		Matrix.magicAPI = (MagicAPI) Bukkit.getPluginManager().getPlugin("Magic");
+	    protocolManager = ProtocolLibrary.getProtocolManager();
         registerGlow();
         new Werewolf();
 
         ArenaManager.init(this);
         // BattlePass.init(this);
         TournamentHandler.init(this);
-
+		plugin.getServer().getPluginManager().registerEvents(new DreamListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new VPNListener(), Matrix.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
@@ -72,7 +90,25 @@ public class Matrix extends JavaPlugin {
         getLogger().info("MatrixPlugin is stopping...");
         this.plugin.saveConfig();
     }
+	public void displayCredits(Player p) {
+		CraftPlayer craft = (CraftPlayer) p;
+EntityPlayer nms = craft.getHandle();
+nms.viewingCredits = true;
 
+((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutGameStateChange(new a(4), 1));
+/*
+PacketContainer credits = ProtocolLibrary.getProtocolManager()
+	.createPacket(PacketType.Play.Server.GAME_STATE_CHANGE);
+credits.getBytes().write(0,  (byte) 4);
+credits.getFloat().write(1, 0.0F);
+try {
+ProtocolLibrary.getProtocolManager().sendServerPacket(p,
+		credits);
+} catch (InvocationTargetException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+}*/
+}
     /**
      * Add glow effect
      */
@@ -127,17 +163,26 @@ public class Matrix extends JavaPlugin {
                         }
                         return true;
                     }
-                } else if (args[0].equalsIgnoreCase("startRaid")) {
-                    if (sender.hasPermission("matrix.commandspy") && sender instanceof Player) {
-                        if (RaidListener.forceStart) {
-                            RaidListener.forceStart = false;
-                            sender.sendMessage(Util.color("&4Matrix Network &7>> &cNext Raid will not be a Pirate Raid"));
-                        } else {
-                            RaidListener.forceStart = true;
-                            sender.sendMessage(Util.color("&4Matrix Network &7>> &cNext Raid will be a Pirate Raid"));
-                        }
-                        return true;
-                    }
+				} else if (args[0].equalsIgnoreCase("startRaid")) {
+					if (sender.hasPermission("matrix.commandspy") && sender instanceof Player) {
+						if (RaidListener.forceStart) {
+							RaidListener.forceStart = false;
+							sender.sendMessage(
+									Util.color("&4Matrix Network &7>> &cNext Raid will not be a Pirate Raid"));
+						} else {
+							RaidListener.forceStart = true;
+							sender.sendMessage(Util.color("&4Matrix Network &7>> &cNext Raid will be a Pirate Raid"));
+						}
+						return true;
+					}
+				} else if (args[0].equalsIgnoreCase("forceCredits")) {
+					if (sender instanceof Player && sender instanceof Player && args.length >= 2 && sender.hasPermission("matrix.forceCredits")) {
+						displayCredits((Player) Bukkit.getPlayer(args[1]));
+						return true;
+					} else {
+						sender.sendMessage(ChatColor.RED + "Must be a player.");
+						return false;
+					}
                 } else if (args[0].equalsIgnoreCase("vpn")) {
                     if (args.length == 3) {
                         if (sender.hasPermission("matrix.vpn")) {
@@ -209,7 +254,13 @@ public class Matrix extends JavaPlugin {
         return api;
     }
 
-    ;
+	public static MagicAPI getMagicPlugin() {
+		return magicAPI;
+	}
+
+
+
 }
+
 
 
