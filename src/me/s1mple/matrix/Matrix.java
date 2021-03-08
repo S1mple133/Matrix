@@ -22,6 +22,7 @@ import com.elmakers.mine.bukkit.api.magic.MagicAPI;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 import me.libraryaddict.disguise.LibsDisguises;
+import me.s1mple.matrix.Listener.DreamListener;
 import me.s1mple.matrix.Listener.PermsListener;
 import me.s1mple.matrix.Listener.SkillsListener;
 import me.s1mple.matrix.Raid.RaidListener;
@@ -71,7 +72,7 @@ public class Matrix extends JavaPlugin {
 		// ArenaManager.init(this);
 		// BattlePass.init(this);
 		// TournamentHandler.init(this);
-
+		plugin.getServer().getPluginManager().registerEvents(new DreamListener(), Matrix.plugin);
 		plugin.getServer().getPluginManager().registerEvents(new SkillsListener(), Matrix.plugin);
 		plugin.getServer().getPluginManager().registerEvents(new PermsListener(), Matrix.plugin);
 		if (magicAPI != null)

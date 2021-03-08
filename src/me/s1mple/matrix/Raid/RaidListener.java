@@ -42,7 +42,7 @@ public class RaidListener implements Listener {
 			num = forceStart ? 5 : (int) (Math.random() * 100) + 1;
 
 			System.out.println(num);
-			if (num % 7== 0) {
+			if (num % 5 == 0) {
 
 				// Depending on the result of the player's previous raid, broadcast a message
 				// accordingly.
