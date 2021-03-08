@@ -1,18 +1,15 @@
 package me.s1mple.matrix;
 
 
-import me.s1mple.matrix.Matrix;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ConfigManager {
@@ -31,6 +28,7 @@ public class ConfigManager {
 
     /**
      * Return the config file
+     *
      * @return
      */
     public FileConfiguration getConfig() {
@@ -54,7 +52,7 @@ public class ConfigManager {
     public void reloadConfig(JavaPlugin plugin) {
         InputStream configStream = plugin.getResource("bending.yml");
 
-        if(configStream != null) {
+        if (configStream != null) {
             config.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(configStream, StandardCharsets.UTF_8)));
         }
     }
@@ -99,7 +97,7 @@ public class ConfigManager {
         config.addDefault("Abilities.MatrixState.Enabled", true);
         config.addDefault("Abilities.MatrixState.Cooldown", 3);
         config.addDefault("Abilities.MatrixState.EffectDuration", 200);
-        config.addDefault("Abilities.MatrixState.EffectList", Arrays.asList("HEAL","JUMP"));
+        config.addDefault("Abilities.MatrixState.EffectList", Arrays.asList("HEAL", "JUMP"));
         config.addDefault("Abilities.MatrixPassive.Instructions", "Shifting will grant you the vision of your ex lifes on this world.");
         config.addDefault("Abilities.MatrixPassive.Description", "This passive protects you from the demons (damage) makes you luckier and grants you an other view of this world.");
         config.addDefault("Abilities.MatrixPassive.Enabled", true);
@@ -117,7 +115,7 @@ public class ConfigManager {
      * @return Prefix of a MatrixBender
      */
     public String getBendingPrefix() {
-        return  config.getString("Matrix.Prefix");
+        return config.getString("Matrix.Prefix");
     }
 
 

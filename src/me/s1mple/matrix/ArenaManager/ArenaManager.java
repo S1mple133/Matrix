@@ -35,9 +35,9 @@ public class ArenaManager {
         config = YamlConfiguration.loadConfiguration(configFile);
 
         int cnt = 0;
-        while(config.get("Arenas."+cnt+".Name") != null) {
-            Arena.addArena(new Arena(config.getString("Arenas."+cnt+".Name"), config.getString("Arenas."+cnt+".Schematic"),
-                    new Location(plugin.getServer().getWorld(config.getString("Arenas."+cnt+".World")), config.getDouble("Arenas."+cnt+".X"), config.getDouble("Arenas."+cnt+".Y"), config.getDouble("Arenas."+cnt+".Z"))));
+        while (config.get("Arenas." + cnt + ".Name") != null) {
+            Arena.addArena(new Arena(config.getString("Arenas." + cnt + ".Name"), config.getString("Arenas." + cnt + ".Schematic"),
+                    new Location(plugin.getServer().getWorld(config.getString("Arenas." + cnt + ".World")), config.getDouble("Arenas." + cnt + ".X"), config.getDouble("Arenas." + cnt + ".Y"), config.getDouble("Arenas." + cnt + ".Z"))));
             cnt++;
         }
     }

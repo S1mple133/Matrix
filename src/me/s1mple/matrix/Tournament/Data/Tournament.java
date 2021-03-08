@@ -6,9 +6,10 @@ import me.s1mple.matrix.Tournament.TournamentHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Tournament {
     private static Server server = Matrix.getPlugin().getServer();
@@ -40,16 +41,17 @@ public class Tournament {
 
     /**
      * Starts round
+     *
      * @return true if round could be started, playerdata amount should be even
      */
     public boolean startRound() {
         // If first round, order participators and start more rounds (as long as arenas are free)
-        if(round < 0) {
+        if (round < 0) {
             orderPairs(participators);
         }
 
         Arena actArena;
-        while((actArena = searchFreeArena()) != null && round < rounds.size()) {
+        while ((actArena = searchFreeArena()) != null && round < rounds.size()) {
             rounds.get(round).start(actArena, this);
             round++;
         }
@@ -57,11 +59,14 @@ public class Tournament {
         return true;
     }
 
-    public int getRound() { return round; }
+    public int getRound() {
+        return round;
+    }
 
 
     /**
      * Returns torunament state
+     *
      * @return
      */
     @Override
@@ -73,11 +78,11 @@ public class Tournament {
             participatorPl.append(ChatColor.DARK_GREEN + " * " + ChatColor.GREEN).append(p.getPlayer().getName()).append("\n");
         }
 
-        for(Arena a : freeArenas) {
+        for (Arena a : freeArenas) {
             arenasPl.append(ChatColor.DARK_GREEN + " * " + ChatColor.GREEN).append(a.getName()).append("\n");
         }
 
-        return ChatColor.DARK_GREEN + "===== " + ChatColor.GREEN +getName() + ChatColor.DARK_GREEN + " =====\n" +
+        return ChatColor.DARK_GREEN + "===== " + ChatColor.GREEN + getName() + ChatColor.DARK_GREEN + " =====\n" +
                 ChatColor.DARK_GREEN + "Participators\n" +
                 participatorPl +
                 ChatColor.DARK_GREEN + "Arenas\n" +
@@ -93,6 +98,7 @@ public class Tournament {
     /**
      * Called when round is finished
      * aka a player gets killed
+     *
      * @param looser
      */
     public void finishRound(Player looser) {
@@ -100,11 +106,10 @@ public class Tournament {
         PlayerData winnerData;
         Player winner;
 
-        if(toRemove.getPlayerData1().getPlayer().equals(looser)) {
+        if (toRemove.getPlayerData1().getPlayer().equals(looser)) {
             winnerData = toRemove.getPlayerData2();
             winner = toRemove.getPlayerData2().getPlayer();
-        }
-        else {
+        } else {
             winnerData = toRemove.getPlayerData1();
             winner = toRemove.getPlayerData1().getPlayer();
         }
@@ -113,7 +118,7 @@ public class Tournament {
         looser.sendMessage(Messages.LOOSER_MESSAGE);
 
         actRoundWinners.add(winnerData);
-        if(isFirstRound)
+        if (isFirstRound)
             losers.add(TournamentHandler.loadPlayerData(looser));
         winnerData.wonRound();
 
@@ -130,20 +135,19 @@ public class Tournament {
         ar.freeArena();
         freeArenas.add(toRemove.getArena());
 
-        TournamentHandler.teleportPlayerWithMsg(winner, ar.getSpectatorPoint(), ChatColor.GREEN + "You won the round!");
+        TournamentHandler.teleportPlayerWithMsg(winner, ar.getSpectatorPoint(), Messages.TOURNAMENT_WON_PLAYER);
 
         //TournamentHandler.pasteArena(ar);
 
         // Set tournament winner
-        if(rounds.size() == 1) {
-            if(actRoundWinners.size() == 1) {
+        if (rounds.size() == 1) {
+            if (actRoundWinners.size() == 1) {
                 TournamentHandler.loadPlayerData(winner).wonTournament();
-                if(isLoosersTournament) {
+                if (isLoosersTournament) {
                     server.broadcastMessage(String.format(Messages.TOURNAMENT_LOOSER_WON, winner.getName()));
                     end();
-                }
-                else {
-                    if(losers.size() == 1) {
+                } else {
+                    if (losers.size() == 1) {
                         server.broadcastMessage(String.format(Messages.TOURNAMENT_WON, winner.getName()));
                         isLoosersTournament = false;
                         rounds.remove(toRemove);
@@ -159,18 +163,16 @@ public class Tournament {
                     orderPairs(losers);
                     startRound();
                 }
-            }
-            else {
+            } else {
                 // TODO: Test out with More Arenas
-                if(isFirstRound)
-                    isFirstRound=false;
+                if (isFirstRound)
+                    isFirstRound = false;
 
                 orderPairs(actRoundWinners);
                 actRoundWinners.clear();
                 startRound();
             }
-        }
-        else {
+        } else {
             startRound();
         }
 
@@ -180,7 +182,7 @@ public class Tournament {
     }
 
     public void end() {
-        for(Arena ar : freeArenas) {
+        for (Arena ar : freeArenas) {
             ar.unReserve();
         }
 
@@ -207,20 +209,21 @@ public class Tournament {
         List<PlayerData> toOrder = new ArrayList<>(list);
         Collections.sort(toOrder);
 
-        if(toOrder.size() % 2 != 0) {
+        if (toOrder.size() % 2 != 0) {
             PlayerData toRemove = toOrder.get(0);
-            Matrix.getPlugin().getServer().broadcastMessage(ChatColor.AQUA + toRemove.getPlayer().getName() + " will skip the round, uneven amount of players.");
+            Matrix.getPlugin().getServer().broadcastMessage(Messages.ROUND_SKIP_PREFIX + toRemove.getPlayer().getName() + Messages.ROUND_SKIP_SUFFIX);
             this.actRoundWinners.add(toRemove);
             toOrder.remove(toRemove);
         }
 
         for (int i = 0; i < toOrder.size(); i += 2) {
-            rounds.add(new Round(round, toOrder.get(i), toOrder.get(i+1)));
+            rounds.add(new Round(round, toOrder.get(i), toOrder.get(i + 1)));
         }
     }
 
     /**
      * Adds participator to tournament
+     *
      * @param participator
      * @return bool if the player could be added
      */
@@ -228,9 +231,9 @@ public class Tournament {
         PlayerData data = TournamentHandler.loadPlayerData(participator);
         data.joinedTournament();
 
-        TournamentHandler.teleportPlayerWithMsg(participator, TournamentHandler.getTournamentLobby(), ChatColor.GREEN + "Joining Tournament . . .!");
+        TournamentHandler.teleportPlayerWithMsg(participator, TournamentHandler.getTournamentLobby(), Messages.JOIN_TOURNAMENT_MSG);
 
-        if(participators.contains(data))
+        if (participators.contains(data))
             return false;
 
         participators.add(data);
@@ -244,7 +247,7 @@ public class Tournament {
         Arena a = null;
 
         for (int i = 0; i < freeArenas.size(); i++) {
-            if(!freeArenas.get(i).isOccupied()) {
+            if (!freeArenas.get(i).isOccupied()) {
                 a = freeArenas.get(i);
                 break;
             }
@@ -264,8 +267,8 @@ public class Tournament {
     }
 
     public boolean hasParticipator(Player sender) {
-        for(PlayerData p : participators) {
-            if(p.getPlayer().equals(sender))
+        for (PlayerData p : participators) {
+            if (p.getPlayer().equals(sender))
                 return true;
         }
 

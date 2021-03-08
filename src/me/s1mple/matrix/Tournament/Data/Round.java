@@ -1,6 +1,5 @@
 package me.s1mple.matrix.Tournament.Data;
 
-import com.sk89q.worldedit.entity.Player;
 import me.s1mple.matrix.Matrix;
 import me.s1mple.matrix.Tournament.TournamentHandler;
 import org.bukkit.ChatColor;
@@ -46,6 +45,6 @@ public class Round {
                 TournamentHandler.teleportPlayerWithMsg(playerData1.getPlayer(), arena.getSpawnPoint1(), ChatColor.AQUA + "Fight is starting . . .");
                 TournamentHandler.teleportPlayerWithMsg(playerData2.getPlayer(), arena.getSpawnPoint2(), ChatColor.AQUA + "Fight is starting . . .");
             }
-        }.runTaskLater(Matrix.getPlugin(), 20*7);
+        }.runTaskLater(Matrix.getPlugin(), 20 * 7);
     }
 }

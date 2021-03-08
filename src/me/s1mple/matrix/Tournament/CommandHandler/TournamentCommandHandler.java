@@ -1,9 +1,10 @@
 package me.s1mple.matrix.Tournament.CommandHandler;
 
 import me.s1mple.matrix.Matrix;
+import me.s1mple.matrix.Tournament.Data.Arena;
 import me.s1mple.matrix.Tournament.Data.PlayerData;
 import me.s1mple.matrix.Tournament.Data.Tournament;
-import me.s1mple.matrix.Tournament.Data.Arena;
+import me.s1mple.matrix.Tournament.Messages;
 import me.s1mple.matrix.Tournament.TournamentHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -51,130 +52,117 @@ public class TournamentCommandHandler implements CommandExecutor {
         ##/tt join <TournamentName>
          */
 
-        if(!command.getName().equalsIgnoreCase("tournament"))
+        if (!command.getName().equalsIgnoreCase("tournament"))
             return false;
 
-        if(args.length == 0) {
+        if (args.length == 0) {
             sender.sendMessage(helpMessage);
 
-            if(sender.hasPermission("tournament.admin"))
+            if (sender.hasPermission("tournament.admin"))
                 sender.sendMessage(helpMessageAdmin);
 
             return true;
         }
-        if(args.length == 1) {
-            if(args[0].equalsIgnoreCase("help")) {
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("help")) {
                 sender.sendMessage(helpMessage);
 
-                if(sender.hasPermission("tournament.admin"))
+                if (sender.hasPermission("tournament.admin"))
                     sender.sendMessage(helpMessageAdmin);
 
                 return true;
-            }
-            else if(args[0].equalsIgnoreCase("stats")) {
+            } else if (args[0].equalsIgnoreCase("stats")) {
                 sender.sendMessage(TournamentHandler.getPlayerData((Player) sender).toString());
                 return true;
-            }
-            else if(args[0].equalsIgnoreCase("leave")) {
-                PlayerData pd = TournamentHandler.getPlayerData((Player)sender);
-                if(pd == null || !pd.inTournament()) {
-                    sender.sendMessage(ChatColor.RED + "You're not partitipating in any tournament");
+            } else if (args[0].equalsIgnoreCase("leave")) {
+                PlayerData pd = TournamentHandler.getPlayerData((Player) sender);
+                if (pd == null || !pd.inTournament()) {
+                    sender.sendMessage(Messages.NOT_IN_TOURNAMENT);
                     return false;
                 }
 
-                TournamentHandler.removeParticipatorFromTournament((Player)sender);
-                sender.sendMessage(ChatColor.RED + "You left the tournament!");
+                TournamentHandler.removeParticipatorFromTournament((Player) sender);
+                sender.sendMessage(Messages.LEFT_TOURNAMENT);
                 return true;
-            }
-            else if(args[0].equalsIgnoreCase("setlobby") && sender.hasPermission("tournament.admin")) {
-                if(TournamentHandler.saveTournamentLobby(((Player)sender).getLocation())) {
-                    sender.sendMessage(ChatColor.GREEN + "Successfully saved lobby!");
-                }
-                else {
-                    sender.sendMessage(ChatColor.RED + "Failed to save lobby!");
+            } else if (args[0].equalsIgnoreCase("setlobby") && sender.hasPermission("tournament.admin")) {
+                if (TournamentHandler.saveTournamentLobby(((Player) sender).getLocation())) {
+                    sender.sendMessage(Messages.SAVED_LOBBY);
+                } else {
+                    sender.sendMessage(Messages.FAILED_SETTING_LOBBY);
                 }
 
                 return true;
             }
-        }
-        else if(args.length == 2) {
-            if(args[0].equalsIgnoreCase("join")) {
-                if(!TournamentHandler.existsTournament(args[1])) {
-                    sender.sendMessage(ChatColor.RED + "Tournament " + args[1] + " does not exist.");
+        } else if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("join")) {
+                if (!TournamentHandler.existsTournament(args[1])) {
+                    sender.sendMessage(Messages.TOURNAMENT_NONEXISTENT.replace("%tournament%", args[1]));
                     return false;
-                }
-                else if(TournamentHandler.getPlayerData((Player) sender).inTournament()) {
-                    sender.sendMessage(ChatColor.RED + "You are already participating in a tournament!");
+                } else if (TournamentHandler.getPlayerData((Player) sender).inTournament()) {
+                    sender.sendMessage(Messages.ALREADY_IN_TOURNAMENT);
                     return false;
                 }
 
                 TournamentHandler.getTournament(args[1]).addParticipator((Player) sender);
-                sender.sendMessage(ChatColor.GREEN + "Successfully joined " + args[1]);
+                sender.sendMessage(Messages.JOINED_TOURNAMENT.replace("%tournament%", args[1]));
                 return true;
             }
-            if(args[0].equalsIgnoreCase("start") && sender.hasPermission("tournament.admin")) {
+            if (args[0].equalsIgnoreCase("start") && sender.hasPermission("tournament.admin")) {
                 Tournament t = TournamentHandler.getTournament(args[1]);
 
-                if(t == null || t.started()) {
-                    sender.sendMessage(ChatColor.RED + "Could not start tournament! It either doesnt exist or it was already started.");
+                if (t == null || t.started()) {
+                    sender.sendMessage(Messages.TOURNAMENT_CANNOT_BE_STARTED);
                     return false;
                 }
 
-                if(t.startRound())
-                    sender.sendMessage(ChatColor.GREEN + "Tournament started!");
-                else
-                    sender.sendMessage(ChatColor.RED + "Could not start tournament! Player amount not even");
+                if (t.startRound()) {
+                    sender.sendMessage(Messages.TOURNAMENT_STARTED);
+                } else
+                    sender.sendMessage(Messages.TOURNAMENT_PLAYERAMOUNT_UNEVEN);
                 return true;
-            }
-            else if(args[0].equalsIgnoreCase("info")) {
+            } else if (args[0].equalsIgnoreCase("info")) {
                 Tournament t = TournamentHandler.getTournament(args[1]);
-                if(t == null) {
-                    sender.sendMessage(ChatColor.RED + "Tournament doesnt exist!");
+                if (t == null) {
+                    sender.sendMessage(Messages.TOURNAMENT_UNEXISTENT);
                     return false;
-                }
-                else {
+                } else {
                     sender.sendMessage(t.toString());
                     return true;
                 }
-            }
-            else if(args[0].equalsIgnoreCase("arena") && sender.hasPermission("tournament.admin")) {
-                if(args[1].equalsIgnoreCase("list")) {
+            } else if (args[0].equalsIgnoreCase("arena") && sender.hasPermission("tournament.admin")) {
+                if (args[1].equalsIgnoreCase("list")) {
                     List<Arena> arenas = TournamentHandler.getArenas();
                     int size = TournamentHandler.getArenas().size();
                     StringBuilder message = new StringBuilder(ChatColor.AQUA + "Occupied arenas are red, unoccupied arenas show up green\n");
 
-                    for(int i = 0; i < size; i++) {
+                    for (int i = 0; i < size; i++) {
                         message.append(arenas.get(i).isOccupied() ? ChatColor.RED : ChatColor.GREEN).append(arenas.get(i).getName());
-                        if(i != size-1)
+                        if (i != size - 1)
                             message.append(", ");
                     }
 
                     sender.sendMessage(message.toString());
                     return true;
-                }
-                else if(TournamentHandler.getArenaOfPlayerInCreation((Player) sender) == null) {
+                } else if (TournamentHandler.getArenaOfPlayerInCreation((Player) sender) == null) {
                     sender.sendMessage(ChatColor.RED + "You are not creating any arena! DO /arena create before using this command!");
                     return false;
                 }
 
 
-                if(args[1].equalsIgnoreCase("setspawnpoint1")) {
-                    sender.sendMessage(TournamentHandler.getArenaOfPlayerInCreation((Player)sender).setSpawnPoint1(((Player) sender).getLocation()) ? ChatColor.GREEN + "Success!" : ChatColor.RED + "Failure!");
+                if (args[1].equalsIgnoreCase("setspawnpoint1")) {
+                    sender.sendMessage(TournamentHandler.getArenaOfPlayerInCreation((Player) sender).setSpawnPoint1(((Player) sender).getLocation()) ? ChatColor.GREEN + "Success!" : ChatColor.RED + "Failure!");
                     return true;
-                }
-                else if(args[1].equalsIgnoreCase("setspawnpoint2")) {
-                    sender.sendMessage(TournamentHandler.getArenaOfPlayerInCreation((Player)sender).setSpawnPoint2(((Player) sender).getLocation()) ? ChatColor.GREEN + "Success!" : ChatColor.RED + "Failure!");
+                } else if (args[1].equalsIgnoreCase("setspawnpoint2")) {
+                    sender.sendMessage(TournamentHandler.getArenaOfPlayerInCreation((Player) sender).setSpawnPoint2(((Player) sender).getLocation()) ? ChatColor.GREEN + "Success!" : ChatColor.RED + "Failure!");
                     return true;
-                }
-                else if(args[1].equalsIgnoreCase("setspectatorpoint")) {
-                    TournamentHandler.getArenaOfPlayerInCreation((Player)sender).setSpectatorPoint(((Player) sender).getLocation());
+                } else if (args[1].equalsIgnoreCase("setspectatorpoint")) {
+                    TournamentHandler.getArenaOfPlayerInCreation((Player) sender).setSpectatorPoint(((Player) sender).getLocation());
                     sender.sendMessage(ChatColor.GREEN + "Success!");
                     return true;
-                }
-                else if(args[1].equalsIgnoreCase("save")) {
-                    Arena ar = TournamentHandler.getArenaOfPlayerInCreation((Player)sender);
+                } else if (args[1].equalsIgnoreCase("save")) {
+                    Arena ar = TournamentHandler.getArenaOfPlayerInCreation((Player) sender);
 
-                    if(!TournamentHandler.saveArena(ar, (Player)sender)) {
+                    if (!TournamentHandler.saveArena(ar, (Player) sender)) {
                         sender.sendMessage(ChatColor.RED + "Cannot save arena! Some spawnpoints were not set!");
                         return false;
                     }
@@ -183,34 +171,31 @@ public class TournamentCommandHandler implements CommandExecutor {
                     return true;
                 }
             }
-        }
-        else if(args.length == 3 && sender.hasPermission("tournament.admin") && args[0].equalsIgnoreCase("prepare")) {
+        } else if (args.length == 3 && sender.hasPermission("tournament.admin") && args[0].equalsIgnoreCase("prepare")) {
             String[] arenaNames = args[1].split(",");
             List<Arena> arenas = new ArrayList<>();
 
-            if(TournamentHandler.getTournamentLobby() == null) {
+            if (TournamentHandler.getTournamentLobby() == null) {
                 sender.sendMessage(ChatColor.RED + "The tournament lobby is not set! Set it by doin /tt setlobby");
                 return false;
             }
 
-            for(String arenaName : arenaNames) {
-                if(TournamentHandler.getArena(arenaName) == null || TournamentHandler.getArena(arenaName).isReserved()) {
+            for (String arenaName : arenaNames) {
+                if (TournamentHandler.getArena(arenaName) == null || TournamentHandler.getArena(arenaName).isReserved()) {
                     sender.sendMessage(ChatColor.RED + "Arena " + arenaName + " doesnt exist or is not available !");
                     return false;
-                }
-                else {
+                } else {
                     arenas.add(TournamentHandler.getArena(arenaName));
                 }
             }
 
             TournamentHandler.createTournament(args[2], arenas);
             sender.sendMessage(ChatColor.GREEN + "Arena Preparation started!");
-            Matrix.getPlugin().getServer().broadcastMessage(ChatColor.AQUA + "Tournament " + args[2] + " started! Do /tt join " + args[2] + " to join!");
+            Matrix.getPlugin().getServer().broadcastMessage(Messages.TOURNAMENT_STARTED_BROADCAST.replace("%tournament%", args[2]));
             return true;
-        }
-        else if(args.length == 4  && sender.hasPermission("tournament.admin") && args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("create")) {
+        } else if (args.length == 4 && sender.hasPermission("tournament.admin") && args[0].equalsIgnoreCase("arena") && args[1].equalsIgnoreCase("create")) {
             sender.sendMessage(ChatColor.RED + String.format("You started creation of %s", args[2]));
-            TournamentHandler.createArenaInCreation((Player)sender, new Arena(args[2], args[3], ((Player)(sender)).getLocation()));
+            TournamentHandler.createArenaInCreation((Player) sender, new Arena(args[2], args[3], ((Player) (sender)).getLocation()));
             return true;
         }
 

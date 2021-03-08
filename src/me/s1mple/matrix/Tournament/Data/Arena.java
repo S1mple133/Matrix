@@ -1,9 +1,6 @@
 package me.s1mple.matrix.Tournament.Data;
 
 import org.bukkit.Location;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.util.Map;
 
 public class Arena {
     private Location spawnPoint1;
@@ -42,10 +39,11 @@ public class Arena {
 
     /**
      * Occupies arena for Tournament
+     *
      * @return If the arena could be occupied
      */
     public boolean occupyArena() {
-        if(!this.isAvailable)
+        if (!this.isAvailable)
             return false;
 
         this.isAvailable = false;
@@ -73,11 +71,12 @@ public class Arena {
 
     /**
      * Sets the arena spawn point 1
-     * @return false if location not valid
+     *
      * @param spawnPoint1
+     * @return false if location not valid
      */
     public boolean setSpawnPoint1(Location spawnPoint1) {
-        if(getSpawnPoint1() == null || (getSpawnPoint2() != null && getSpawnPoint2().getWorld().equals(spawnPoint1.getWorld()))) {
+        if (getSpawnPoint1() == null || (getSpawnPoint2() != null && getSpawnPoint2().getWorld().equals(spawnPoint1.getWorld()))) {
             this.spawnPoint1 = spawnPoint1;
         }
 
@@ -90,11 +89,12 @@ public class Arena {
 
     /**
      * Sets the second arena spawn point
+     *
      * @param spawnPoint2
      * @return
      */
     public boolean setSpawnPoint2(Location spawnPoint2) {
-        if(getSpawnPoint2() == null || (getSpawnPoint1() != null && getSpawnPoint1().getWorld().equals(spawnPoint2.getWorld()))) {
+        if (getSpawnPoint2() == null || (getSpawnPoint1() != null && getSpawnPoint1().getWorld().equals(spawnPoint2.getWorld()))) {
             this.spawnPoint2 = spawnPoint2;
         }
 

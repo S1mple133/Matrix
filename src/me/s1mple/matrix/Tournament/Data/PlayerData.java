@@ -1,10 +1,8 @@
 package me.s1mple.matrix.Tournament.Data;
 
 import me.s1mple.matrix.Matrix;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -56,11 +54,12 @@ public class PlayerData implements Comparable<PlayerData> {
     }
 
     private double killDeathRate() {
-        return roundsLost == 0 ? roundsWon : roundsWon / (double)roundsLost;
+        return roundsLost == 0 ? roundsWon : roundsWon / (double) roundsLost;
     }
 
     /**
      * Returns amount of tournaments this player participated in.
+     *
      * @return
      */
     public int getParticipatedInTournaments() {
@@ -84,8 +83,9 @@ public class PlayerData implements Comparable<PlayerData> {
         isInTournament = false;
     }
 
-        /**
+    /**
      * Returns player stats
+     *
      * @return
      */
     @Override

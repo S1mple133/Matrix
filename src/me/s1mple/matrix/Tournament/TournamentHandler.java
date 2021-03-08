@@ -1,36 +1,27 @@
 package me.s1mple.matrix.Tournament;
 
-import me.s1mple.matrix.Matrix;
-import me.s1mple.matrix.Tournament.CommandHandler.TournamentCommandHandler;
-import me.s1mple.matrix.Tournament.Data.*;
-
-import me.s1mple.matrix.Tournament.Listener.TournamentListener;
-import net.minecraft.server.v1_16_R1.Items;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.PlayerDeathEvent;
-
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.bukkit.BukkitEntity;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.math.transform.Transform;
-import com.sk89q.worldedit.world.World;
+import me.s1mple.matrix.Matrix;
+import me.s1mple.matrix.Tournament.CommandHandler.TournamentCommandHandler;
+import me.s1mple.matrix.Tournament.Data.Arena;
+import me.s1mple.matrix.Tournament.Data.PlayerData;
+import me.s1mple.matrix.Tournament.Data.SaveArena;
+import me.s1mple.matrix.Tournament.Data.Tournament;
+import me.s1mple.matrix.Tournament.Listener.TournamentListener;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.*;
 
 public class TournamentHandler {
     private static File player_data;
@@ -114,7 +105,7 @@ public class TournamentHandler {
 
     /**
      * Save player data to disk
-     * 
+     *
      * @param data
      */
     public static void savePlayerData(PlayerData data) {
@@ -152,7 +143,7 @@ public class TournamentHandler {
 
     /**
      * Saves arena to disk
-     * 
+     *
      * @param toSave
      */
     public static boolean saveArena(Arena toSave, Player saver) {
@@ -181,21 +172,22 @@ public class TournamentHandler {
      * Called when the plugin is loaded
      */
     public static void init(Matrix plugin) {
+        Messages.init();
+
         plugin.getCommand("tournament").setExecutor(new TournamentCommandHandler());
 
         player_data = new File(Matrix.getPlugin().getDataFolder(), "tournaments");
 
         extra_data = new File(player_data, "extras.yml");
 
-        if(!extra_data.exists()) {
+        if (!extra_data.exists()) {
             try {
                 extra_data.createNewFile();
                 tournamentLobby = null;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             try {
                 tournamentLobby = Location.deserialize(new Gson().fromJson(Files.readAllLines(extra_data.toPath()).get(0), Map.class));
             } catch (IOException e) {
@@ -220,7 +212,6 @@ public class TournamentHandler {
         playerDatas = new TreeSet<>();
         playersInGame = new HashMap<>();
         arenasInCreation = new HashMap<>();
-
 
 
         plugin.getServer().getPluginManager().registerEvents(new TournamentListener(), plugin);
@@ -258,7 +249,7 @@ public class TournamentHandler {
         try {
             ClipboardFormats.findByFile(f).load(f).paste(BukkitAdapter.adapt(a.getSchemPasteLoc().getWorld()),
                     BlockVector3.at(a.getSchemPasteLoc().getX(), a.getSchemPasteLoc().getY(),
-                    a.getSchemPasteLoc().getZ()),
+                            a.getSchemPasteLoc().getZ()),
                     false,
                     true,
                     false,
@@ -271,24 +262,25 @@ public class TournamentHandler {
 
     /**
      * When a participator does /tt leave
+     *
      * @param participator
      */
     public static void removeParticipatorFromTournament(Player participator) {
         PlayerData pd = TournamentHandler.loadPlayerData(participator);
 
-        if(getTournamentOfPlayer(participator) != null) {
+        if (getTournamentOfPlayer(participator) != null) {
             getTournamentOfPlayer(participator).remvoveParticipator(pd);
             pd.leftTournament();
         }
 
-        if(playersInGame.containsKey(participator)) {
+        if (playersInGame.containsKey(participator)) {
             playersInGame.get(participator).finishRound(participator);
         }
     }
 
     public static Arena getArena(String arg) {
-        for(Arena ar : arenas) {
-            if(ar.getName().equals(arg))
+        for (Arena ar : arenas) {
+            if (ar.getName().equals(arg))
                 return ar;
         }
 
@@ -297,7 +289,7 @@ public class TournamentHandler {
 
     public static Tournament getTournamentOfPlayer(Player sender) {
         for (Tournament t : tournaments) {
-            if(t.hasParticipator(sender))
+            if (t.hasParticipator(sender))
                 return t;
         }
 
@@ -314,14 +306,14 @@ public class TournamentHandler {
 
             @Override
             public void run() {
-                if(seconds == 3)
+                if (seconds == 3)
                     player.sendMessage(msg);
-                if(seconds <= 0) {
+                if (seconds <= 0) {
                     player.teleport(teleportTo);
                     Matrix.getPlugin().getServer().getScheduler().cancelTask(this.getTaskId());
                 }
 
-                if(seconds <= 0)
+                if (seconds <= 0)
                     player.sendMessage(ChatColor.YELLOW + "Teleporting. . .");
                 else
                     player.sendMessage(ChatColor.YELLOW + "Teleporting in " + seconds-- + ". . .");
