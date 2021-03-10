@@ -19,9 +19,16 @@ public class DreamListener implements Listener{
 		   Player player = event.getPlayer();
 			ItemStack stack = player.getInventory().getItemInMainHand();
 			ItemStack stack1 = player.getInventory().getItemInOffHand();
-			boolean item1 = stack.getItemMeta().getCustomModelData() == 2200035 && stack.getItemMeta().getLore().get(2).contains("CHAOSSSS") && stack.getItemMeta().getDisplayName().contains("Rune of Madness");
-			boolean item2 = stack1.getItemMeta().getCustomModelData() == 2200035 && stack1.getItemMeta().getLore().get(2).contains("CHAOSSSS") && stack1.getItemMeta().getDisplayName().contains("Rune of Madness");
-			if (player.getLocation().getY() < 70 && (item1 || item2)) {
+			boolean item1 = false;
+			boolean item2 = false;
+			try {
+				item1 = stack.getItemMeta().getCustomModelData() == 2200035 && stack.getItemMeta().getLore().get(1).contains("CHAOSSSS") && stack.getItemMeta().getDisplayName().contains("Rune of Madness");
+				item2 = stack1.getItemMeta().getCustomModelData() == 2200035 && stack1.getItemMeta().getLore().get(1).contains("CHAOSSSS") && stack1.getItemMeta().getDisplayName().contains("Rune of Madness");		
+			} catch (Exception e) {
+			
+			}
+
+			if (player.getLocation().getY() < 80 && (item1 || item2)) {
 				player.sendMessage("§dThe rune requests you ascend to greater heights...");
 			} else {
 				if (item1 && event.getBedEnterResult().equals(BedEnterResult.OK)) {

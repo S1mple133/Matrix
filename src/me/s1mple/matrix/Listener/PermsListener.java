@@ -53,6 +53,10 @@ public class PermsListener implements Listener {
           player.sendMessage("&bYou cannot travel to the future yet");
           event.setCancelled(true);
       }  
+      if (!player.hasPermission("quest.time.Limbo") && event.getTo().getWorld().getName().contains("dream")) {
+          player.sendMessage("&bYou cannot travel to other dreams yet");
+          event.setCancelled(true);
+      }  
     }
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
