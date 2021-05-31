@@ -106,13 +106,6 @@
 		    <artifactId>ProtocolLib</artifactId>
 		    <version>4.5.1</version>
 		  </dependency>
-
-		<dependency>
-			<groupId>com</groupId>
-			<artifactId>skinsrestorer</artifactId>
-			<version>13.7.5-SNAPSHOT</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.vampirerevamp</groupId>
 			<artifactId>vampirerevamp</artifactId>
@@ -120,7 +113,20 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/util/VampireRevamp.jar</systemPath>
 		</dependency>
-
+		<dependency>
+			<groupId>com.factions</groupId>
+			<artifactId>factions</artifactId>
+			<version>1.0.3</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/util/Factions.jar</systemPath>
+		</dependency>
+				<dependency>
+			<groupId>com.massivecore</groupId>
+			<artifactId>Massivecore</artifactId>
+			<version>1.0.3</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/util/Massivecore.jar</systemPath>
+		</dependency>
 		<dependency>
 			<groupId>net.luckperms</groupId>
 			<artifactId>api</artifactId>

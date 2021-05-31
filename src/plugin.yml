@@ -2,7 +2,7 @@ main: me.s1mple.matrix.Matrix
 name: MatrixPlugin
 version: ${project.version}
 author: S1mple, CrashCringle12
-depend: [LuckPerms, LibsDisguises, VampireRevamp, SkillsPro, CustomDimensions]
+depend: [LuckPerms, LibsDisguises, VampireRevamp, SkillsPro, CustomDimensions, Factions, Massivecore]
 description: Matrix Plugin.
 api-version: 1.14
 commands:
