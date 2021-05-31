@@ -5,10 +5,12 @@ import me.s1mple.matrix.MatrixMethods;
 import me.s1mple.matrix.Util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -39,6 +41,7 @@ public class PermsListener implements Listener {
         }
     }
 */
+
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         if(event.getPlayer().hasPermission("matrix.commandspy")) {
@@ -55,6 +58,14 @@ public class PermsListener implements Listener {
       }  
       if (!player.hasPermission("quest.time.Limbo") && event.getTo().getWorld().getName().contains("dream")) {
           player.sendMessage("&bYou cannot travel to other dreams yet");
+          event.setCancelled(true);
+      }  
+      if (!player.hasPermission("quest.time.Corrupted") && event.getTo().getWorld().getName().contains("em_dark_spire")) {
+          player.sendMessage("&4Your soul is too pure to enter");
+          event.setCancelled(true);
+      }  
+      if (!player.hasPermission("quest.time.Past") && event.getTo().getWorld().getName().contains("em_oasis")) {
+          player.sendMessage("&4You cannot travel to the past yet");
           event.setCancelled(true);
       }  
     }

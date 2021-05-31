@@ -32,6 +32,8 @@ import com.clanjhoo.vampire.VampireRevamp;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.elmakers.mine.bukkit.api.magic.MagicAPI;
+import com.massivecraft.factions.Factions;
+import com.massivecraft.massivecore.MassiveCore;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 import me.libraryaddict.disguise.LibsDisguises;
@@ -47,19 +49,19 @@ import net.luckperms.api.LuckPermsProvider;
 import net.minecraft.server.v1_16_R3.EntityPlayer;
 import net.minecraft.server.v1_16_R3.PacketPlayOutGameStateChange;
 import net.minecraft.server.v1_16_R3.PacketPlayOutGameStateChange.a;
-import skinsrestorer.bukkit.SkinsRestorer;
 
 public class Matrix extends JavaPlugin {
 	public static Matrix plugin;
 	public static ConfigManager configManager;
 	public static String version = "1.10";
 	public static String author = "S1mpleCrash";
-	private SkinsRestorer skinApi;
 	private WorldEditPlugin worldEditPlugin;
 	private SkillsPro skillsapi;
 	private VampireRevamp revamp;
 	private LibsDisguises disguise;
 	private LuckPerms api;
+	private Factions factions;
+	private MassiveCore massivecore;
 	private static MagicAPI magicAPI;
 	private ProtocolManager protocolManager;
 	@Override
@@ -68,12 +70,13 @@ public class Matrix extends JavaPlugin {
 		this.plugin = this;
 		this.configManager = new ConfigManager(this);
 
-		this.skinApi = ((SkinsRestorer) plugin.getServer().getPluginManager().getPlugin("SkinsRestorer"));
 		this.worldEditPlugin = ((WorldEditPlugin) plugin.getServer().getPluginManager().getPlugin("WorldEdit"));
 		this.skillsapi = ((SkillsPro) plugin.getServer().getPluginManager().getPlugin("SkillsPro"));
 		this.revamp = ((VampireRevamp) plugin.getServer().getPluginManager().getPlugin("VampireRevamp"));
 		this.disguise = ((LibsDisguises) plugin.getServer().getPluginManager().getPlugin("LibsDisguises"));
 		this.api = LuckPermsProvider.get();
+		this.factions = ((Factions) plugin.getServer().getPluginManager().getPlugin("Factions"));
+		this.massivecore = ((MassiveCore) plugin.getServer().getPluginManager().getPlugin("MassiveCore"));
 		Matrix.magicAPI = (MagicAPI) Bukkit.getPluginManager().getPlugin("Magic");
 		protocolManager = ProtocolLibrary.getProtocolManager();
 		registerGlow();
@@ -246,10 +249,6 @@ public class Matrix extends JavaPlugin {
 
 	public SkillsPro getSkillsApi() {
 		return skillsapi;
-	}
-
-	public SkinsRestorer getSkinsApi() {
-		return skinApi;
 	}
 
 	public WorldEditPlugin getWorldEditPlugin() {
