@@ -67,13 +67,13 @@ public class DreamListener implements Listener{
     					stack1.setAmount(stack.getAmount()-5);
     				if (item1 || item2) {
     					location.getWorld().playSound(location, Sound.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.NEUTRAL, 100, (float) 1.5);
-    					player.sendMessage("§3§oPrime hears your call and rings the grand bell in your name...");
+    					player.sendMessage("&3&oPrime hears your call and rings the grand bell in your name...");
     					for (Entity e : location.getWorld().getNearbyEntities(location, 40, 40, 40)) {
     						if (e instanceof Player && e.getEntityId() != player.getEntityId()) {
     						
     							if (MPlayer.get(player).getFaction() != MPlayer.get((Player) e).getFaction()) {
     								
-	    							((Player) e).sendMessage("§3The Primordial Bell Rings for thee");
+	    							((Player) e).sendMessage("&3The Primordial Bell Rings for thee");
 	    							MatrixMethods.ConsoleCmd("god off " + ((Player) e).getName());
 	    							((LivingEntity) e).removePotionEffect(PotionEffectType.HEALTH_BOOST);
 	    							((LivingEntity) e).removePotionEffect(PotionEffectType.REGENERATION);
@@ -129,11 +129,11 @@ public class DreamListener implements Listener{
 			}
 
 			if (player.getLocation().getY() < 80 && (item1 || item2)) {
-				player.sendMessage("§dThe rune requests you ascend to greater heights...");
+				player.sendMessage("&dThe rune requests you ascend to greater heights...");
 			} else {
 				if (item1 && event.getBedEnterResult().equals(BedEnterResult.OK)) {
 					stack.setAmount(stack.getAmount()-1);
-					player.sendMessage("§dThe rune plunges your mind into a dream....");
+					player.sendMessage("&dThe rune plunges your mind into a dream....");
 					MatrixMethods.ConsoleCmd("execute in minecraft:dream_dimension run teleport "+ player.getName()
 					+ " ~ ~2 ~" );
 					Block block = player.getLocation().subtract(0, 1, 0).getBlock();
@@ -144,13 +144,13 @@ public class DreamListener implements Listener{
 					
 				} else if (item2 && event.getBedEnterResult().equals(BedEnterResult.OK)) {
 					stack1.setAmount(stack1.getAmount()-1);
-					player.sendMessage("§dThe rune plunges your mind into a dream....");
+					player.sendMessage("&dThe rune plunges your mind into a dream....");
 					MatrixMethods.ConsoleCmd("execute in minecraft:dream_dimension run teleport "+ player.getName()
 					+ " ~ ~ ~" );
 					Block block = player.getLocation().subtract(0, 1, 0).getBlock();
 					block.setType(Material.MELON);
 				} else if (!event.getBedEnterResult().equals(BedEnterResult.OK) && (item1 || item2)) {
-					player.sendMessage("§5The rune demands silence...");
+					player.sendMessage("&5The rune demands silence...");
 				}
 
 			}

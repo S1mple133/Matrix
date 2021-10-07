@@ -31,7 +31,6 @@ import java.util.UUID;
 import com.clanjhoo.vampire.VampireRevamp;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.elmakers.mine.bukkit.api.magic.MagicAPI;
 import com.massivecraft.factions.Factions;
 import com.massivecraft.massivecore.MassiveCore;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
@@ -62,7 +61,6 @@ public class Matrix extends JavaPlugin {
 	private LuckPerms api;
 	private Factions factions;
 	private MassiveCore massivecore;
-	private static MagicAPI magicAPI;
 	private ProtocolManager protocolManager;
 	@Override
 	public void onEnable() {
@@ -77,7 +75,6 @@ public class Matrix extends JavaPlugin {
 		this.api = LuckPermsProvider.get();
 		this.factions = ((Factions) plugin.getServer().getPluginManager().getPlugin("Factions"));
 		this.massivecore = ((MassiveCore) plugin.getServer().getPluginManager().getPlugin("MassiveCore"));
-		Matrix.magicAPI = (MagicAPI) Bukkit.getPluginManager().getPlugin("Magic");
 		protocolManager = ProtocolLibrary.getProtocolManager();
 		registerGlow();
 		new Werewolf();
@@ -257,10 +254,6 @@ public class Matrix extends JavaPlugin {
 
 	public LuckPerms getLuckPerms() {
 		return api;
-	}
-
-	public static MagicAPI getMagicPlugin() {
-		return magicAPI;
 	}
 
 }

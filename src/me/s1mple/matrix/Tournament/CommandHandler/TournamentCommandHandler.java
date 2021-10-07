@@ -45,7 +45,7 @@ public class TournamentCommandHandler implements CommandExecutor {
         ##/tt arena list tournament.admin list arenas
         ##/tt prepare <Arena> <TournamentName> tournament.admin Prepares arena (should be used before adding players)
         /tt setlobby
-        ## /tt start TournamentName tournament.admin starts tournament, sends �Do /tt accept to join the tournament� to the first set of players
+        ## /tt start TournamentName tournament.admin starts tournament, sends &Do /tt accept to join the tournament& to the first set of players
         /tt prize add <TournamentsWon> <Command> %winner% as placeholder for winner name
         ##/tt leave Leave arena
         ##/tt join <TournamentName>

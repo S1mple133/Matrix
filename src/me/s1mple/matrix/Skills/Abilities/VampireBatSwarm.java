@@ -27,7 +27,7 @@ public class VampireBatSwarm extends ActiveAbility {
    @EventHandler
 	public void toggleBatSwarm(SkillToggleAbilityEvent event) {
 	   if (event.getAbility() == this) {
-			event.getPlayer().sendRawMessage("§cThis ability can't exactly be toggled yet. Sorry!");
+			event.getPlayer().sendRawMessage("&cThis ability can't exactly be toggled yet. Sorry!");
 	   }
 	}
    @EventHandler
@@ -52,7 +52,7 @@ public class VampireBatSwarm extends ActiveAbility {
 			player.performCommand("v batusi");
 		}
 		else {
-			player.sendRawMessage("§cYou are not a Nosferatu Vampire!");
+			player.sendRawMessage("&cYou are not a Nosferatu Vampire!");
 		}
     	
 	}

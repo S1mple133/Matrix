@@ -21,12 +21,12 @@ public class SkillsListener implements Listener{
 
 			if(event.isVampire()) {
 				SkillsAPI.getSkilledPlayer(player).setActiveSkill(SkillManager.getSkill("Vampire"));
-				event.getUplayer().getPlayer().sendRawMessage("§cYou have unlocked the §4Vampire§c skill tree. §4Do /skills improve");
+				event.getUplayer().getPlayer().sendRawMessage("&cYou have unlocked the &4Vampire&c skill tree. &4Do /skills improve");
 				api.getUserManager().getUser(player.getUniqueId()).data().add(Node.builder("-skills.select.*").build());
 			}
 			else {
 				SkillsAPI.getSkilledPlayer(player).setActiveSkill(SkillManager.getSkill("Arbalist"));
-				event.getUplayer().getPlayer().sendRawMessage("§cYou have been removed from the Vampire skill tree!");
+				event.getUplayer().getPlayer().sendRawMessage("&cYou have been removed from the Vampire skill tree!");
 				api.getUserManager().getUser(player.getUniqueId()).data().remove(Node.builder("-skills.select.*").build());
 			}
 			
